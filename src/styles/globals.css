@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-100;
+  }
+
+  a,
+  button {
+    @apply cursor-pointer focus:outline-offset-2;
+  }
+}
+
+@layer utilities {
+  .t-black {
+    color: rgb(0 0 0 / 0.9);
+  }
+
+  .t-black-light {
+    color: rgb(0 0 0 / 0.6);
+  }
+
+  .t-white {
+    color: rgb(255 255 255 / 0.9);
+  }
+
+  .t-white-light {
+    color: rgb(255 255 255 / 0.75);
+  }
+
+  .t-blue {
+    /* text-blue-600 */
+    --tw-text-opacity: 1;
+    color: rgb(37 99 235 / var(--tw-text-opacity));
+  }
+
+  .t-blue-light {
+    /* text-blue-400 */
+    --tw-text-opacity: 1;
+    color: rgb(96 165 250 / var(--tw-text-opacity));
+  }
+}
+
+@layer components {
+  .mui-icon {
+    @apply inline-block h-6 w-6;
+  }
+
+  .intent {
+    @apply flex w-full cursor-pointer items-center justify-between rounded-lg bg-white p-4 text-black hover:shadow-xl md:max-w-md xl:mx-0;
+  }
+
+  .feed-card {
+    @apply t-black dark:t-white overflow-hidden rounded-lg bg-white shadow-[0px_0px_0px_1px_rgba(0,0,0,0.08)] dark:bg-dblue;
+  }
+
+  .sidebar-btn {
+    @apply block cursor-pointer px-3 focus:underline focus:underline-offset-1;
+  }
+
+  .card-btn {
+    @apply cursor-pointer transition-colors duration-200 hover:bg-black/5 focus:bg-black/5 dark:hover:bg-gray-100/10 dark:focus:bg-gray-100/10;
+  }
+
+  .label-btn {
+    @apply cursor-pointer transition-colors duration-200 focus-within:bg-black/5 focus-within:outline focus-within:outline-2 focus-within:outline-blue-600 hover:bg-black/5 dark:focus-within:bg-gray-100/10 dark:hover:bg-gray-100/10;
+  }
+
+  .sidebar-link {
+    @apply block px-2 py-1 text-xs font-semibold;
+  }
+
+  .sidebar-section {
+    @apply border-t-[0.5px] border-gray-300;
+  }
+
+  .addpost-btn {
+    @apply flex h-12 items-center justify-center space-x-3 rounded px-2 text-sm font-semibold;
+  }
+
+  .t-primary {
+    @apply t-black dark:t-white;
+  }
+
+  .t-secondary {
+    @apply t-black-light dark:t-white-light;
+  }
+
+  .t-link {
+    @apply t-blue dark:t-blue-light cursor-pointer decoration-blue-500 underline-offset-1 hover:underline focus:underline;
+  }
+
+  .post-btn {
+    @apply t-black-light dark:t-white-light flex items-center justify-center rounded px-2 py-2.5 text-sm font-semibold;
+  }
+}

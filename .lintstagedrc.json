@@ -1,0 +1,4 @@
+{
+  "*.{js,jsx,ts,tsx}": "pnpm lint:staged",
+  "*.{json,scss}": "pnpm format:staged"
+}
