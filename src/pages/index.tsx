@@ -16,6 +16,11 @@ import social_logo from '$public/social_logo.png'
 import hero_svg from '$public/hero.svg'
 import Sidebar from '$components/Sidebar'
 import Feed from '$components/Feed'
+import Modal from '$components/Modal'
+import AddPostForm from '$components/AddPostForm'
+import Footer from '$components/Footer'
+import Widgets from '$components/Widgets'
+import Post from '$components/Post'
 
 export default function Home() {
   return (
@@ -59,8 +64,13 @@ export default function Home() {
             <h1 className="max-w-xl text-3xl font-extralight !leading-snug text-amber-800/80 md:text-5xl">
               Welcome to the ELP community
             </h1>
-            {/* <Sidebar />
-            <Feed /> */}
+            <Sidebar />
+            <Feed />
+            {/* <Modal />
+            <AddPostForm />
+            <Widgets /> */}
+            <Post />
+            <Footer />
             {/* <div className="space-y-4">
               <div className="intent">
                 <h2 className="text-xl">Search for a job</h2>

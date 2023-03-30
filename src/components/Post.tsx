@@ -47,12 +47,13 @@ export default function Post({ post, modalPost = false }: Props) {
           </span>
           <div className="ml-2 flex-grow leading-5">
             <p className="t-link dark:t-white hover:t-blue dark:hover:t-blue-light font-semibold text-black/90">
-              {post.author.name}
+              {/* {post.author.name} */} Mike Kiplangat
             </p>
             <p className="t-secondary text-xs">
-              {formatDistanceToNow(parseISO(post.createdAt as string), {
+              {/* {formatDistanceToNow(parseISO(post.createdAt as string), {
                 addSuffix: true,
-              })}
+              })} */}{' '}
+              3/12/2023
             </p>
           </div>
         </Link>
@@ -70,7 +71,7 @@ export default function Post({ post, modalPost = false }: Props) {
       </header>
 
       <div>
-        {post.input && (
+        {/* {post.input && (
           <article
             className={clsx(
               'relative mx-4 mb-2 max-h-14 overflow-hidden break-words text-sm leading-5',
@@ -109,7 +110,7 @@ export default function Post({ post, modalPost = false }: Props) {
               className="max-h-[556px] object-contain"
             />
           </button>
-        )}
+        )} */}
       </div>
 
       <div className="mx-3 grid grid-flow-col border-t border-black/10	py-1 text-black/60 dark:border-gray-500">

@@ -11,26 +11,28 @@ export default function Sidebar() {
   return (
     <div className="space-y-2">
       {/* First card */}
-      <section className="rounded-[10px] bg-black text-center">
-        <div className="-ml-3 -mr-3 h-14 min-w-full bg-[url('/sidebar_bg.svg')] bg-cover bg-center"></div>
+      <section className="rounded-[10px] bg-black p-4 text-center">
+        {/* <div className="-ml-3 -mr-3 h-14 min-w-full bg-[url('/sidebar_bg.svg')] bg-cover bg-center"></div> */}
 
-        <button
-          onClick={() => signOut({ callbackUrl: '/auth/signin' })}
-          className="-mt-9 cursor-pointer touch-manipulation"
-        >
-          <Avatar size={64} />
-        </button>
+        <div className="mx-auto flex">
+          <button
+            onClick={() => signOut({ callbackUrl: '/auth/signin' })}
+            className="cursor-pointer p-2 "
+          >
+            <Avatar size={64} />
+          </button>
 
-        <div className="px-4 py-4">
-          <a href="#" className="block">
-            <h3 className="cursor-pointer font-semibold decoration-purple-700 underline-offset-1 hover:underline">
-              {/*dummy data*/}
-              Mike Kiplangat
-              {session?.user?.name}
-            </h3>
-          </a>
-          <p className="t-secondary text-sm">{session?.user?.email}</p>
-          m.kiplangat@alustudent.com
+          <div className="px-4 py-4 text-left">
+            <a href="#" className="block">
+              <h3 className="cursor-pointer divide-amber-800/80 font-semibold underline-offset-1 hover:underline">
+                {/*dummy data*/}
+                Mike Kiplangat
+                {session?.user?.name}
+              </h3>
+            </a>
+            <p className="t-secondary text-sm">{session?.user?.email}</p>
+            m.kiplangat@alustudent.com
+          </div>
         </div>
 
         <div className="hidden text-left text-sm md:block">
@@ -73,30 +75,27 @@ export default function Sidebar() {
 
           <a
             href="#"
-            className="sidebar-section sidebar-btn card-btn flex items-center space-x-1.5 p-3"
+            className="sidebar-section card-btn flex items-center space-x-1.5 p-3"
           >
             <MdBookmark className="mui-icon t-secondary h-4 w-4" />
             <h4 className="text-xs font-semibold">My items</h4>
           </a>
         </div>
-      </section>
-
-      {/* Second card */}
-      <section className="sticky top-16 hidden rounded-[10px] bg-black pt-2 md:block lg:top-20">
-        <a href="#" className="sidebar-link text-white">
-          <h4>Groups</h4>
-        </a>
-        <div className="sidebar-link flex items-center justify-between">
-          <a href="#" className="flex-grow text-white">
-            <h4>Events</h4>
+        <div className="card-btn sidebar-link text-left text-sm md:block">
+          <a href="#" className="sidebar-link text-white">
+            <h4>Hubs</h4>
           </a>
-          <span className="cursor-pointer rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
-            <MdAdd className="mui-icon t-secondary" />
-          </span>
         </div>
-        <a href="#" className="sidebar-link text-white">
-          <h4>Followed Hashtags</h4>
-        </a>
+        <div className="card-btn sidebar-link text-left text-sm md:block">
+          <a href="#" className="sidebar-link text-white">
+            <h4>Chapters</h4>
+          </a>
+        </div>
+        <div className="card-btn sidebar-link text-left text-sm md:block">
+          <a href="#" className="sidebar-link text-white">
+            <h4>Direct Message</h4>
+          </a>
+        </div>
         <a className="sidebar-section sidebar-btn card-btn mt-2 p-3">
           <h4 className="t-secondary text-sm font-semibold">Discover more</h4>
         </a>
