@@ -1,11 +1,16 @@
-import type { AddPostFormValues, Post } from '$lib/types'
-import { type MouseEventHandler, useCallback, useEffect, useState } from 'react'
-import Image from 'next/image'
-import axios from 'axios'
-import { useSession } from 'next-auth/react'
-import { type SubmitHandler, useForm, ChangeHandler } from 'react-hook-form'
-import { useSetAtom } from 'jotai'
-import { useQueryClient } from '@tanstack/react-query'
+import type { AddPostFormValues, Post } from "$lib/types";
+import {
+  type MouseEventHandler,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import Image from "next/image";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { type SubmitHandler, useForm, ChangeHandler } from "react-hook-form";
+import { useSetAtom } from "jotai";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   MdArticle,
   MdBarChart,
@@ -16,18 +21,18 @@ import {
   MdWork,
   MdArrowDropDown,
   MdPublic,
-} from 'react-icons/md'
-import { TiStarburst } from 'react-icons/ti'
-import { uploadImage } from '$lib/utils'
-import { storage } from '$lib/config/firebase'
-import Avatar from '$components/Avatar'
-import { modalState } from '$lib/atoms'
+} from "react-icons/md";
+import { TiStarburst } from "react-icons/ti";
+import { uploadImage } from "$lib/utils";
+import { storage } from "$lib/config/firebase";
+import Avatar from "$components/Avatar";
+import { modalState } from "$lib/atoms";
 
 export default function AddPostForm() {
-  const queryClient = useQueryClient()
-  const setModalOpen = useSetAtom(modalState)
-  const [dataUrl, setDataUrl] = useState('')
-  const { data: session } = useSession()
+  const queryClient = useQueryClient();
+  const setModalOpen = useSetAtom(modalState);
+  const [dataUrl, setDataUrl] = useState("");
+  const { data: session } = useSession();
   const {
     setFocus,
     handleSubmit,
@@ -36,59 +41,53 @@ export default function AddPostForm() {
     formState,
     reset,
     resetField,
-  } = useForm<AddPostFormValues>()
-  const { isSubmitting } = formState
+  } = useForm<AddPostFormValues>();
+  const { isSubmitting } = formState;
 
   const onCreatePost: SubmitHandler<AddPostFormValues> = useCallback(
-    async data => {
-      if (!session?.user?.uid) return
+    async (data) => {
+      if (!session?.user?.uid) return;
       try {
-        let newPost: any
-        const { data: res } = await axios.post('/api/posts', {
+        let newPost: any;
+        const { data: res } = await axios.post("/api/posts", {
           input: data.input.trim(),
-        })
-        newPost = res
+        });
+        newPost = res;
 
         if (data.image[0]) {
-          const downloadURL = await uploadImage(
-            storage,
-            data.image[0],
-            session.user.uid,
-            res.id.toString()
-          )
           const { data: post } = await axios.patch(`/api/posts/${res.id}`, {
-            photoUrl: downloadURL,
-          })
-          newPost = post
+            photoUrl: "",
+          });
+          newPost = post;
         }
-        reset()
-        setModalOpen(false)
-        queryClient.setQueryData<Post[]>(['posts'], old => [
+        reset();
+        setModalOpen(false);
+        queryClient.setQueryData<Post[]>(["posts"], (old) => [
           newPost,
           ...(old ?? []),
-        ])
+        ]);
       } catch (error) {
-        console.error(error)
-        alert(error)
+        console.error(error);
+        alert(error);
       }
     },
     [queryClient, reset, session?.user?.uid, setModalOpen]
-  )
+  );
 
-  const onSelectImage: ChangeHandler = async e => {
-    const f = e.target.files?.[0]
+  const onSelectImage: ChangeHandler = async (e) => {
+    const f = e.target.files?.[0];
     if (f) {
-      const reader = new FileReader()
-      reader.readAsDataURL(f)
-      reader.onload = ev => {
-        setDataUrl(ev.target?.result as string)
-      }
-    } else setDataUrl('')
-  }
+      const reader = new FileReader();
+      reader.readAsDataURL(f);
+      reader.onload = (ev) => {
+        setDataUrl(ev.target?.result as string);
+      };
+    } else setDataUrl("");
+  };
 
   useEffect(() => {
-    setFocus('input')
-  }, [setFocus])
+    setFocus("input");
+  }, [setFocus]);
 
   return (
     <div className="overflow-auto">
@@ -114,7 +113,7 @@ export default function AddPostForm() {
           <label className="block px-4 pt-3">
             <span className="sr-only">Post content</span>
             <textarea
-              {...register('input')}
+              {...register("input")}
               rows={4}
               placeholder="What do you want to talk about?"
               className="w-full resize-none border-none bg-transparent p-2 placeholder-black/60 focus:ring-0 dark:placeholder-white/75"
@@ -124,10 +123,10 @@ export default function AddPostForm() {
           {dataUrl && (
             <div className="relative mx-6 my-3">
               <ClearImageButton
-                onClick={e => {
-                  e.preventDefault()
-                  resetField('image')
-                  setDataUrl('')
+                onClick={(e) => {
+                  e.preventDefault();
+                  resetField("image");
+                  setDataUrl("");
                 }}
               />
               <Image
@@ -144,7 +143,7 @@ export default function AddPostForm() {
         <footer className="sticky bottom-0 bg-white dark:bg-dblue">
           <div className="px-4 pt-3">
             <button
-              onClick={e => e.preventDefault()}
+              onClick={(e) => e.preventDefault()}
               className="rounded px-2 py-1.5 font-semibold text-btnblue hover:bg-btnbluelight dark:text-blue-400"
             >
               Add hashtag
@@ -153,40 +152,40 @@ export default function AddPostForm() {
 
           <div className="flex justify-between pb-4 pl-4 pr-6 pt-3">
             <div className="flex items-center">
-              <label className="t-secondary card-btn label-btn block rounded-full p-2">
+              <label className="t-secondary card-btn label-btn block rounded-xl p-2">
                 <span className="sr-only">Choose image</span>
                 <input
                   type="file"
-                  {...register('image', {
+                  {...register("image", {
                     onChange: onSelectImage,
                   })}
                   className="sr-only"
                 />
                 <MdOutlinePhotoSizeSelectActual size={24} />
               </label>
-              <button className="t-secondary card-btn rounded-full p-2">
+              <button className="t-secondary card-btn rounded-xl p-2">
                 <MdVideocam size={24} />
               </button>
-              <button className="t-secondary card-btn rounded-full p-2">
+              <button className="t-secondary card-btn rounded-xl p-2">
                 <MdArticle size={24} />
               </button>
-              <button className="t-secondary card-btn rounded-full p-2">
+              <button className="t-secondary card-btn rounded-xl p-2">
                 <MdWork size={24} />
               </button>
-              <button className="t-secondary card-btn rounded-full p-2">
+              <button className="t-secondary card-btn rounded-xl p-2">
                 <TiStarburst size={24} />
               </button>
-              <button className="t-secondary card-btn rounded-full p-2">
+              <button className="t-secondary card-btn rounded-xl p-2">
                 <MdBarChart size={24} />
               </button>
-              <button className="t-secondary card-btn rounded-full p-2">
+              <button className="t-secondary card-btn rounded-xl p-2">
                 <MdMoreHoriz size={24} />
               </button>
             </div>
             <button
-              className="rounded-full bg-btnblue px-4 py-1.5 font-semibold text-white hover:bg-btnbluedark focus:bg-btnbluedark disabled:cursor-not-allowed disabled:bg-white/75 disabled:text-black/40"
+              className="rounded-xl bg-btnblue px-4 py-1.5 font-semibold text-white hover:bg-btnbluedark focus:bg-btnbluedark disabled:cursor-not-allowed disabled:bg-white/75 disabled:text-black/40"
               type="submit"
-              disabled={!watch('input')?.trim() || isSubmitting}
+              disabled={!watch("input")?.trim() || isSubmitting}
             >
               Post
             </button>
@@ -194,7 +193,7 @@ export default function AddPostForm() {
         </footer>
       </form>
     </div>
-  )
+  );
 }
 
 const ClearImageButton = ({ onClick }: { onClick: MouseEventHandler }) => (
@@ -204,4 +203,4 @@ const ClearImageButton = ({ onClick }: { onClick: MouseEventHandler }) => (
   >
     <MdClose size={24} />
   </button>
-)
+);

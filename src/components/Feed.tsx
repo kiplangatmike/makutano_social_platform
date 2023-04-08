@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query'
-import { MdArrowDropDown } from 'react-icons/md'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { fetchPosts } from '$lib/utils'
-import AddPost from '$components/AddPost'
-import Post from '$components/Post'
+import { useQuery } from "@tanstack/react-query";
+import { MdArrowDropDown } from "react-icons/md";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import Image from "next/image";
+import { fetchPosts } from "$lib/utils";
+import AddPost from "$components/AddPost";
+import Post from "$components/Post";
 
 export default function Feed() {
   const {
@@ -11,10 +12,10 @@ export default function Feed() {
     isError,
     isLoading,
     error,
-  } = useQuery(['posts'], fetchPosts, {
+  } = useQuery(["posts"], fetchPosts, {
     staleTime: 5000,
-  })
-  const [parent] = useAutoAnimate<HTMLDivElement>()
+  });
+  const [parent] = useAutoAnimate<HTMLDivElement>();
 
   return (
     <div className="">
@@ -33,10 +34,10 @@ export default function Feed() {
         {isLoading && <p>loading...</p>}
         {isError && error instanceof Error && <p>Error: {error?.message}</p>}
 
-        {posts?.map(p => (
+        {posts?.map((p) => (
           <Post key={p.id} post={p} />
         ))}
       </div>
     </div>
-  )
+  );
 }

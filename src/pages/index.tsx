@@ -1,32 +1,25 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import { signIn } from 'next-auth/react'
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import { signIn } from "next-auth/react";
 import {
   MdExplore,
   MdGroup,
   MdOndemandVideo,
   MdBusinessCenter,
   MdArrowForwardIos,
-} from 'react-icons/md'
-import { GiCompass } from 'react-icons/gi'
+} from "react-icons/md";
+import { GiCompass } from "react-icons/gi";
 
-import HeaderLink from '$components/HeaderLink'
-import social_logo from '$public/social_logo.png'
-import hero_svg from '$public/hero.svg'
-import Sidebar from '$components/Sidebar'
-import Feed from '$components/Feed'
-import Modal from '$components/Modal'
-import AddPostForm from '$components/AddPostForm'
-import Footer from '$components/Footer'
-import Widgets from '$components/Widgets'
-import Post from '$components/Post'
+import HeaderLink from "$components/HeaderLink";
+import social_logo from "$public/social_logo.png";
+import hero_svg from "$public/hero.svg";
 
 export default function Home() {
   return (
     <div>
       <Head>
-        <title>LinkedIn: Log In or Sign Up | Next</title>
+        <title>Makutano: Log In or Sign Up | Next</title>
       </Head>
 
       <header>
@@ -40,11 +33,10 @@ export default function Home() {
 
           <div className="align-center flex items-center divide-amber-800/80 sm:divide-x">
             <div className="hidden space-x-8 pr-4 sm:flex">
-              {/* Header links */}
-              <HeaderLink Icon={GiCompass}>Discover</HeaderLink>
+              {/* <HeaderLink Icon={GiCompass}>Discover</HeaderLink>
               <HeaderLink Icon={MdGroup}>People</HeaderLink>
               <HeaderLink Icon={MdOndemandVideo}>Learning</HeaderLink>
-              <HeaderLink Icon={MdBusinessCenter}>Opportunities</HeaderLink>
+              <HeaderLink Icon={MdBusinessCenter}>Opportunities</HeaderLink> */}
             </div>
             <div className="pl-4">
               <button
@@ -64,13 +56,6 @@ export default function Home() {
             <h1 className="max-w-xl text-3xl font-extralight !leading-snug text-amber-800/80 md:text-5xl">
               Welcome to the ELP community
             </h1>
-            <Sidebar />
-            <Feed />
-            {/* <Modal />
-            <AddPostForm />
-            <Widgets /> */}
-            <Post />
-            <Footer />
             {/* <div className="space-y-4">
               <div className="intent">
                 <h2 className="text-xl">Search for a job</h2>
@@ -101,5 +86,5 @@ export default function Home() {
         </p>
       </main>
     </div>
-  )
+  );
 }
