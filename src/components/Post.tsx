@@ -193,7 +193,7 @@ const PostMenu = ({ post }: { post: Props["post"] }) => {
 
   const onDeletePost = useCallback(async () => {
     console.log("results");
-  }, [post, session?.user?.uid]);
+  }, []);
 
   return (
     <Menu as="div" className="relative">

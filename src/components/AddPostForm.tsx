@@ -23,8 +23,6 @@ import {
   MdPublic,
 } from "react-icons/md";
 import { TiStarburst } from "react-icons/ti";
-import { uploadImage } from "$lib/utils";
-import { storage } from "$lib/config/firebase";
 import Avatar from "$components/Avatar";
 import { modalState } from "$lib/atoms";
 
