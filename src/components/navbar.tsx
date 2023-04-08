@@ -15,7 +15,7 @@ export default function Navbar() {
           <div className="flex items-center justify-start">
             <div className="flex-shrink-0">
               <Link href="/" className="text-xl font-bold text-white">
-                Makutano
+                Makkutano
               </Link>
             </div>
             <div className="hidden sm:ml-6 sm:block">

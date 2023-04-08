@@ -7,17 +7,9 @@ import { useSetAtom } from "jotai";
 import { useSession } from "next-auth/react";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { Menu, Transition } from "@headlessui/react";
-import {
-  MdClose,
-  MdOutlineComment,
-  MdOutlineThumbUpAlt,
-  MdThumbUpAlt,
-  MdEdit,
-  MdDelete,
-} from "react-icons/md";
+import { MdClose, MdEdit, MdDelete } from "react-icons/md";
 import { AiTwotoneHeart, AiOutlineHeart } from "react-icons/ai";
 import { BiComment } from "react-icons/bi";
-import { RiSendPlaneFill } from "react-icons/ri";
 import { HiOutlineReply } from "react-icons/hi";
 import { IoIosMore } from "react-icons/io";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -47,7 +39,7 @@ export default function Post({ post, modalPost = false }: Props) {
       )}
     >
       <header className="mb-2 flex flex-nowrap items-center justify-between px-4 pt-3">
-        <Link href="#" className="flex items-center">
+        <Link href="/profile" className="flex items-center">
           <span className="flex cursor-pointer">
             <Avatar size={40} />
           </span>
@@ -77,7 +69,7 @@ export default function Post({ post, modalPost = false }: Props) {
         )}
       </header>
 
-      <div>
+      <Link href="/onepost">
         {post?.input && (
           <article
             className={clsx(
@@ -125,31 +117,34 @@ export default function Post({ post, modalPost = false }: Props) {
             />
           </button>
         )}
-      </div>
+      </Link>
 
       <div className="mx-4 my-1 border-t border-black/10	py-1 text-black/60 dark:border-gray-500">
         <button
           className={clsx(
-            " rounded-xl text-white hover:bg-gray-100/50",
+            "card-btn rounded-xl text-white ",
             liked && "text-blue-500"
           )}
           onClick={() => setLiked((p) => !p)}
         >
           {liked ? (
-            <AiOutlineHeart className="mui-icon mx-2 w-[20px] -scale-x-100 " />
+            <AiOutlineHeart className="mui-icon mx-4 -scale-x-100 first-line:w-[25px] " />
           ) : (
-            <AiTwotoneHeart className="mui-icon mx-2 w-[20px] -scale-x-100" />
+            <AiTwotoneHeart className="mui-icon mx-4 w-[25px] -scale-x-100" />
           )}
         </button>
+        <span className="text-white">10</span>
         <button
           onClick={() => setModalOpen2(false)}
-          className=" rounded-xl text-white hover:bg-gray-100/50"
+          className="card-btn rounded-xl text-white"
         >
-          <BiComment className="mui-icon mx-2 w-[18px] -scale-x-100" />
+          <BiComment className="mui-icon mx-4 w-[23px] -scale-x-100" />
         </button>
-        <button className="rounded-xl text-white hover:bg-gray-100/50">
-          <HiOutlineReply className="mui-icon mx-2 mr-1 w-[18px] -scale-x-100" />
+        <span className="text-white">10</span>
+        <button className="card-btn rounded-xl text-white">
+          <HiOutlineReply className="mui-icon mx-4 w-[23px] -scale-x-100" />
         </button>
+        <span className="text-white">10</span>
       </div>
       <div className=" ml-3 flex gap-3">
         <div>

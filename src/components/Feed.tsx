@@ -18,7 +18,7 @@ export default function Feed() {
   const [parent] = useAutoAnimate<HTMLDivElement>();
 
   return (
-    <div className="">
+    <div className="relative mt-28">
       <AddPost />
       <div className="my-2">
         <button className="flex w-full cursor-pointer items-center">

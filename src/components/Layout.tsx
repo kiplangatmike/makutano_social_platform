@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Header from "./Header";
-import Navbar from "./navbar";
+// import Navbar from "./navbar";
 import Modal from "./Modal";
 
 import Footer from "./Footer";
@@ -15,7 +15,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <title>Feed | Makutano</title>
       </Head>
       <Header />
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="px-4">
         <div className="mx-auto my-6 grid max-w-xl grid-cols-1 gap-5 md:max-w-3xl md:grid-cols-[7fr_17fr] lg:max-w-6xl lg:grid-cols-[5fr_12fr_7fr]">
           <Sidebar />

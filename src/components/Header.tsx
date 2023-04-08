@@ -76,10 +76,10 @@ export default function Header() {
           {/* <HeaderLink Icon={MdChat} feed>
             Messaging
           </HeaderLink> */}
-          <HeaderLink Icon={MdNotifications} feed link="/mynetwork">
+          <HeaderLink Icon={MdNotifications} feed link="/notification">
             Notifications
           </HeaderLink>
-          <HeaderLink feed avatar hidden link="/mynetwork">
+          <HeaderLink feed avatar hidden link="/profile">
             Me
           </HeaderLink>
           {/* <HeaderLink Icon={MdApps} feed hidden>
