@@ -1,22 +1,22 @@
-import type { AppProps } from 'next/app'
-import { useRef } from 'react'
-import Head from 'next/head'
-import { ThemeProvider } from 'next-themes'
-import { SessionProvider } from 'next-auth/react'
+import React from "react";
+import type { AppProps } from "next/app";
+import { useRef } from "react";
+import Head from "next/head";
+import { ThemeProvider } from "next-themes";
+import { SessionProvider } from "next-auth/react";
 import {
   Hydrate,
   QueryClient,
   QueryClientProvider,
-} from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-
-import '$styles/globals.css'
+} from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import "$styles/globals.css";
 
 export default function MyApp({
   Component,
   pageProps: { session, dehydratedState, ...pageProps },
 }: AppProps) {
-  const queryClient = useRef(new QueryClient())
+  const queryClient = useRef(new QueryClient());
 
   return (
     <>
@@ -36,9 +36,9 @@ export default function MyApp({
               <Component {...pageProps} />
             </ThemeProvider>
           </Hydrate>
-          {process.env.NODE_ENV !== 'production' && <ReactQueryDevtools />}
+          {process.env.NODE_ENV !== "production" && <ReactQueryDevtools />}
         </QueryClientProvider>
       </SessionProvider>
     </>
-  )
+  );
 }
