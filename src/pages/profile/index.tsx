@@ -85,19 +85,20 @@ function ProfileModal({ onClose }: { onClose: Function }) {
   };
 
   return (
-    <div className="top- absolute z-10">
-      <div className="relative">
+    <div className=" absolute z-10">
+      <div className="relative w-[200%]">
         <div
           onClick={onClose}
-          className=" absolute -right-7 -top-7 rounded-full bg-white p-2 text-black"
+          className="absolute -right-7 -top-7  rounded-full bg-white p-2 text-black"
         >
           <AiOutlineClose />
         </div>
-        <div className=" feed-card mx-auto overflow-visible rounded-3xl bg-white text-black">
+        <div className=" feed-card mx-auto w-full overflow-visible rounded-3xl bg-white text-black">
           <form className="p-2 " onSubmit={handleSubmit}>
-            <div className="flex flex-col">
+            <div className="flex flex-col p-3">
               <label>Full name</label>
               <input
+                className="mt-1 rounded-xl py-2 pl-3"
                 title="text"
                 placeholder="enter full name"
                 value={formData.fullName}
@@ -105,35 +106,53 @@ function ProfileModal({ onClose }: { onClose: Function }) {
               ></input>
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col p-3">
               <label>Email</label>
               <input
+                className="mt-1 rounded-xl py-2 pl-3"
                 title="text"
                 placeholder="enter your email"
                 value={formData.email}
                 onChange={handleChange}
               ></input>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col p-3">
               <label>University attended/attend</label>
               <input
+                className="mt-1 rounded-xl py-2 pl-3"
                 title="text"
-                placeholder="enter full name"
+                placeholder="enter full name "
                 value={formData.university}
                 onChange={handleChange}
               ></input>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col p-3">
               <label>High School attended/attend</label>
               <input
+                className="mt-1 rounded-xl py-2 pl-3"
                 title="text"
                 placeholder="high school name"
                 value={formData.highSchool}
                 onChange={handleChange}
               ></input>
             </div>
-            <div>
-              <button type="submit">Update</button>
+            <div className="flex flex-col p-3">
+              <label>Short Description About You</label>
+              <input
+                className="mt-1 rounded-xl py-2 pl-3"
+                title="text"
+                placeholder="high school name"
+                value={formData.highSchool}
+                onChange={handleChange}
+              ></input>
+            </div>
+            <div className="text-center">
+              <button
+                className="rounded-xl bg-amber-800 px-4 py-1 "
+                type="submit"
+              >
+                Update
+              </button>
             </div>
           </form>
         </div>
