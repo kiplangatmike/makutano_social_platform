@@ -10,7 +10,6 @@ export default withAuthApi(async ({ method, body }, res, session) => {
         include: {
           author: {
             select: {
-              email: true,
               id: true,
               image: true,
               name: true,
@@ -46,7 +45,6 @@ export default withAuthApi(async ({ method, body }, res, session) => {
           include: {
             author: {
               select: {
-                email: true,
                 id: true,
                 image: true,
                 name: true,

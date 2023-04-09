@@ -6,6 +6,8 @@ import { ThemeProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import { Provider } from "react-redux";
 import { makeStore } from "$services/store";
+import { ToastContainer, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Hydrate,
   QueryClient,
@@ -36,6 +38,18 @@ export default function MyApp({
           <QueryClientProvider client={queryClient.current}>
             <Hydrate state={dehydratedState}>
               <ThemeProvider attribute="class">
+                <ToastContainer
+                  position="top-center"
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  transition={Slide}
+                  className={"toast-styles"}
+                />
                 <Component {...pageProps} />
               </ThemeProvider>
             </Hydrate>
