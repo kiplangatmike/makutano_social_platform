@@ -6,7 +6,7 @@ export default function Comments() {
     ["Mercy Nyamusi", "That's good"],
   ];
   return (
-    <div className="feed-card mt-2 rounded-3xl p-4">
+    <div className="feed-card mt-4 rounded-3xl p-4">
       <div>
         {comment.map((items, index) => (
           <div key={index} className="flex items-center gap-2 p-2">

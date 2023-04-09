@@ -69,7 +69,7 @@ export default function Post({ post, modalPost = false }: Props) {
         )}
       </header>
 
-      <Link href="/onepost">
+      <Link href={`/onepost/${post}`}>
         {post?.input && (
           <article
             className={clsx(
