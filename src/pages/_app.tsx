@@ -4,6 +4,8 @@ import { useRef } from "react";
 import Head from "next/head";
 import { ThemeProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
+import { Provider } from "react-redux";
+import { makeStore } from "$services/store";
 import {
   Hydrate,
   QueryClient,
@@ -30,14 +32,16 @@ export default function MyApp({
       </Head>
 
       <SessionProvider session={session}>
-        <QueryClientProvider client={queryClient.current}>
-          <Hydrate state={dehydratedState}>
-            <ThemeProvider attribute="class">
-              <Component {...pageProps} />
-            </ThemeProvider>
-          </Hydrate>
-          {process.env.NODE_ENV !== "production" && <ReactQueryDevtools />}
-        </QueryClientProvider>
+        <Provider store={makeStore}>
+          <QueryClientProvider client={queryClient.current}>
+            <Hydrate state={dehydratedState}>
+              <ThemeProvider attribute="class">
+                <Component {...pageProps} />
+              </ThemeProvider>
+            </Hydrate>
+            {process.env.NODE_ENV !== "production" && <ReactQueryDevtools />}
+          </QueryClientProvider>
+        </Provider>
       </SessionProvider>
     </>
   );

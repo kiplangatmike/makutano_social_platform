@@ -17,12 +17,11 @@ export default function Layout({ children }: { children: ReactNode }) {
       <Header />
       {/* <Navbar /> */}
       <div className="px-4">
-        <div className="mx-auto my-6 grid max-w-xl grid-cols-1 gap-5 md:max-w-3xl md:grid-cols-[7fr_17fr] lg:max-w-6xl lg:grid-cols-[5fr_12fr_7fr]">
+        <div className="mx-auto my-6">
           <Sidebar />
           {children}
-          <aside className="block md:hidden lg:block">
+          <aside className="fixed right-4 top-20 mt-0 block w-[325px] h-[80vh] overflow-y-auto md:hidden lg:block">
             <Widgets />
-            <Footer />
           </aside>
         </div>
       </div>

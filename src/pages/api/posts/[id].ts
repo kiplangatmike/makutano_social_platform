@@ -9,7 +9,7 @@ export default withAuthApi(async ({ method, body, query }, res) => {
     if (method === 'GET') {
       try {
         const post = await prisma.post.findUnique({
-          where: { id: +id },
+          where: { id: id },
           include: {
             author: {
               select: {
@@ -30,10 +30,16 @@ export default withAuthApi(async ({ method, body, query }, res) => {
 
     if (method === 'PATCH') {
       try {
-        const photoUrl = z.string().url().parse(body.photoUrl)
+        const { input, media } = z
+          .object({
+            input: z.string().min(1).trim().optional(),
+            media: z.array(z.string().url()).optional(),
+          })
+          .parse(body)
+
         const post = await prisma.post.update({
-          where: { id: +id },
-          data: { photoUrl },
+          where: { id: id },
+          data: { input, media },
           include: {
             author: {
               select: {
@@ -55,7 +61,7 @@ export default withAuthApi(async ({ method, body, query }, res) => {
 
     if (method === 'DELETE') {
       try {
-        const post = await prisma.post.delete({ where: { id: +id } })
+        const post = await prisma.post.delete({ where: { id: id } })
         return res.status(200).json(post)
       } catch (error) {
         return res.status(500).json(error)

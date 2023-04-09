@@ -5,7 +5,7 @@ import React from "react";
 const Network = () => {
   return (
     <Layout>
-      <div className="feed-card flex h-[100vh] flex-col items-center rounded-3xl">
+      <div className="feed-card mx-auto flex w-[600px] flex-col items-center rounded-3xl pb-8">
         <h1 className="my-2 text-2xl font-bold">My Network</h1>
         <div className="w-[93%]">
           <input
@@ -21,7 +21,7 @@ const Network = () => {
                 <p className="text-gray-500">@Liplan</p>
               </div>
               <button className="rounded-2xl bg-blue-600 px-4 py-2 font-bold text-white hover:bg-blue-700">
-                Follow
+                Unfollow
               </button>
             </div>
             <div className="flex items-center space-x-4">
@@ -31,7 +31,7 @@ const Network = () => {
                 <p className="text-gray-500">@Mercy</p>
               </div>
               <button className="rounded-2xl bg-blue-600 px-4 py-2 font-bold text-white hover:bg-blue-700">
-                Follow
+                Unfollow
               </button>
             </div>
           </div>

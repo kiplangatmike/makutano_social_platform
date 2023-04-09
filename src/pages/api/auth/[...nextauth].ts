@@ -4,6 +4,7 @@ import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { prisma } from '$lib/config/prisma'
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -14,11 +15,6 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     }),
   ],
-
-  pages: {
-    signIn: '/auth/signin',
-  },
-
   session: {
     strategy: 'jwt',
   },
