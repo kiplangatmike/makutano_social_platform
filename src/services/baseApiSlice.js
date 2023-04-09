@@ -22,9 +22,9 @@ export const baseApiSlice = createApi({
       }),
     }),
     editPost: builder.mutation({
-      query: (id, body) => ({
+      query: ({ id, body }) => ({
         url: `/posts/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body,
       }),
     }),
@@ -35,13 +35,13 @@ export const baseApiSlice = createApi({
       }),
     }),
     likePost: builder.mutation({
-      query: (userId, postId) => ({
+      query: ({ userId, postId }) => ({
         url: `/posts/interactions/like?id=${postId}&userId=${userId}`,
         method: "POST",
       }),
     }),
     unlikePost: builder.mutation({
-      query: (userId, postId) => ({
+      query: ({ userId, postId }) => ({
         url: `/posts/interactions/unlike?id=${postId}&userId=${userId}`,
         method: "POST",
       }),
@@ -60,9 +60,15 @@ export const baseApiSlice = createApi({
     }),
     commentPost: builder.mutation({
       query: (body) => ({
-        url: `/posts/interactions/comment?id=${body.postId}&userId=${body.userId}`,
+        url: `/posts/interactions/comment`,
         method: "POST",
         body,
+      }),
+    }),
+    getCommentsCount: builder.query({
+      query: (id) => ({
+        url: `/posts/interactions/comment?id=${id}`,
+        method: "GET",
       }),
     }),
   }),
@@ -78,4 +84,5 @@ export const {
   useGetPostsQuery,
   useGetPostsByUserIdQuery,
   useCommentPostMutation,
+  useGetCommentsCountQuery,
 } = baseApiSlice;

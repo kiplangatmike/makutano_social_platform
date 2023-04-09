@@ -11,6 +11,8 @@ import { useSession } from "next-auth/react";
 import { type SubmitHandler, useForm, ChangeHandler } from "react-hook-form";
 import { useSetAtom } from "jotai";
 import { useQueryClient } from "@tanstack/react-query";
+import { useAtom, useAtomValue } from "jotai";
+import { modalPostState, modalTypeState } from "$lib/atoms";
 import {
   MdArticle,
   MdBarChart,
@@ -26,11 +28,25 @@ import { TiStarburst } from "react-icons/ti";
 import Avatar from "$components/Avatar";
 import { modalState } from "$lib/atoms";
 
-import { useCreatePostMutation } from "$services/baseApiSlice";
+import {
+  useCreatePostMutation,
+  useEditPostMutation,
+} from "$services/baseApiSlice";
 import { uploadOne } from "$lib/utils/uploader";
+import toaster from "$lib/utils/toaster";
 
 export default function AddPostForm() {
   const [images, setImages] = useState<File[]>([]);
+
+  const post = useAtomValue(modalPostState);
+
+  useEffect(() => {
+    if (post) {
+      reset({
+        input: post.input,
+      });
+    }
+  }, [post]);
 
   const queryClient = useQueryClient();
   const setModalOpen = useSetAtom(modalState);
@@ -48,6 +64,7 @@ export default function AddPostForm() {
   const { isSubmitting } = formState;
 
   const [createPost] = useCreatePostMutation();
+  const [editPost] = useEditPostMutation();
 
   const uploadMedia = async (files: File[]) => {
     //  upload files, use async method - uploadOne
@@ -84,16 +101,80 @@ export default function AddPostForm() {
             payload,
             ...(old ?? []),
           ]);
+          toaster({
+            status: "success",
+            message: "Post created successfully",
+          });
         })
         .catch((error) => {
           console.log(error);
+          toaster({
+            status: "error",
+            // @ts-ignore
+            message: error ?? "Error while creating post. Try again later.",
+          });
         });
 
       reset();
       setModalOpen(false);
     } catch (error) {
       console.error(error);
-      alert(error);
+      toaster({
+        status: "error",
+        // @ts-ignore
+        message: error ?? "Error while creating post. Try again later.",
+      });
+    }
+  };
+
+  const onEditPost = async (data: { input: string }) => {
+    if (!session?.user?.uid) return;
+    try {
+      const body = {
+        input: data.input.trim(),
+      };
+
+      const id = post?.id;
+
+      await editPost({ id, body })
+        .unwrap()
+        .then((payload) => {
+          // upload images
+          if (images.length > 0) {
+            uploadMedia(images).then((res) => {
+              axios.patch(`/api/posts/${payload.id}`, {
+                media: res,
+              });
+            });
+          }
+          toaster({
+            status: "success",
+            message: "Post edited successfully",
+          });
+          // update feed
+          queryClient.setQueryData<Post[]>(["posts"], (old) => [
+            payload,
+            ...(old ?? []),
+          ]);
+        })
+        .catch((error) => {
+          console.log(error);
+          toaster({
+            status: "error",
+            // @ts-ignore
+            message: error ?? "Error while editing post. Try again later.",
+          });
+        });
+
+      reset();
+      setModalOpen(false);
+    } catch (error) {
+      console.error(error);
+      toaster({
+        status: "error",
+        // @ts-ignore
+        message: error ?? "Error while editing post. Try again later.",
+      });
     }
   };
 
@@ -105,7 +186,7 @@ export default function AddPostForm() {
     <div className="overflow-auto">
       <form
         className="t-primary flex h-full flex-col justify-between"
-        onSubmit={handleSubmit(onCreatePost)}
+        onSubmit={handleSubmit(post ? onEditPost : onCreatePost)}
       >
         <div className="flex-grow overflow-y-auto">
           <div className="flex items-center space-x-2 px-4 pt-3">
@@ -182,7 +263,7 @@ export default function AddPostForm() {
               type="submit"
               disabled={!watch("input")?.trim() || isSubmitting}
             >
-              Post
+              {post ? "Edit post" : "Post"}
             </button>
           </div>
         </footer>
