@@ -54,11 +54,36 @@ export default function Profile() {
   );
 }
 
-function ProfileModal({ onClose }: { onClose: string }) {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [university, setUniversity] = useState("");
-  const [highSchool, sethighSchool] = useState("");
+function ProfileModal({ onClose }: { onClose: Function }) {
+  type FormData = {
+    fullName: string;
+
+    email: string;
+    university: string;
+    highSchool: string;
+  };
+
+  const [formData, setFormData] = useState<FormData>({
+    fullName: "",
+    email: "",
+    university: "",
+    highSchool: "",
+  });
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(formData);
+    // Handle form submission logic here
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
   return (
     <div className="top- absolute z-10">
       <div className="relative">
@@ -69,13 +94,14 @@ function ProfileModal({ onClose }: { onClose: string }) {
           <AiOutlineClose />
         </div>
         <div className=" feed-card mx-auto overflow-visible rounded-3xl bg-white text-black">
-          <form className="p-2 ">
+          <form className="p-2 " onSubmit={handleSubmit}>
             <div className="flex flex-col">
               <label>Full name</label>
               <input
                 title="text"
                 placeholder="enter full name"
-                value={fullName}
+                value={formData.fullName}
+                onChange={handleChange}
               ></input>
             </div>
 
@@ -84,7 +110,8 @@ function ProfileModal({ onClose }: { onClose: string }) {
               <input
                 title="text"
                 placeholder="enter your email"
-                value={email}
+                value={formData.email}
+                onChange={handleChange}
               ></input>
             </div>
             <div className="flex flex-col">
@@ -92,7 +119,8 @@ function ProfileModal({ onClose }: { onClose: string }) {
               <input
                 title="text"
                 placeholder="enter full name"
-                value={university}
+                value={formData.university}
+                onChange={handleChange}
               ></input>
             </div>
             <div className="flex flex-col">
@@ -100,11 +128,12 @@ function ProfileModal({ onClose }: { onClose: string }) {
               <input
                 title="text"
                 placeholder="high school name"
-                value={highSchool}
+                value={formData.highSchool}
+                onChange={handleChange}
               ></input>
             </div>
             <div>
-              <button>Update</button>
+              <button type="submit">Update</button>
             </div>
           </form>
         </div>
