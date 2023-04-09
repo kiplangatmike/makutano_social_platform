@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 import { Fragment, type ReactNode, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -29,6 +31,7 @@ import {
   useUnlikePostMutation,
 } from "$services/baseApiSlice";
 import { Post } from "$lib/types";
+import toaster from "$lib/utils/toaster";
 
 export default function OnePost({ post, modalPost = false }: Props) {
   const [liked, setLiked] = useState(false);
@@ -62,6 +65,10 @@ export default function OnePost({ post, modalPost = false }: Props) {
       })
       .catch((error) => {
         console.log(error);
+        toaster({
+          status: "error",
+          message: error?.message ?? "Error while liking. Try again later",
+        });
       });
   };
 
@@ -79,6 +86,10 @@ export default function OnePost({ post, modalPost = false }: Props) {
       })
       .catch((error) => {
         console.log(error);
+        toaster({
+          status: "error",
+          message: error?.message ?? "Error while unliking. Try again later",
+        });
       });
   };
 
@@ -106,9 +117,17 @@ export default function OnePost({ post, modalPost = false }: Props) {
       .then(() => {
         console.log("commented");
         setComment("");
+        toaster({
+          status: "success",
+          message: "Comment posted!",
+        });
       })
       .catch((error) => {
         console.log(error);
+        toaster({
+          status: "error",
+          message: error?.message ?? "Error while commenting. Try again later",
+        });
       });
   };
 
@@ -122,6 +141,10 @@ export default function OnePost({ post, modalPost = false }: Props) {
       await navigator.share(shareData);
     } catch (err) {
       navigator.clipboard.writeText(window.location.href);
+      toaster({
+        status: "success",
+        message: "Copied to clipboard",
+      });
     }
   };
 
@@ -201,26 +224,6 @@ export default function OnePost({ post, modalPost = false }: Props) {
                 </button>
               )}
           </article>
-        )}
-
-        {localPostContent?.photoUrl && !modalPost && (
-          <button
-            onClick={() => {
-              setModalOpen(true);
-              setModalType("gifYouUp");
-              setModalPost(localPostContent);
-            }}
-            className="my-4 block w-full"
-          >
-            <Image
-              src={localPostContent.photoUrl}
-              alt={localPostContent.input}
-              width={556}
-              height={556}
-              priority
-              className="max-h-[556px] object-contain"
-            />
-          </button>
         )}
       </Link>
 
@@ -311,8 +314,16 @@ const PostMenu = ({ post }: { post: Props["post"] }) => {
   const client = useQueryClient();
 
   const { data: session } = useSession();
-  const setModalOpen = useSetAtom(modalState);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const setModalOpen = useSetAtom(modalState);
+  const setModalType = useSetAtom(modalTypeState);
+  const setModalPost = useSetAtom(modalPostState);
+
+  const openModal = useCallback(() => {
+    setModalOpen(true);
+    setModalType("dropIn");
+  }, [setModalOpen, setModalType]);
 
   const [deletePost] = useDeletePostMutation();
 
@@ -331,6 +342,11 @@ const PostMenu = ({ post }: { post: Props["post"] }) => {
       })
       .catch((error) => {
         console.log(error);
+        toaster({
+          status: "error",
+          message:
+            error?.message ?? "Error while deleting post. Try again later.",
+        });
       });
   };
 
@@ -350,7 +366,16 @@ const PostMenu = ({ post }: { post: Props["post"] }) => {
         leaveTo="scale-90 opacity-0"
       >
         <Menu.Items className="absolute right-0 top-10 z-40 flex w-48 origin-top-right flex-col items-stretch rounded-lg rounded-tr-none border bg-white py-1 shadow-lg outline-offset-2 dark:border-gray-500 dark:bg-dblue">
-          <MenuButton Icon={MdEdit}>Edit post</MenuButton>
+          <MenuButton
+            onClick={() => {
+              setModalOpen(true);
+              setModalType("dropIn");
+              setModalPost(post);
+            }}
+            Icon={MdEdit}
+          >
+            Edit post
+          </MenuButton>
           <MenuButton
             onClick={() => onDeletePost(post.id)}
             Icon={MdDelete}

@@ -22,9 +22,9 @@ export const baseApiSlice = createApi({
       }),
     }),
     editPost: builder.mutation({
-      query: (id, body) => ({
+      query: ({ id, body }) => ({
         url: `/posts/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body,
       }),
     }),

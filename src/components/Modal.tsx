@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Dialog } from '@headlessui/react'
-import { MdClose } from 'react-icons/md'
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { AnimatePresence, motion } from "framer-motion";
+import { Dialog } from "@headlessui/react";
+import { MdClose } from "react-icons/md";
 
-import AddPostForm from '$components/AddPostForm'
-import Post from '$components/Post'
-import { modalPostState, modalState, modalTypeState } from '$lib/atoms'
+import AddPostForm from "$components/AddPostForm";
+import Post from "$components/Post";
+import { modalPostState, modalState, modalTypeState } from "$lib/atoms";
 
 export default function Modal() {
-  const [isClient, setIsClient] = useState(false)
-  const [isOpen, setIsOpen] = useAtom(modalState)
-  const modalType = useAtomValue(modalTypeState)
-  const post = useAtomValue(modalPostState)
+  const [isClient, setIsClient] = useState(false);
+  const [isOpen, setIsOpen] = useAtom(modalState);
+  const modalType = useAtomValue(modalTypeState);
+  const post = useAtomValue(modalPostState);
 
-  useEffect(() => setIsClient(true), [])
+  useEffect(() => setIsClient(true), []);
 
-  if (!isClient) return null
+  if (!isClient) return null;
 
   return (
     <AnimatePresence mode="wait">
@@ -37,7 +37,7 @@ export default function Modal() {
             exit={{ opacity: 0 }}
           />
 
-          {modalType === 'dropIn' && (
+          {modalType === "dropIn" && (
             <motion.div
               // position: relative to bring the modal to front
               className="t-primary relative mx-auto flex max-h-[80vh] w-full max-w-xl flex-col justify-center overflow-y-hidden rounded-xl bg-white dark:bg-dblue"
@@ -57,76 +57,49 @@ export default function Modal() {
               <AddPostForm />
             </motion.div>
           )}
-
-          {modalType == 'gifYouUp' && (
-            <motion.div
-              variants={gifYouUp}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="relative mx-auto flex h-screen max-h-[70vh] w-full max-w-6xl rounded-lg"
-            >
-              <Dialog.Title className="sr-only">View post</Dialog.Title>
-              <Dialog.Description className="sr-only">
-                View a post
-              </Dialog.Description>
-              {/* left panel */}
-              <div className="relative h-full flex-grow rounded-l-lg bg-dblue">
-                {post?.photoUrl && (
-                  <Image
-                    src={post?.photoUrl}
-                    alt={post.input}
-                    fill
-                    className="object-contain"
-                  />
-                )}
-              </div>
-
-              {/* Right panel */}
-              <div className="w-1/3 rounded-r-lg bg-white dark:border-l-[0.5px] dark:border-gray-500 dark:bg-dblue">
-                <Post post={post!} modalPost />
-              </div>
-            </motion.div>
-          )}
         </Dialog>
       )}
     </AnimatePresence>
-  )
+  );
 }
 
 const CloseButton = () => {
-  const setIsOpen = useSetAtom(modalState)
+  const setIsOpen = useSetAtom(modalState);
+  const setPost = useSetAtom(modalPostState);
 
   return (
     <button
-      onClick={() => setIsOpen(false)}
+      onClick={() => {
+        setPost(null);
+        setIsOpen(false);
+      }}
       className="card-btn rounded-full p-2"
     >
       <MdClose className="t-secondary h-7 w-7" />
     </button>
-  )
-}
+  );
+};
 
 const dropIn = {
   hidden: {
-    y: '-100vh',
+    y: "-100vh",
     opacity: 0,
   },
   visible: {
-    y: '0',
+    y: "0",
     opacity: 1,
     transition: {
       duration: 0.1,
-      type: 'spring',
+      type: "spring",
       damping: 25,
       stiffness: 500,
     },
   },
   exit: {
-    y: '100vh',
+    y: "100vh",
     opacity: 0,
   },
-}
+};
 
 const gifYouUp = {
   hidden: {
@@ -138,7 +111,7 @@ const gifYouUp = {
     scale: 1,
     transition: {
       duration: 0.2,
-      ease: 'easeIn',
+      ease: "easeIn",
     },
   },
   exit: {
@@ -146,7 +119,7 @@ const gifYouUp = {
     scale: 0,
     transition: {
       duration: 0.15,
-      ease: 'easeOut',
+      ease: "easeOut",
     },
   },
-}
+};
