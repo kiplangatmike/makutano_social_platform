@@ -21,7 +21,7 @@ export type Post = PrismaPost & {
 
 export type AddPostFormValues = {
   input: string
-  image: FileList
+  image: File[]
 }
 
 export type AsyncReturnType<T extends (...args: any) => Promise<any>> =

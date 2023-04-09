@@ -63,28 +63,22 @@ export default function Header() {
         </div>
 
         {/* Right */}
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center gap-2 space-x-6 py-1">
           <HeaderLink Icon={TbBrandGoogleHome} feed active link="/feed">
             Home
           </HeaderLink>
-          <HeaderLink Icon={SlPeople} feed active link="/mynetwork">
+          <HeaderLink Icon={SlPeople} feed link="/mynetwork">
             My Network
           </HeaderLink>
-          <HeaderLink Icon={MdBusinessCenter} feed hidden link="/mynetwork">
+          <HeaderLink Icon={MdBusinessCenter} feed hidden link="/network">
             Opportunities
           </HeaderLink>
-          {/* <HeaderLink Icon={MdChat} feed>
-            Messaging
-          </HeaderLink> */}
           <HeaderLink Icon={MdNotifications} feed link="/notification">
             Notifications
           </HeaderLink>
-          <HeaderLink feed avatar hidden link="/profile">
+          <HeaderLink feed avatar hidden link="/profile/12">
             Me
           </HeaderLink>
-          {/* <HeaderLink Icon={MdApps} feed hidden>
-            Work
-          </HeaderLink> */}
 
           {/* Dark mode toggle */}
           {mounted && (

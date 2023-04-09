@@ -4,7 +4,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Image from "next/image";
 import { fetchPosts } from "$lib/utils";
 import AddPost from "$components/AddPost";
-import Post from "$components/Post";
+import OnePost from "$components/Post";
 
 export default function Feed() {
   const {
@@ -18,24 +18,25 @@ export default function Feed() {
   const [parent] = useAutoAnimate<HTMLDivElement>();
 
   return (
-    <div className="relative mt-28">
-      <AddPost />
-      <div className="my-2">
-        <button className="flex w-full cursor-pointer items-center">
-          <hr className="mr-2 h-[1px] flex-grow border-t border-black/10 bg-black/10 dark:border-gray-500 dark:bg-gray-500" />
-          <div className="flex items-center">
-            <span className="t-secondary text-xs">Sort by</span>
-            <span className="mx-1 text-xs font-semibold">Top</span>
-            <MdArrowDropDown size={20} className="-ml-1" />
-          </div>
-        </button>
-      </div>
+    <div className="relative mx-auto mt-0 w-full pb-6 xl:w-[40vw] 2xl:w-[50vw]">
+      {posts && posts?.length > 0 && (
+        <div className="my-2">
+          <button className="flex w-full cursor-pointer items-center">
+            <hr className="mr-2 h-[1px] flex-grow border-t border-black/10 bg-black/10 dark:border-gray-500 dark:bg-gray-500" />
+            <div className="flex items-center">
+              <span className="t-secondary text-xs">Sort by</span>
+              <span className="mx-1 text-xs font-semibold">Top</span>
+              <MdArrowDropDown size={20} className="-ml-1" />
+            </div>
+          </button>
+        </div>
+      )}
       <div ref={parent} className="space-y-4">
         {isLoading && <p>loading...</p>}
         {isError && error instanceof Error && <p>Error: {error?.message}</p>}
-
+        {posts?.length === 0 && <p>No posts found</p>}
         {posts?.map((p) => (
-          <Post key={p.id} post={p} />
+          <OnePost key={p.id} post={p} />
         ))}
       </div>
     </div>

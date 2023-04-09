@@ -1,4 +1,3 @@
-import type { Post } from "$lib/types";
 import { Fragment, type ReactNode, useState, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -22,14 +21,19 @@ import {
 } from "$lib/atoms";
 import Avatar from "$components/Avatar";
 import { IconType } from "react-icons";
+import axios from "axios";
+import { useDeletePostMutation } from "$services/baseApiSlice";
+import { Post } from "$lib/types";
 
-export default function Post({ post, modalPost = false }: Props) {
+export default function OnePost({ post, modalPost = false }: Props) {
   const [liked, setLiked] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const setModalOpen = useSetAtom(modalState);
   const setModalOpen2 = useSetAtom(modalState2);
   const setModalType = useSetAtom(modalTypeState);
   const setModalPost = useSetAtom(modalPostState);
+
+  const { data: session } = useSession();
 
   return (
     <div
@@ -41,7 +45,7 @@ export default function Post({ post, modalPost = false }: Props) {
       <header className="mb-2 flex flex-nowrap items-center justify-between px-4 pt-3">
         <Link href="/profile" className="flex items-center">
           <span className="flex cursor-pointer">
-            <Avatar size={40} />
+            <Avatar src={post?.author?.image as string} size={40} />
           </span>
           <div className="ml-2 flex-grow leading-5">
             <p className="t-link dark:t-white hover:t-blue dark:hover:t-blue-light font-semibold text-black/90">
@@ -59,34 +63,40 @@ export default function Post({ post, modalPost = false }: Props) {
 
         {modalPost ? (
           <button
-            onClick={() => setModalOpen(false)}
+            onClick={() => {
+              if (post.authorId === session?.user?.uid) {
+                setModalOpen(false);
+              }
+            }}
             className="card-btn -mt-2 self-start rounded-xl p-1"
           >
             <MdClose className="mui-icon" />
           </button>
-        ) : (
+        ) : session?.user?.uid === post?.authorId ? (
           <PostMenu post={post} />
-        )}
+        ) : null}
       </header>
 
-      <Link href="/onepost">
+      <Link href={`/feed/${post?.id}`}>
         {post?.input && (
           <article
             className={clsx(
-              "relative mx-4 mb-2  overflow-hidden break-words text-sm leading-5",
+              "relative mx-4 mb-2 overflow-hidden break-words text-sm leading-5",
               showAll && "max-h-[none]",
               modalPost && "max-h-72 overflow-y-auto"
             )}
           >
-            <p className="">{post?.input}</p>
-            <div className="my-1 overflow-hidden rounded-xl">
-              <Image
-                src="https://images.unsplash.com/photo-1680178441861-c9539e92434f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1216&q=80"
-                width={550}
-                height={280}
-                alt=""
-              ></Image>
-            </div>
+            <p className="mb-4">{post?.input}</p>
+            {post?.media?.length > 0 && (
+              <div className="relative my-1 h-[200px] w-full overflow-hidden rounded-xl">
+                <Image
+                  src={post?.media[0]}
+                  fill
+                  alt=""
+                  className="object-contain"
+                ></Image>
+              </div>
+            )}
             {!modalPost && !showAll && post?.input?.length > 220 && (
               <button
                 onClick={() => setShowAll(true)}
@@ -119,7 +129,7 @@ export default function Post({ post, modalPost = false }: Props) {
         )}
       </Link>
 
-      <div className="mx-4 my-1 border-t border-black/10	py-1 text-black/60 dark:border-gray-500">
+      <div className="my-1 flex w-full justify-between gap-3 border-t border-black/10 px-4	py-3 text-black/60 dark:border-gray-500">
         <button
           className={clsx(
             "card-btn rounded-xl text-white ",
@@ -128,48 +138,49 @@ export default function Post({ post, modalPost = false }: Props) {
           onClick={() => setLiked((p) => !p)}
         >
           {liked ? (
-            <AiOutlineHeart className="mui-icon mx-4 -scale-x-100 first-line:w-[25px] " />
+            <AiOutlineHeart className="mui-icon -scale-x-100 first-line:w-[25px] " />
           ) : (
-            <AiTwotoneHeart className="mui-icon mx-4 w-[25px] -scale-x-100" />
+            <AiTwotoneHeart className="mui-icon w-[25px] -scale-x-100" />
           )}
+          <span className="ml-1 text-white">10</span>
         </button>
-        <span className="text-white">10</span>
+
         <button
           onClick={() => setModalOpen2(false)}
           className="card-btn rounded-xl text-white"
         >
-          <BiComment className="mui-icon mx-4 w-[23px] -scale-x-100" />
+          <BiComment className="mui-icon w-[23px] -scale-x-100" />
+          <span className="ml-1 text-white">10</span>
         </button>
-        <span className="text-white">10</span>
+
         <button className="card-btn rounded-xl text-white">
-          <HiOutlineReply className="mui-icon mx-4 w-[23px] -scale-x-100" />
+          <HiOutlineReply className="mui-icon w-[23px] -scale-x-100" />
         </button>
-        <span className="text-white">10</span>
       </div>
-      <div className=" ml-3 flex gap-3">
+      <div className=" mb-3 ml-3 flex items-center gap-3">
         <div>
           <Avatar size={30} />
         </div>
-        <div className="relative mb-2 mr-4 grow rounded-3xl">
+        <div className="relative mr-4 grow rounded-3xl">
           <form className="mr-0">
             <input
-              className=" block h-8 w-full overflow-hidden rounded-3xl px-4 outline-none"
+              className=" block h-12 w-full overflow-hidden rounded-3xl px-4 outline-none"
               placeholder="Leave a comment"
             />
           </form>
-          <button className="absolute right-4 top-1 text-gray-400">
+          <button className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="h-6 w-6"
+              className="h-8 w-8"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
               />
             </svg>
           </button>
@@ -191,9 +202,25 @@ const PostMenu = ({ post }: { post: Props["post"] }) => {
   const setModalOpen = useSetAtom(modalState);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const onDeletePost = useCallback(async () => {
-    console.log("results");
-  }, []);
+  const [deletePost] = useDeletePostMutation();
+
+  const queryClient = useQueryClient();
+
+  const onDeletePost = async (id: string) => {
+    await deletePost(id)
+      .unwrap()
+      .then(() => {
+        // remove post from cache
+        queryClient.setQueryData(["posts"], (oldData) => {
+          console.log(oldData);
+          // @ts-ignore
+          return oldData?.filter((p: Post) => p.id !== id);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <Menu as="div" className="relative">
@@ -213,7 +240,7 @@ const PostMenu = ({ post }: { post: Props["post"] }) => {
         <Menu.Items className="absolute right-0 top-10 z-40 flex w-48 origin-top-right flex-col items-stretch rounded-lg rounded-tr-none border bg-white py-1 shadow-lg outline-offset-2 dark:border-gray-500 dark:bg-dblue">
           <MenuButton Icon={MdEdit}>Edit post</MenuButton>
           <MenuButton
-            onClick={onDeletePost}
+            onClick={() => onDeletePost(post.id)}
             Icon={MdDelete}
             disabled={isDeleting}
           >

@@ -26,7 +26,12 @@ import { TiStarburst } from "react-icons/ti";
 import Avatar from "$components/Avatar";
 import { modalState } from "$lib/atoms";
 
+import { useCreatePostMutation } from "$services/baseApiSlice";
+import { uploadOne } from "$lib/utils/uploader";
+
 export default function AddPostForm() {
+  const [images, setImages] = useState<File[]>([]);
+
   const queryClient = useQueryClient();
   const setModalOpen = useSetAtom(modalState);
   const [dataUrl, setDataUrl] = useState("");
@@ -42,45 +47,54 @@ export default function AddPostForm() {
   } = useForm<AddPostFormValues>();
   const { isSubmitting } = formState;
 
-  const onCreatePost: SubmitHandler<AddPostFormValues> = useCallback(
-    async (data) => {
-      if (!session?.user?.uid) return;
-      try {
-        let newPost: any;
-        const { data: res } = await axios.post("/api/posts", {
-          input: data.input.trim(),
-        });
-        newPost = res;
+  const [createPost] = useCreatePostMutation();
 
-        if (data.image[0]) {
-          const { data: post } = await axios.patch(`/api/posts/${res.id}`, {
-            photoUrl: "",
-          });
-          newPost = post;
-        }
-        reset();
-        setModalOpen(false);
-        queryClient.setQueryData<Post[]>(["posts"], (old) => [
-          newPost,
-          ...(old ?? []),
-        ]);
-      } catch (error) {
-        console.error(error);
-        alert(error);
-      }
-    },
-    [queryClient, reset, session?.user?.uid, setModalOpen]
-  );
+  const uploadMedia = async (files: File[]) => {
+    //  upload files, use async method - uploadOne
+    const responses = await Promise.all(
+      files.map((file: File) => uploadOne(file))
+    ).catch((error) => {
+      console.log(error);
+    });
 
-  const onSelectImage: ChangeHandler = async (e) => {
-    const f = e.target.files?.[0];
-    if (f) {
-      const reader = new FileReader();
-      reader.readAsDataURL(f);
-      reader.onload = (ev) => {
-        setDataUrl(ev.target?.result as string);
+    return responses;
+  };
+
+  const onCreatePost = async (data: { input: string }) => {
+    if (!session?.user?.uid) return;
+    try {
+      const body = {
+        input: data.input.trim(),
       };
-    } else setDataUrl("");
+
+      await createPost(body)
+        .unwrap()
+        .then((payload) => {
+          // upload images
+          if (images.length > 0) {
+            uploadMedia(images).then((res) => {
+              axios.patch(`/api/posts/${payload.id}`, {
+                media: res,
+              });
+            });
+          }
+
+          // update feed
+          queryClient.setQueryData<Post[]>(["posts"], (old) => [
+            payload,
+            ...(old ?? []),
+          ]);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      reset();
+      setModalOpen(false);
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
   };
 
   useEffect(() => {
@@ -118,7 +132,7 @@ export default function AddPostForm() {
             />
           </label>
 
-          {dataUrl && (
+          {images && (
             <div className="relative mx-6 my-3">
               <ClearImageButton
                 onClick={(e) => {
@@ -127,36 +141,31 @@ export default function AddPostForm() {
                   setDataUrl("");
                 }}
               />
-              <Image
+              {/* <Image
                 src={dataUrl}
                 alt="Uploaded image"
                 width={576}
                 height={576}
                 className="max-h-96 rounded-lg object-contain"
-              />
+              /> */}
+              <p>{images.length}</p>
             </div>
           )}
         </div>
 
         <footer className="sticky bottom-0 bg-white dark:bg-dblue">
-          <div className="px-4 pt-3">
-            <button
-              onClick={(e) => e.preventDefault()}
-              className="rounded px-2 py-1.5 font-semibold text-btnblue hover:bg-btnbluelight dark:text-blue-400"
-            >
-              Add hashtag
-            </button>
-          </div>
-
           <div className="flex justify-between pb-4 pl-4 pr-6 pt-3">
             <div className="flex items-center">
               <label className="t-secondary card-btn label-btn block rounded-xl p-2">
                 <span className="sr-only">Choose image</span>
                 <input
                   type="file"
-                  {...register("image", {
-                    onChange: onSelectImage,
-                  })}
+                  onChange={(e) => {
+                    if (e.target.files) {
+                      const files: File[] = Array.from(e.target.files);
+                      setImages(files);
+                    }
+                  }}
                   className="sr-only"
                 />
                 <MdOutlinePhotoSizeSelectActual size={24} />
@@ -165,23 +174,11 @@ export default function AddPostForm() {
                 <MdVideocam size={24} />
               </button>
               <button className="t-secondary card-btn rounded-xl p-2">
-                <MdArticle size={24} />
-              </button>
-              <button className="t-secondary card-btn rounded-xl p-2">
                 <MdWork size={24} />
-              </button>
-              <button className="t-secondary card-btn rounded-xl p-2">
-                <TiStarburst size={24} />
-              </button>
-              <button className="t-secondary card-btn rounded-xl p-2">
-                <MdBarChart size={24} />
-              </button>
-              <button className="t-secondary card-btn rounded-xl p-2">
-                <MdMoreHoriz size={24} />
               </button>
             </div>
             <button
-              className="rounded-xl bg-btnblue px-4 py-1.5 font-semibold text-white hover:bg-btnbluedark focus:bg-btnbluedark disabled:cursor-not-allowed disabled:bg-white/75 disabled:text-black/40"
+              className="rounded-xl bg-btnblue px-8 py-2 font-semibold text-white hover:bg-btnbluedark focus:bg-btnbluedark disabled:cursor-not-allowed disabled:bg-white/75 disabled:text-black/40"
               type="submit"
               disabled={!watch("input")?.trim() || isSubmitting}
             >

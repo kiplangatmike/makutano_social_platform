@@ -8,25 +8,38 @@ import Avatar from "$components/Avatar";
 import premium_icon from "$public/premium.svg";
 import Link from "next/link";
 
+import { useCallback } from "react";
+import { useSetAtom } from "jotai";
+import { motion } from "framer-motion";
+
+import { modalState, modalTypeState } from "$lib/atoms";
+import { BiLogOut } from "react-icons/bi";
+
 export default function Sidebar() {
   const { data: session } = useSession();
 
+  const setModalOpen = useSetAtom(modalState);
+  const setModalType = useSetAtom(modalTypeState);
+
+  const openModal = useCallback(() => {
+    setModalOpen(true);
+    setModalType("dropIn");
+  }, [setModalOpen, setModalType]);
+
   return (
-    <div className="left-0 top-0 space-y-2">
+    <div className="fixed left-4 top-20 w-[325px] space-y-2">
       {/* First card */}
       <section className="feed-card rounded-3xl text-center">
-        {/* <div className="-ml-3 -mr-3 h-14 min-w-full bg-[url('/sidebar_bg.svg')] bg-cover bg-center"></div> */}
-
-        <div className="mx-auto flex">
-          <button
-            onClick={() => signOut({ callbackUrl: "/auth/signin" })}
-            className="cursor-pointer p-2 "
+        <div className="relative mx-auto flex">
+          <Link
+            href={`/profile/12`}
+            className="ml-8 mt-4 h-[40px] min-w-[40px] cursor-pointer"
           >
-            <Avatar size={24} />
-          </button>
+            <Avatar size={40} />
+          </Link>
 
           <div className="px-6 py-4 text-left">
-            <Link href="#" className="block">
+            <Link href={`/profile/12`} className="block">
               <h3 className="cursor-pointer divide-amber-800/80 font-semibold underline-offset-1 hover:underline">
                 {session?.user?.name}
               </h3>
@@ -36,49 +49,12 @@ export default function Sidebar() {
         </div>
 
         <div className="hidden px-6 text-left text-sm md:block">
-          {/* <div className="sidebar-section py-3">
-            <a
-              href="#"
-              className="sidebar-btn card-btn flex justify-between space-x-2 py-1 text-xs"
-            >
-              <h4 className="t-secondary font-semibold">
-                Who viewed your profile
-              </h4>
-              <span className="t-link">39</span>
-            </a>
-            <a
-              href="#"
-              className="sidebar-btn card-btn flex justify-between space-x-2 py-1 text-xs"
-            >
-              <h4 className="t-secondary font-semibold">Views of your post</h4>
-              <span className="t-link">629</span>
-            </a>
-          </div> */}
-
-          {/* <a
-            href="#"
-            className="sidebar-section sidebar-btn card-btn py-3 text-xs"
-          >
-            <h4 className="t-secondary">Access exclusive tools & insights</h4>
-            <span className="flex items-center space-x-2">
-              <Image
-                src={premium_icon}
-                alt="premium app icon"
-                width={16}
-                height={16}
-              />
-              <span className="t-link font-semibold">
-                Get Hired Faster, Try Premium Free
-              </span>
-            </span>
-          </a> */}
-
           <Link
             href="#"
             className="sidebar-section card-btn flex items-center space-x-1.5 p-3"
           >
             <MdBookmark className="mui-icon t-secondary h-4 w-4" />
-            <h4 className="text-x font-semibold">My items</h4>
+            <h4 className="text-x font-semibold">Bookmarks</h4>
           </Link>
         </div>
 
@@ -91,7 +67,7 @@ export default function Sidebar() {
             <h4 className="text-x font-semibold">Hubs</h4>
           </Link>
         </div>
-        <div className="hidden px-6 text-left text-sm md:block">
+        <div className="hidden px-6 pb-2 text-left text-sm md:block">
           <Link
             href="#"
             className="sidebar-section card-btn flex items-center space-x-1.5 p-3"
@@ -99,7 +75,7 @@ export default function Sidebar() {
             <TbBuildingBank className="mui-icon t-secondary h-4 w-4" />
             <h4 className="text-x font-semibold">Chapters</h4>
           </Link>
-          <div className=" pl-8">
+          <div className="flex flex-col gap-2 pl-8">
             <Link href="#" className="flex gap-2">
               <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
               <h4 className="text-x font-semibold">ALU</h4>
@@ -118,38 +94,24 @@ export default function Sidebar() {
             </Link>
           </div>
         </div>
-        <div className="hidden px-6 text-left text-sm md:block">
-          <Link
-            href="#"
-            className="sidebar-section card-btn flex items-center space-x-1.5 p-3"
+        <button
+          onClick={() => signOut({ callbackUrl: "/" })}
+          className="sidebar-section sidebar-btn card-btn mt-2 flex w-full items-center gap-3 p-3 px-8"
+        >
+          <BiLogOut className="mui-icon t-secondary h-4 w-4" />
+          <h4 className="text-x font-semibold">Logout</h4>
+        </button>
+
+        <div className="sidebar-section sidebar-btn card-btn w-full p-3 px-8">
+          <motion.button
+            onClick={openModal}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            className="t-secondary rounded-3xl bg-amber-800 px-8 py-2 text-lg font-semibold"
           >
-            <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
-            <h4 className="text-x font-semibold">Direct Message</h4>
-          </Link>
-
-          <div className=" pl-8">
-            <Link href="/messaging" className="flex gap-2">
-              <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
-              <h4 className="text-x font-semibold">Liplan</h4>
-            </Link>
-            <Link href="#" className="flex gap-2">
-              <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
-              <h4 className="text-x font-semibold">Mercy</h4>
-            </Link>
-            <Link href="#" className="flex gap-2">
-              <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
-              <h4 className="text-x font-semibold">Mike</h4>
-            </Link>
-            <Link href="#" className="flex gap-2">
-              <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
-              <h4 className="text-x font-semibold">Nyamusi</h4>
-            </Link>
-          </div>
+            Create Post
+          </motion.button>
         </div>
-
-        <a className="sidebar-section sidebar-btn card-btn mt-2 p-3 px-8">
-          <h4 className="t-secondary text-sm font-semibold">Logout</h4>
-        </a>
       </section>
     </div>
   );

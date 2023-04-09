@@ -7,6 +7,7 @@ const nextConfig = {
       "images.unsplash.com",
       "firebasestorage.googleapis.com",
       "unsplash.com",
+      "res.cloudinary.com",
     ],
   },
 };

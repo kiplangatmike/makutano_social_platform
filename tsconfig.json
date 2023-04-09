@@ -25,9 +25,15 @@
       "$public": ["../public"],
       "$public/*": ["../public/*"],
       "$styles": ["styles"],
-      "$styles/*": ["styles/*"]
+      "$styles/*": ["styles/*"],
+      "$services/*": ["services/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/lib/config/mongoclient.js"
+  ],
   "exclude": ["node_modules"]
 }

@@ -1,12 +1,11 @@
 import type { GetServerSideProps } from "next";
 import type { Article } from "$lib/types";
-import Head from "next/head";
 import axios from "axios";
 import { useEffect } from "react";
 import { useSetAtom } from "jotai";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 
-import { unstable_getServerSession } from "next-auth/next";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 
 import { prisma } from "$lib/config/prisma";
@@ -30,7 +29,7 @@ export default function FeedPage({ articles }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   // Check if the user is authenticated on the server...
-  const session = await unstable_getServerSession(req, res, authOptions);
+  const session = await getServerSession(req, res, authOptions);
 
   // Get posts on SSR
   const queryClient = new QueryClient();
