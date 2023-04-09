@@ -12,7 +12,7 @@ import { articlesState } from "$lib/atoms";
 
 export default function Widgets() {
   const articles = useAtomValue(articlesState);
-  const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore] = useState(true);
 
   return (
     <div className="feed-card rounded-3xl py-3">
@@ -21,12 +21,7 @@ export default function Widgets() {
         <BsInfoSquareFill className="mui-icon h-6 w-4" />
       </div>
 
-      <ul
-      // className={clsx(
-      //   "my-2 transition-all",
-      //   showMore ? "h-[476px]" : "h-[266px]"
-      // )}
-      >
+      <ul className="pb-8">
         {articles.slice(0, 2).map((a) => (
           <>
             <Item key={a.url} article={a} />
@@ -39,20 +34,6 @@ export default function Widgets() {
             </>
           ))}
       </ul>
-
-      <button
-        onClick={() => setShowMore((p) => !p)}
-        className="t-secondary ml-6 flex items-center space-x-1 rounded bg-gray-700 px-2 py-0.5"
-      >
-        <span className="text-sm font-semibold">
-          {showMore ? "Show less" : "Show more"}
-        </span>
-        {showMore ? (
-          <HiOutlineChevronUp className="mui-icon h-5 w-5" />
-        ) : (
-          <HiOutlineChevronDown className="mui-icon h-5 w-5" />
-        )}
-      </button>
     </div>
   );
 }

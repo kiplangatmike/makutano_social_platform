@@ -16,7 +16,7 @@ export default function HeaderLink({
   link,
 }: Props) {
   return (
-    <a
+    <Link
       href={link}
       className={clsx(
         "flex cursor-pointer flex-col items-center justify-center",
@@ -44,7 +44,7 @@ export default function HeaderLink({
       {active && (
         <span className="hidden h-0.5 w-[calc(100%+20px)] rounded-t-full bg-black dark:bg-white lg:inline-flex" />
       )}
-    </a>
+    </Link>
   );
 }
 
@@ -55,5 +55,5 @@ type Props = {
   feed?: boolean;
   active?: boolean;
   hidden?: boolean;
-  link?: string;
+  link: string;
 };

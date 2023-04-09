@@ -29,10 +29,10 @@ export default withAuthApi(async ({ method, body }, res, session) => {
   // Create a new post
   if (method === 'POST') {
     try {
-      const { input, photoUrl } = z
+      const { input, media } = z
         .object({
           input: z.string().min(1).trim(),
-          photoUrl: z.string().url().optional(),
+          media: z.array(z.string().url()).optional(),
         })
         .parse(body)
 
@@ -40,7 +40,7 @@ export default withAuthApi(async ({ method, body }, res, session) => {
         const post = await prisma.post.create({
           data: {
             input,
-            photoUrl,
+            media,
             authorId: session?.user?.uid ?? '',
           },
           include: {
