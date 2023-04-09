@@ -70,7 +70,7 @@ const CloseButton = () => {
   return (
     <button
       onClick={() => {
-        setPost(null);
+        setPost(undefined);
         setIsOpen(false);
       }}
       className="card-btn rounded-full p-2"
