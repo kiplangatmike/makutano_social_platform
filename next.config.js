@@ -8,6 +8,7 @@ const nextConfig = {
       "firebasestorage.googleapis.com",
       "unsplash.com",
       "res.cloudinary.com",
+      "via.placeholder.com",
     ],
   },
 };

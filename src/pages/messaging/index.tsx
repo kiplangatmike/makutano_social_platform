@@ -16,6 +16,8 @@ const ChatInterface = () => {
               src="https://via.placeholder.com/150"
               className="h-10 w-10 rounded-full"
               alt="Avatar"
+              width={100}
+              height={100}
             />
           </div>
           <div className="mt-4 flex items-start justify-start pl-2">
@@ -23,6 +25,8 @@ const ChatInterface = () => {
               src="https://via.placeholder.com/150"
               className="h-10 rounded-full"
               alt="Avatar"
+              width={100}
+              height={100}
             />
             <div className="ml-4 max-w-xs break-words rounded-lg bg-black px-4 py-2 text-sm shadow-md ">
               Hi, Nyamusi

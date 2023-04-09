@@ -1,11 +1,15 @@
 import Avatar from "$components/Avatar";
 import Layout from "$components/Layout";
 import Image from "next/image";
+import { useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 
 export default function Profile() {
+  const [openModal, setOpenModal] = useState(false);
   return (
     <Layout>
-      <div className="feed-card h-[50vh] rounded-3xl">
+      <div className="feed-card mx-[350px] h-[50vh] rounded-3xl">
+        {openModal && <ProfileModal onClose={() => setOpenModal(false)} />}
         <div className="relative h-1/3 bg-gray-900">
           <div className="h-full overflow-hidden">
             <Image
@@ -15,8 +19,11 @@ export default function Profile() {
               height={1000}
             ></Image>
           </div>
-          <div className="absolute bottom-0 mx-5 -mb-10">
+          <div className="absolute bottom-0 -mb-10 ml-5">
             <Avatar size={80} />
+          </div>
+          <div className="absolute bottom-0 right-0 -mb-10 mr-5 rounded-xl bg-gray-200/20 px-4 py-1">
+            <button onClick={() => setOpenModal(true)}>update profile</button>
           </div>
         </div>
         <div className=" ml-5 mt-12 h-2/3">
@@ -44,5 +51,64 @@ export default function Profile() {
         </div>
       </div>
     </Layout>
+  );
+}
+
+function ProfileModal({ onClose }: { onClose: string }) {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [university, setUniversity] = useState("");
+  const [highSchool, sethighSchool] = useState("");
+  return (
+    <div className="top- absolute z-10">
+      <div className="relative">
+        <div
+          onClick={onClose}
+          className=" absolute -right-7 -top-7 rounded-full bg-white p-2 text-black"
+        >
+          <AiOutlineClose />
+        </div>
+        <div className=" feed-card mx-auto overflow-visible rounded-3xl bg-white text-black">
+          <form className="p-2 ">
+            <div className="flex flex-col">
+              <label>Full name</label>
+              <input
+                title="text"
+                placeholder="enter full name"
+                value={fullName}
+              ></input>
+            </div>
+
+            <div className="flex flex-col">
+              <label>Email</label>
+              <input
+                title="text"
+                placeholder="enter your email"
+                value={email}
+              ></input>
+            </div>
+            <div className="flex flex-col">
+              <label>University attended/attend</label>
+              <input
+                title="text"
+                placeholder="enter full name"
+                value={university}
+              ></input>
+            </div>
+            <div className="flex flex-col">
+              <label>High School attended/attend</label>
+              <input
+                title="text"
+                placeholder="high school name"
+                value={highSchool}
+              ></input>
+            </div>
+            <div>
+              <button>Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }

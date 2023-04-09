@@ -38,11 +38,11 @@ export default function OnePost({ post, modalPost = false }: Props) {
   return (
     <div
       className={clsx(
-        !modalPost && "feed-card rounded-3xl",
+        !modalPost && "feed-card mx-[350px] rounded-3xl",
         modalPost && "rounded-r-lg"
       )}
     >
-      <header className="mb-2 flex flex-nowrap items-center justify-between px-4 pt-3">
+      <header className="mb-2 flex flex-nowrap items-center justify-between px-4 pt-3 ">
         <Link href="/profile" className="flex items-center">
           <span className="flex cursor-pointer">
             <Avatar src={post?.author?.image as string} size={40} />

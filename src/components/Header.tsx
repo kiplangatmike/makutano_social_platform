@@ -76,7 +76,7 @@ export default function Header() {
           <HeaderLink Icon={MdNotifications} feed link="/notification">
             Notifications
           </HeaderLink>
-          <HeaderLink feed avatar hidden link="/profile/12">
+          <HeaderLink feed avatar hidden link="/profile">
             Me
           </HeaderLink>
 
