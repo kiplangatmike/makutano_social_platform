@@ -10,14 +10,16 @@ export default withAuthApi(async ({ method, query }, res) => {
         const userId = z.string().parse(query.userId)
         try {
 
-            // add userId to likes array on post
+            // remove userId to likes array on post
             const updatedPost = await prisma.post.update({
                 where: {
                     id: postId
                 },
                 data: {
                     likes: {
-                        push: userId
+                        set: (await prisma.post.findUnique({ where: { id: postId } }))?.likes.filter(
+                            (like) => like !== userId
+                        )
                     }
                 }
             })
