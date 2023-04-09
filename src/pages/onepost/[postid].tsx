@@ -1,4 +1,5 @@
 import Avatar from "$components/Avatar";
+import type { Post } from "$lib/types";
 import Layout from "$components/Layout";
 import Comments from "$components/comments";
 import { modalState2 } from "$lib/atoms";
@@ -10,8 +11,9 @@ import { useState } from "react";
 import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
 import { BiComment } from "react-icons/bi";
 import { HiOutlineReply } from "react-icons/hi";
+import { formatDistanceToNow, parseISO } from "date-fns";
 
-export default function OnePost(id: number) {
+export default function OnePost({ post, modalPost = false }: Props) {
   const [liked, setLiked] = useState(false);
   const setModalOpen2 = useSetAtom(modalState2);
 
@@ -24,17 +26,11 @@ export default function OnePost(id: number) {
               <Avatar size={40} />
             </span>
             <div className="ml-2 flex-grow leading-5">
-              <p className="t-link dark:t-white hover:t-blue dark:hover:t-blue-light font-semibold text-black/90">
-                Liplan Lekipising
+              <p className="t-link dark:t-white hover:t-blue dark:hover:t-blue-light font-semibold text-white">
+                {post?.author?.name}
+                Mike Kiplangat
               </p>
-              {/* {post?.createdAt && (
-              <p className="t-secondary text-xs">
-                {formatDistanceToNow(parseISO(post?.createdAt as string), {
-                  addSuffix: true,
-                })}{" "}
-              </p>
-            )} */}
-              08/04/2023
+              <p className="t-secondary text-xs">2 minutes ago</p>
             </div>
           </Link>
           <div className="relative  mb-2 overflow-hidden rounded-3xl px-3">
@@ -78,3 +74,7 @@ export default function OnePost(id: number) {
     </Layout>
   );
 }
+type Props = {
+  post: Post;
+  modalPost?: boolean;
+};

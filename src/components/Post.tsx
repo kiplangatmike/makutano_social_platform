@@ -12,7 +12,7 @@ import { AiTwotoneHeart, AiOutlineHeart } from "react-icons/ai";
 import { BiComment } from "react-icons/bi";
 import { HiOutlineReply } from "react-icons/hi";
 import { IoIosMore } from "react-icons/io";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 import {
   modalPostState,
