@@ -7,6 +7,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import Education from "$components/Education";
 import Experience from "$components/Experience";
 import ProfilePost from "$components/ProfilePost";
+import ProfileMod from "$components/ProfileMod";
+import About from "$components/About";
 
 export default function Profile() {
   const [openModal, setOpenModal] = useState(false);
@@ -19,7 +21,7 @@ export default function Profile() {
   return (
     <div>
       <Layout>
-        {openModal && <ProfileModal onClose={() => setOpenModal(false)} />}
+        {openModal && <ProfileMod isOpen={openModal} onClose={() => setOpenModal(false)} ><ProfileModal/></ProfileMod>}
         <div className="feed-card rounded-3xl">
           <div className="relative h-[80px] bg-gray-900">
             <div className="h-full overflow-hidden">
@@ -61,52 +63,63 @@ export default function Profile() {
                 </div>
               </div>
             </div>
-            <div className="my-3 flex gap-4">
+            <div className="my-3 mr-5 flex justify-around">
               <div
-                className={`rounded-xl px-4 py-1 ${activeComponent === "component1" ? "bg-red-800 text-white" : "bg-gray-200/20 text-white"}`}
+                className={`rounded-xl px-4 py-1 ${
+                  activeComponent === "component1"
+                    ? "bg-red-800 text-white"
+                    : "bg-gray-200/20 text-white"
+                }`}
                 onClick={() => handleButtonClick("component1")}
               >
                 <button>Posts</button>
               </div>
               <div
-                className={`rounded-xl px-4 py-1 ${activeComponent === "component2" ? "bg-red-800 text-white" : "bg-gray-200/20 text-white"}`}
+                className={`rounded-xl px-4 py-1 ${
+                  activeComponent === "component2"
+                    ? "bg-red-800 text-white"
+                    : "bg-gray-200/20 text-white"
+                }`}
                 onClick={() => handleButtonClick("component2")}
               >
                 <button>Education</button>
               </div>
               <div
-                className={`rounded-xl px-4 py-1 ${activeComponent === "component3" ? "bg-red-800 text-white" : "bg-gray-200/20 text-white"}`}
+                className={`rounded-xl px-4 py-1 ${
+                  activeComponent === "component3"
+                    ? "bg-red-800 text-white"
+                    : "bg-gray-200/20 text-white"
+                }`}
                 onClick={() => handleButtonClick("component3")}
               >
                 <button>Experience</button>
               </div>
+              <div
+                className={`rounded-xl px-4 py-1 ${
+                  activeComponent === "component4"
+                    ? "bg-red-800 text-white"
+                    : "bg-gray-200/20 text-white"
+                }`}
+                onClick={() => handleButtonClick("component4")}
+              >
+                <button>About</button>
+              </div>
             </div>
           </div>
         </div>
-        {/* <div className="feed-card mt-3 rounded-3xl p-4  ">
-          <div className="mb-2 text-[20px] font-semibold">About</div>
-          <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue
-            eu urna non commodo. Maecenas ultrices vitae erat ac suscipit. Donec
-            ex mi, sagittis eget fringilla ornare, dictum vitae magna.
-            Suspendisse risus massa, tempus in congue et, consectetur sed
-            tortor. Nulla tempus diam est, ac gravida elit scelerisque at. In
-            vel tincidunt odio, hendrerit fermentum orci. Donec tristique
-            feugiat ullamcorper. Aenean id augue vestibulum, tempor felis vel,
-            gravida nibh.
-          </div>
-        </div> */}
+       
         <div className="feed-card mt-4 rounded-3xl p-4 ">
           {activeComponent === "component1" ? <ProfilePost /> : null}
           {activeComponent === "component2" ? <Education /> : null}
           {activeComponent === "component3" ? <Experience /> : null}
+          {activeComponent === "component4" ? <About /> : null}
         </div>
       </Layout>
     </div>
   );
 }
 
-function ProfileModal({ onClose }: { onClose: () => void }) {
+function ProfileModal() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [university, setUniversity] = useState("");
@@ -124,78 +137,65 @@ function ProfileModal({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="absolute inset-0  z-10 w-[50%]">
-      <div className="relative ">
-        <div className=" feed-card fixed mx-auto w-full overflow-visible rounded-3xl bg-white text-black">
-          <div
-            onClick={onClose}
-            className="absolute right-2 top-2  rounded-full bg-white p-2 text-black"
-          >
-            <AiOutlineClose />
-          </div>
-          <form className=" p-2" onSubmit={handleSubmit}>
-            <div className="mt-12 flex flex-col p-3">
-              <label>Full name</label>
-              <input
-                className="mt-1 rounded-xl py-2 pl-3 text-black"
-                type="text"
-                placeholder="enter full name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-              ></input>
-            </div>
-
-            <div className="flex flex-col p-3">
-              <label>Email</label>
-              <input
-                className="mt-1 rounded-xl py-2 pl-3 text-black"
-                type="text"
-                placeholder="enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              ></input>
-            </div>
-            <div className="flex flex-col p-3">
-              <label>University attended/attend</label>
-              <input
-                className="mt-1 rounded-xl py-2 pl-3 text-black"
-                type="text"
-                placeholder="enter full name "
-                value={university}
-                onChange={(e) => setUniversity(e.target.value)}
-              ></input>
-            </div>
-            <div className="flex flex-col p-3">
-              <label>High School attended/attend</label>
-              <input
-                className="mt-1 rounded-xl py-2 pl-3 text-black"
-                type="text"
-                placeholder="high school name"
-                value={highSchool}
-                onChange={(e) => setHighSchool(e.target.value)}
-              ></input>
-            </div>
-            <div className="flex flex-col p-3">
-              <label>Short Description About You</label>
-              <input
-                className="mt-1 rounded-xl py-2 pl-3 text-black"
-                type="text"
-                placeholder="high school name"
-                value={desc}
-                onChange={(e) => setDesc(e.target.value)}
-              ></input>
-            </div>
-            <div className="text-center">
-              <button
-                className="rounded-xl bg-amber-800 px-4 py-1 "
-                type="submit"
-              >
-                Update
-              </button>
-            </div>
-          </form>
+    <div>
+      <form className=" p-2" onSubmit={handleSubmit}>
+        <div className="mt-12 flex flex-col p-3">
+          <label>Full name</label>
+          <input
+            className="mt-1 rounded-xl py-2 pl-3 text-black"
+            type="text"
+            placeholder="enter full name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          ></input>
         </div>
-      </div>
+
+        <div className="flex flex-col p-3">
+          <label>Email</label>
+          <input
+            className="mt-1 rounded-xl py-2 pl-3 text-black"
+            type="text"
+            placeholder="enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          ></input>
+        </div>
+        <div className="flex flex-col p-3">
+          <label>University attended/attend</label>
+          <input
+            className="mt-1 rounded-xl py-2 pl-3 text-black"
+            type="text"
+            placeholder="enter full name "
+            value={university}
+            onChange={(e) => setUniversity(e.target.value)}
+          ></input>
+        </div>
+        <div className="flex flex-col p-3">
+          <label>High School attended/attend</label>
+          <input
+            className="mt-1 rounded-xl py-2 pl-3 text-black"
+            type="text"
+            placeholder="high school name"
+            value={highSchool}
+            onChange={(e) => setHighSchool(e.target.value)}
+          ></input>
+        </div>
+        <div className="flex flex-col p-3">
+          <label>Short Description About You</label>
+          <input
+            className="mt-1 rounded-xl py-2 pl-3 text-black"
+            type="text"
+            placeholder="high school name"
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+          ></input>
+        </div>
+        <div className="text-center">
+          <button className="rounded-xl bg-amber-800 px-4 py-1 " type="submit">
+            Update
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
