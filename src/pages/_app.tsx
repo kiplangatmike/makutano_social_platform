@@ -25,7 +25,7 @@ export default function MyApp({
   return (
     <>
       <Head>
-        <title>LinkedIn Clone | Next</title>
+        <title>Makutano App</title>
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
