@@ -1,10 +1,13 @@
 import { z } from 'zod'
 import { prisma } from '$lib/config/prisma'
-import { withAuthApi } from '$lib/utils/api'
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]';
 
-export default withAuthApi(async ({ method, body }, res, session) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getServerSession(req, res, authOptions);
   // Get all posts
-  if (method === 'GET') {
+  if (req.method === 'GET') {
     try {
       const posts = await prisma.post.findMany({
         include: {
@@ -26,14 +29,14 @@ export default withAuthApi(async ({ method, body }, res, session) => {
   }
 
   // Create a new post
-  if (method === 'POST') {
+  if (req.method === 'POST') {
     try {
       const { input, media } = z
         .object({
           input: z.string().min(1).trim(),
           media: z.array(z.string().url()).optional(),
         })
-        .parse(body)
+        .parse(req.body)
 
       try {
         const post = await prisma.post.create({
@@ -64,4 +67,6 @@ export default withAuthApi(async ({ method, body }, res, session) => {
   }
 
   return res.status(405).end()
-})
+}
+
+export default handler;

@@ -10,7 +10,7 @@ import { ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="h-screen overflow-y-scroll bg-lstone transition-all dark:bg-black">
+    <div className="h-screen overflow-y-scroll bg-lstone transition-all dark:bg-gradient-radial dark:from-[#15202b] dark:from-100% dark:to-[#194547] dark:to-50%">
       <Head>
         <title>Feed | Makutano</title>
       </Head>
@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="mx-auto my-6">
           <Sidebar />
           {children}
-          <aside className="fixed right-4 top-20 mt-0 block w-[325px] h-[80vh] overflow-y-auto md:hidden lg:block">
+          <aside className="fixed right-4 top-20 mt-0 block h-[80vh] w-[325px] overflow-y-auto md:hidden lg:block">
             <Widgets />
           </aside>
         </div>
