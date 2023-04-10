@@ -53,7 +53,7 @@
   }
 
   .feed-card {
-    @apply t-black dark:t-white overflow-hidden rounded-lg bg-white shadow-[0px_0px_0px_1px_rgba(0,0,0,0.08)] dark:bg-dblue;
+    @apply t-black dark:t-white overflow-hidden rounded-lg bg-white dark:bg-dblue;
   }
 
   .sidebar-btn {
@@ -95,4 +95,9 @@
   .post-btn {
     @apply t-black-light dark:t-white-light flex items-center justify-center rounded px-2 py-2.5 text-sm font-semibold;
   }
+}
+
+.body {
+  background: rgb(25, 69, 71);
+  background: radial-gradient(circle, rgba(21, 32, 43, 1) 100%, rgba(25, 69, 71, 1) 50%);
 }

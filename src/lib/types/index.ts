@@ -1,4 +1,4 @@
-import type { Post as PrismaPost, User as PrismsUser } from '@prisma/client'
+import type { Post as PrismaPost, User as PrismsUser, Comment as PrismaComment } from '@prisma/client'
 
 export interface Article {
   source: {
@@ -17,6 +17,10 @@ export interface Article {
 export type Post = PrismaPost & {
   author: PrismsUser
   createdAt: string
+}
+
+export type Comment = PrismaComment & {
+  author: PrismsUser
 }
 
 export type AddPostFormValues = {
