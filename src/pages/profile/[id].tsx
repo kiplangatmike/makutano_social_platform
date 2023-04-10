@@ -96,14 +96,14 @@ export default function Profile() {
   );
 }
 
-function ProfileModal({ onClose }: { onClose: Function }) {
+function ProfileModal({ onClose }: { onClose: ()=> void }) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [university, setUniversity] = useState("");
   const [highSchool, setHighSchool] = useState("");
   const [desc, setDesc] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(`Name:`);
     setFullName("");
