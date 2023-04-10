@@ -25,11 +25,8 @@ export default function MyApp({
   return (
     <>
       <Head>
-        <title>LinkedIn Clone | Next</title>
-        <meta
-          name="description"
-          content="A LinkedIn clone built with Next.js for learning purpose. THIS IS NOT THE REAL LinkedIn."
-        />
+        <title>Makutano App</title>
+        <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

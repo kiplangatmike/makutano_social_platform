@@ -15,7 +15,7 @@ export default function Widgets() {
   const [showMore, setShowMore] = useState(true);
 
   return (
-    <div className="feed-card rounded-3xl py-3">
+    <div className="feed-card  rounded-3xl py-3">
       <div className="flex items-center px-3">
         <h4 className="flex-grow text-center font-semibold">Program Updates</h4>
         <BsInfoSquareFill className="mui-icon h-6 w-4" />

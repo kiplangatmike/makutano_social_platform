@@ -49,7 +49,7 @@ export default function Modal() {
               <header className="flex items-center justify-between border-b border-black/10 py-4 pl-6 pr-4 dark:border-gray-500">
                 <Dialog.Title className="text-xl">Create a post</Dialog.Title>
                 <Dialog.Description className="sr-only">
-                  Create a new LinkedIn post
+                  Make a post
                 </Dialog.Description>
                 <CloseButton />
               </header>

@@ -16,10 +16,10 @@ export default function Layout({ children }: { children: ReactNode }) {
       </Head>
       <Header />
       {/* <Navbar /> */}
-      <div className="px-4">
-        <div className="mx-auto my-6">
+      <div className="px-5">
+        <div className="my-6">
           <Sidebar />
-          {children}
+          <div className="ml-[27vw]  min-w-[40vw] max-w-[42vw]">{children}</div>
           <aside className="fixed right-4 top-20 mt-0 block h-[80vh] w-[325px] overflow-y-auto md:hidden lg:block">
             <Widgets />
           </aside>

@@ -5,7 +5,7 @@ import React from "react";
 const Network = () => {
   return (
     <Layout>
-      <div className="feed-card mx-auto flex w-[600px] flex-col items-center rounded-3xl pb-8">
+      <div className="feed-card mx-auto flex flex-grow flex-col items-center rounded-3xl pb-8">
         <h1 className="my-2 text-2xl font-bold">My Network</h1>
         <div className="w-[93%]">
           <input

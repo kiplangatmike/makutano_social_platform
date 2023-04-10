@@ -1,6 +1,6 @@
-import Image from 'next/image'
-import linkedin_footer from '$public/linkedin_footer.svg'
-import { HiOutlineChevronDown } from 'react-icons/hi'
+import Image from "next/image";
+import footer from "$public/footer.svg";
+import { HiOutlineChevronDown } from "react-icons/hi";
 
 export default function Footer() {
   return (
@@ -43,11 +43,7 @@ export default function Footer() {
           </a>
           <HiOutlineChevronDown className="mui-icon ml-1 h-3 w-3" />
         </li>
-        <li className="mx-2 my-1 flex items-center justify-center">
-          <a href="#" className="flex">
-            Get the LinkedIn app
-          </a>
-        </li>
+
         <li className="mx-2 my-1 flex items-center justify-center">
           <a href="#" className="flex">
             More
@@ -55,17 +51,8 @@ export default function Footer() {
         </li>
       </ul>
       <div className="flex items-center justify-center text-center">
-        <Image
-          src={linkedin_footer}
-          alt="LinkedIn logo"
-          width={56}
-          height={14}
-        />
-        <p className="ml-2 text-xs">LinkedIn Clone © 2022</p>
-      </div>
-      <div className="pt-4">
-        <p className="text-center text-sm">NOTE: This is a CLONE only.</p>
+        <Image src={footer} alt="logo" width={56} height={14} />
       </div>
     </footer>
-  )
+  );
 }

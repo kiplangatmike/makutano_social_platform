@@ -149,7 +149,7 @@ export default function OnePost({ post, modalPost = false }: Props) {
   return (
     <div
       className={clsx(
-        !modalPost && "feed-card rounded-3xl",
+        !modalPost && "feed-card mx-[350px] rounded-3xl",
         modalPost && "rounded-r-lg"
       )}
     >
@@ -212,7 +212,7 @@ export default function OnePost({ post, modalPost = false }: Props) {
                 localPostContent?.input?.length > 220 && (
                   <button
                     onClick={() => setShowAll(true)}
-                    className="t-secondary dark:text-amber-400 inline-block bg-white pl-2 hover:underline dark:bg-dblue"
+                    className="t-secondary inline-block bg-white pl-2 hover:underline dark:bg-dblue dark:text-amber-400"
                   >
                     ...see more
                   </button>
