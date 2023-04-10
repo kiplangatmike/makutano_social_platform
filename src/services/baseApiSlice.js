@@ -50,6 +50,7 @@ export const baseApiSlice = createApi({
       query: () => ({
         url: "/posts",
         method: "GET",
+        keepUnusedDataFor: 60000, // 1 minute
       }),
     }),
     getPostsByUserId: builder.query({

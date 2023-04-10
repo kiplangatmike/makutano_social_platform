@@ -3,6 +3,7 @@ import { prisma } from '$lib/config/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
+import { extractKeywords, getRecommendedPosts } from '$lib/utils/recommender.utils';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions);
@@ -21,7 +22,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         orderBy: { createdAt: 'desc' },
       })
-      res.status(200).json(posts)
+
+      // recommendation logic
+      const user = await prisma.user.findUnique({
+        where: {
+          id: session?.user?.uid ?? '',
+        },
+        select: {
+          likedPosts: true,
+        },
+      })
+
+      const recommendedPosts = getRecommendedPosts(user?.likedPosts ?? [], posts);
+
+      console.log(`Total posts: ${posts?.length} Found ${recommendedPosts?.length} recommended posts for user ${session?.user?.uid ?? ''}`)
+
+      res.status(200).json(recommendedPosts?.length > 0 ? recommendedPosts : posts)
     } catch (error) {
       console.error(error)
       res.status(500).json(error)
@@ -39,10 +55,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         .parse(req.body)
 
       try {
+        const keywords = extractKeywords(input);
         const post = await prisma.post.create({
           data: {
             input,
             media,
+            keywords,
             authorId: session?.user?.uid ?? '',
           },
           include: {

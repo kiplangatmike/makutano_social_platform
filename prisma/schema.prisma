@@ -29,15 +29,22 @@ model Account {
 }
 
 model User {
-  id            String    @id @default(cuid()) @map("_id")
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  posts         Post[]
-  comments      Comment[]
+  id              String     @id @default(cuid()) @map("_id")
+  name            String?
+  email           String?    @unique
+  emailVerified   DateTime?
+  hasBeenVerified Boolean?   @default(false)
+  role            String?    @default("USER")
+  image           String?
+  accounts        Account[]
+  sessions        Session[]
+  posts           Post[]
+  comments        Comment[]
+  chapterIds      String[]
+  chapters        Chapters[] @relation(fields: [chapterIds], references: [id])
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  likedPosts      String[]   @default([])
 }
 
 model VerificationToken {
@@ -50,17 +57,19 @@ model VerificationToken {
 }
 
 model Post {
-  id        String   @id @default(cuid()) @map("_id")
+  id        String    @id @default(cuid()) @map("_id")
   input     String
   photoUrl  String?
   authorId  String
-  media     String[] @default([])
-  keywords  String[] @default([])
-  likes     String[] @default([])
+  media     String[]  @default([])
+  keywords  String[]  @default([])
+  likes     String[]  @default([])
   comments  Comment[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  author    User     @relation(fields: [authorId], references: [id])
+  chapterid String
+  chapter   Chapters  @relation(fields: [chapterid], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  author    User      @relation(fields: [authorId], references: [id])
 }
 
 model Session {
@@ -80,4 +89,17 @@ model Comment {
   updatedAt DateTime @updatedAt
   author    User     @relation(fields: [authorId], references: [id])
   post      Post     @relation(fields: [postId], references: [id])
+}
+
+model Chapters {
+  id        String   @id @default(cuid()) @map("_id")
+  name      String
+  image     String
+  createdBy String
+  postIds   String[]
+  posts     Post[]
+  userIds   String[]
+  users     User[]   @relation(fields: [userIds], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

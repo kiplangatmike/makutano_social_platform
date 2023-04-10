@@ -95,12 +95,17 @@ export default function AddPostForm() {
               });
             });
           }
-
+          // play ding.mp3
+          const ding = new Audio("/ding.mp3");
+          // volume 50%
+          ding.volume = 0.5;
+          ding.play();
           // update feed
           queryClient.setQueryData<Post[]>(["posts"], (old) => [
             payload,
             ...(old ?? []),
           ]);
+
           toaster({
             status: "success",
             message: "Post created successfully",

@@ -57,12 +57,10 @@ export default function OnePost({ post, modalPost = false }: Props) {
     await likeAction({ userId, postId })
       .unwrap()
       .then((payload) => {
-        console.log("liked");
         setLiked(true);
         setLocalPostContent(payload as Post);
       })
       .catch((error) => {
-        console.log(error);
         toaster({
           status: "error",
           message: error?.message ?? "Error while liking. Try again later",
@@ -78,12 +76,10 @@ export default function OnePost({ post, modalPost = false }: Props) {
     await unlikeAction({ userId, postId })
       .unwrap()
       .then((payload) => {
-        console.log("unliked");
         setLiked(false);
         setLocalPostContent(payload as Post);
       })
       .catch((error) => {
-        console.log(error);
         toaster({
           status: "error",
           message: error?.message ?? "Error while unliking. Try again later",
@@ -203,7 +199,7 @@ export default function OnePost({ post, modalPost = false }: Props) {
               modalPost && "max-h-72 overflow-y-auto"
             )}
           >
-            <p className="mb-4">
+            <article className="mb-4">
               {localPostContent?.input?.length > 220
                 ? `${localPostContent?.input?.slice(0, 220)}...`
                 : `${localPostContent?.input}`}
@@ -212,12 +208,12 @@ export default function OnePost({ post, modalPost = false }: Props) {
                 localPostContent?.input?.length > 220 && (
                   <button
                     onClick={() => setShowAll(true)}
-                    className="t-secondary dark:text-amber-400 inline-block bg-white pl-2 hover:underline dark:bg-dblue"
+                    className="t-secondary inline-block bg-white pl-2 hover:underline dark:bg-dblue dark:text-amber-400"
                   >
                     ...see more
                   </button>
                 )}
-            </p>
+            </article>
             {localPostContent?.media?.length > 0 && (
               <div className="relative my-1 h-[200px] w-full overflow-hidden rounded-xl">
                 <Image
@@ -315,7 +311,11 @@ type Props = {
   modalPost?: boolean;
 };
 
-const PostMenu = ({ post }: { post: Props["post"] }) => {
+const PostMenu = ({
+  post,
+}: {
+  post: Props["post"];
+}) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const setModalOpen = useSetAtom(modalState);
@@ -417,99 +417,6 @@ const MenuButton = ({
 );
 
 type MenuButtonProps = {
-  children: ReactNode;
-  Icon: IconType;
-  disabled?: boolean;
-  onClick?: () => void;
-};
-
-const CommentsButton = ({ post }: { post: Props["post"] }) => {
-  const comments = ["hello, how you", "ill be visiting", "congratulations"];
-  const client = useQueryClient();
-  // const { mutate } = useMutation(deletePost, {
-  //   onMutate: () => setIsDeleting(true),
-  //   onSuccess: (deletedPost) => {
-  //     setModalOpen(false);
-  //     client.setQueryData<Post[]>(["posts"], (posts) =>
-  //       posts ? posts.filter((p) => p.id !== deletedPost.id) : []
-  //     );
-  //   },
-  //   onError: (error) => {
-  //     console.error(error);
-  //     alert(error);
-  //   },
-  //   onSettled: () => {
-  //     setIsDeleting(false);
-  //   },
-  // });
-  const { data: session } = useSession();
-  const setModalOpen2 = useSetAtom(modalState2);
-  // const [isDeleting, setIsDeleting] = useState(false);
-
-  // const onDeletePost = useCallback(async () => {
-  //   console.log("results");
-  // }, [mutate, post, session?.user?.uid]);
-
-  return (
-    <Menu as="div" className="relative">
-      <Menu.Button className="card-btn -mt-2 self-start rounded-full p-1">
-        <IoIosMore className="mui-icon" />
-      </Menu.Button>
-
-      <Transition
-        as={Fragment}
-        enter="transition duration-150 ease-out"
-        enterFrom="scale-90 opacity-0"
-        enterTo="scale-100 opacity-100"
-        leave="transition duration-150 ease-in"
-        leaveFrom="scale-100 opacity-100"
-        leaveTo="scale-90 opacity-0"
-      >
-        <div className="px-5 py-2">
-          <h2>comments</h2>
-          <form className="flex flex-col">
-            <label>Leave a comment</label>
-            <input
-              className="rounded-sm px-2 py-1"
-              placeholder="type"
-              title="comment"
-            ></input>
-          </form>
-          {comments.map((comment, index) => (
-            <div key={index}>{comment}</div>
-          ))}
-        </div>
-      </Transition>
-    </Menu>
-  );
-};
-
-const CommentButton = ({
-  children,
-  Icon,
-  onClick,
-  disabled = false,
-}: MenuButtonProps) => (
-  <Menu.Item disabled={disabled}>
-    {({ active, disabled }) => (
-      <button
-        onClick={onClick}
-        className={clsx(
-          "card-btn t-secondary flex cursor-pointer items-center px-4 py-2 transition-colors duration-200",
-          active && "bg-black/5 dark:bg-gray-100/10",
-          disabled && "cursor-not-allowed text-black/40 dark:text-white/40"
-        )}
-      >
-        <Icon size={20} className="" />
-        <span className="ml-2 flex-grow text-left font-semibold">
-          {children}
-        </span>
-      </button>
-    )}
-  </Menu.Item>
-);
-
-type CommentButtonProps = {
   children: ReactNode;
   Icon: IconType;
   disabled?: boolean;

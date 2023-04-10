@@ -4,7 +4,6 @@ import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { prisma } from '$lib/config/prisma'
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -22,16 +21,16 @@ export const authOptions: NextAuthOptions = {
   debug: process.env.NODE_ENV === 'production',
 
   callbacks: {
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token }) {
       return { ...token, uid: token.sub }
     },
-    async session({ session, user, token }) {
+    async session({ session, token }) {
       if (token.sub) {
         return { ...session, user: { ...session.user, uid: token.sub } }
       }
       return session
-    },
-  },
+    }
+  }
 }
 
 export default NextAuth(authOptions)

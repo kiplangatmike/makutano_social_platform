@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
-import { MdAdd, MdBookmark } from "react-icons/md";
+import { MdAdd, MdBookmark, MdHome } from "react-icons/md";
 import { TbBuildingBank } from "react-icons/tb";
 import { SiArtifacthub } from "react-icons/si";
 import { TbBrandWechat } from "react-icons/tb";
@@ -50,47 +50,37 @@ export default function Sidebar() {
 
         <div className="hidden px-6 text-left text-sm md:block">
           <Link
-            href="#"
+            href="/feed"
             className="sidebar-section card-btn flex items-center space-x-1.5 p-3"
           >
-            <MdBookmark className="mui-icon t-secondary h-4 w-4" />
-            <h4 className="text-x font-semibold">Bookmarks</h4>
-          </Link>
-        </div>
-
-        <div className="hidden px-6 text-left text-sm md:block">
-          <Link
-            href="#"
-            className="sidebar-section card-btn flex items-center space-x-1.5 p-3"
-          >
-            <SiArtifacthub className="mui-icon t-secondary h-4 w-4" />
-            <h4 className="text-x font-semibold">Hubs</h4>
+            <MdHome className="mui-icon t-secondary h-4 w-4" />
+            <h4 className="text-x font-semibold">Feed</h4>
           </Link>
         </div>
         <div className="hidden px-6 pb-2 text-left text-sm md:block">
           <Link
-            href="#"
+            href="/chapters"
             className="sidebar-section card-btn flex items-center space-x-1.5 p-3"
           >
             <TbBuildingBank className="mui-icon t-secondary h-4 w-4" />
             <h4 className="text-x font-semibold">Chapters</h4>
           </Link>
           <div className="flex flex-col gap-2 pl-8">
-            <Link href="#" className="flex gap-2">
+            <Link href="/chapters/alu" className="flex gap-2">
               <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
               <h4 className="text-x font-semibold">ALU</h4>
             </Link>
-            <a href="#" className="flex gap-2">
+            <Link href="/chapters/alu" className="flex gap-2">
               <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
-              <h4 className="text-x font-semibold">UON</h4>
-            </a>
-            <Link href="#" className="flex gap-2">
-              <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
-              <h4 className="text-x font-semibold">KU</h4>
+              <h4 className="text-x font-semibold">ALU</h4>
             </Link>
-            <Link href="#" className="flex gap-2">
+            <Link href="/chapters/alu" className="flex gap-2">
               <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
-              <h4 className="text-x font-semibold">MKU</h4>
+              <h4 className="text-x font-semibold">ALU</h4>
+            </Link>
+            <Link href="/chapters/alu" className="flex gap-2">
+              <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
+              <h4 className="text-x font-semibold">ALU</h4>
             </Link>
           </div>
         </div>
