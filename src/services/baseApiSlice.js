@@ -71,6 +71,12 @@ export const baseApiSlice = createApi({
         method: "GET",
       }),
     }),
+    getComments: builder.query({
+      query: (id) => ({
+        url: `/posts/interactions/comment-all?id=${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -85,4 +91,5 @@ export const {
   useGetPostsByUserIdQuery,
   useCommentPostMutation,
   useGetCommentsCountQuery,
+  useGetCommentsQuery,
 } = baseApiSlice;

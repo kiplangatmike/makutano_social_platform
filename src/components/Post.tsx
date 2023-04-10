@@ -38,8 +38,6 @@ export default function OnePost({ post, modalPost = false }: Props) {
   const [showAll, setShowAll] = useState(false);
   const setModalOpen = useSetAtom(modalState);
   const setModalOpen2 = useSetAtom(modalState2);
-  const setModalType = useSetAtom(modalTypeState);
-  const setModalPost = useSetAtom(modalPostState);
 
   const { data: session } = useSession();
 
@@ -155,8 +153,11 @@ export default function OnePost({ post, modalPost = false }: Props) {
         modalPost && "rounded-r-lg"
       )}
     >
-      <header className="mb-2 flex flex-nowrap items-center justify-between px-4 pt-3 ">
-        <Link href="/profile" className="flex items-center">
+      <header className="mb-2 flex flex-nowrap items-center justify-between px-4 pt-3">
+        <Link
+          href={`/profile/${localPostContent?.authorId}`}
+          className="flex items-center"
+        >
           <span className="flex cursor-pointer">
             <Avatar src={localPostContent?.author?.image as string} size={40} />
           </span>
@@ -202,7 +203,21 @@ export default function OnePost({ post, modalPost = false }: Props) {
               modalPost && "max-h-72 overflow-y-auto"
             )}
           >
-            <p className="mb-4">{localPostContent?.input}</p>
+            <p className="mb-4">
+              {localPostContent?.input?.length > 220
+                ? `${localPostContent?.input?.slice(0, 220)}...`
+                : `${localPostContent?.input}`}
+              {!modalPost &&
+                !showAll &&
+                localPostContent?.input?.length > 220 && (
+                  <button
+                    onClick={() => setShowAll(true)}
+                    className="t-secondary inline-block bg-white pl-2 hover:underline dark:bg-dblue dark:text-amber-400"
+                  >
+                    ...see more
+                  </button>
+                )}
+            </p>
             {localPostContent?.media?.length > 0 && (
               <div className="relative my-1 h-[200px] w-full overflow-hidden rounded-xl">
                 <Image
@@ -213,16 +228,6 @@ export default function OnePost({ post, modalPost = false }: Props) {
                 ></Image>
               </div>
             )}
-            {!modalPost &&
-              !showAll &&
-              localPostContent?.input?.length > 220 && (
-                <button
-                  onClick={() => setShowAll(true)}
-                  className="t-secondary hover:t-blue dark:text-t-blue-light absolute -bottom-1 right-0 inline-block bg-white pl-2 hover:underline dark:bg-dblue"
-                >
-                  ...see more
-                </button>
-              )}
           </article>
         )}
       </Link>
@@ -311,9 +316,6 @@ type Props = {
 };
 
 const PostMenu = ({ post }: { post: Props["post"] }) => {
-  const client = useQueryClient();
-
-  const { data: session } = useSession();
   const [isDeleting, setIsDeleting] = useState(false);
 
   const setModalOpen = useSetAtom(modalState);
