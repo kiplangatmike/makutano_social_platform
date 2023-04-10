@@ -18,9 +18,9 @@ export default function Feed() {
   const [parent] = useAutoAnimate<HTMLDivElement>();
 
   return (
-    <div className="relative mx-auto mt-0 w-full pb-6 xl:w-[40vw] 2xl:w-[50vw]">
+    <div className=" relative  w-full pb-6 xl:w-[40vw] 2xl:w-[50vw]">
       {posts && posts?.length > 0 && (
-        <div className="my-2">
+        <div className="">
           <button className="flex w-full cursor-pointer items-center">
             <hr className="mr-2 h-[1px] flex-grow border-t border-black/10 bg-black/10 dark:border-gray-500 dark:bg-gray-500" />
             <div className="flex items-center">
