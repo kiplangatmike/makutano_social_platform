@@ -18,8 +18,8 @@ export default function Header() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <header className="t-primary sticky top-0 z-10 bg-white px-4 focus-within:shadow dark:bg-dblue">
-      <nav className="justify- mx-auto flex max-w-6xl items-center py-1">
+    <header className="t-primary  sticky top-0 z-10 bg-white px-4 focus-within:shadow dark:bg-dblue">
+      <nav className="justify-between mx-auto flex max-w-6xl items-center py-1">
         {/* Left */}
         <div className="flex max-w-xs items-center  text-xl font-semibold">
           <Link href="/feed" className="flex">
@@ -58,7 +58,7 @@ export default function Header() {
           <HeaderLink Icon={MdNotifications} feed link="/notification">
             Notifications
           </HeaderLink>
-          <HeaderLink feed avatar hidden link="/profile">
+          <HeaderLink feed avatar hidden link={`/profile/id`}>
             Me
           </HeaderLink>
 

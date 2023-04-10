@@ -4,9 +4,18 @@ import Image from "next/image";
 import { setegid } from "process";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import Education from "$components/Education";
+import Experience from "$components/Experience";
+import ProfilePost from "$components/ProfilePost";
 
 export default function Profile() {
   const [openModal, setOpenModal] = useState(false);
+
+  const [activeComponent, setActiveComponent] = useState("component1");
+
+  const handleButtonClick = (componentName: string) => {
+    setActiveComponent(componentName);
+  };
   return (
     <div>
       <Layout>
@@ -51,18 +60,30 @@ export default function Profile() {
                   <button>Followers</button>
                 </div>
               </div>
-              {/* <div className="my-3 flex gap-4">
-                <div className="rounded-xl bg-gray-200/20 px-4 py-1 text-white">
-                  <button>About</button>
-                </div>
-                <div className="rounded-xl bg-gray-200/20 px-4 py-1">
-                  <button>Posts</button>
-                </div>
-              </div> */}
+            </div>
+            <div className="my-3 flex gap-4">
+              <div
+                className={`rounded-xl px-4 py-1 ${activeComponent === "component1" ? "bg-red-800 text-white" : "bg-gray-200/20 text-white"}`}
+                onClick={() => handleButtonClick("component1")}
+              >
+                <button>Posts</button>
+              </div>
+              <div
+                className={`rounded-xl px-4 py-1 ${activeComponent === "component2" ? "bg-red-800 text-white" : "bg-gray-200/20 text-white"}`}
+                onClick={() => handleButtonClick("component2")}
+              >
+                <button>Education</button>
+              </div>
+              <div
+                className={`rounded-xl px-4 py-1 ${activeComponent === "component3" ? "bg-red-800 text-white" : "bg-gray-200/20 text-white"}`}
+                onClick={() => handleButtonClick("component3")}
+              >
+                <button>Experience</button>
+              </div>
             </div>
           </div>
         </div>
-        <div className="feed-card mt-3 rounded-3xl p-4  ">
+        {/* <div className="feed-card mt-3 rounded-3xl p-4  ">
           <div className="mb-2 text-[20px] font-semibold">About</div>
           <div>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue
@@ -74,29 +95,18 @@ export default function Profile() {
             feugiat ullamcorper. Aenean id augue vestibulum, tempor felis vel,
             gravida nibh.
           </div>
-        </div>
+        </div> */}
         <div className="feed-card mt-4 rounded-3xl p-4 ">
-          <div className="mb-2 text-[20px] font-semibold">Posts</div>
-          <div className="mb-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue
-            eu urna non commodo. Maecenas ultrices vitae erat ac suscipit. Donec
-            ex mi, sagittis eget fringilla ornare, dictum vitae magna.
-          </div>
-          <div className="h-full overflow-hidden rounded-3xl">
-            <Image
-              src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-              alt=""
-              width={1000}
-              height={1000}
-            ></Image>
-          </div>
+          {activeComponent === "component1" ? <ProfilePost /> : null}
+          {activeComponent === "component2" ? <Education /> : null}
+          {activeComponent === "component3" ? <Experience /> : null}
         </div>
       </Layout>
     </div>
   );
 }
 
-function ProfileModal({ onClose }: { onClose: ()=> void }) {
+function ProfileModal({ onClose }: { onClose: () => void }) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [university, setUniversity] = useState("");
