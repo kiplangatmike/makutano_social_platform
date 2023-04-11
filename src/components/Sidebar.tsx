@@ -27,7 +27,7 @@ export default function Sidebar() {
   }, [setModalOpen, setModalType]);
 
   return (
-    <div className="fixed left-4 top-20 w-[320px] space-y-2">
+    <div className="fixed left-4 top-24 w-[320px] space-y-2">
       {/* First card */}
       <section className="feed-card rounded-3xl text-center">
         <div className="relative mx-auto flex">

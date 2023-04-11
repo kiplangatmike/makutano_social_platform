@@ -19,11 +19,11 @@ export default function HeaderLink({
     <Link
       href={link}
       className={clsx(
-        "flex cursor-pointer flex-col items-center justify-center",
+        "flex cursor-pointer flex-col items-center justify-center bg-[#22292e] px-3 py-2 rounded-xl",
         feed && "t-secondary hover:text-black dark:hover:text-white",
         !feed && "text-gray-500 hover:text-gray-700",
         hidden && "hidden md:inline-flex",
-        active && "text-black dark:text-white"
+        active && " bg-[#2a3238]"
       )}
     >
       {avatar ? (

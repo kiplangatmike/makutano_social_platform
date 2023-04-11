@@ -14,13 +14,33 @@ export default function Experience() {
       </button>
       <ProfileMod isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <form>
-          <h1>Add Experience</h1>
+          <h1 className="text-2xl">Add Experience</h1>
 
-          <div className="flex flex-col">
-            <label className="">Role</label>
-            <input placeholder="Input" />
-            <label>Place of work</label>
-            <input placeholder="Input" />
+          <div className="mt-5 flex flex-col">
+            <div className="flex flex-col">
+              <label className="">Role</label>
+              <input
+                placeholder="Input"
+                className="mt-1 rounded-xl border-none py-2 pl-3 text-black"
+                type="text"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label>Place of work</label>
+              <input
+                placeholder="Input"
+                className="mt-1 rounded-xl border-none py-2 pl-3 text-black"
+                type="text"
+              />
+            </div>
+            <div className="text-center mt-4">
+              <button
+                className="rounded-xl  bg-amber-800 px-4 py-1 hover:bg-amber-900"
+                type="submit"
+              >
+                Update
+              </button>
+            </div>
           </div>
         </form>
       </ProfileMod>
@@ -30,9 +50,9 @@ export default function Experience() {
       <div className="text-[15px] font-semibold">
         Senior Software Developer{" "}
       </div>
-      <div className="text-[12px]">Google</div>
+      <div className="text-[13px]"><span>2020-2022.</span>Google</div>
       <div className="text-[15px] font-semibold">Software Developer </div>
-      <div className="text-[12px]">ABC Company </div>
+      <div className="text-[12px]"><span>2017-2020.</span>ABC Company </div>
     </div>
   );
 }

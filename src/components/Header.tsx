@@ -18,7 +18,7 @@ export default function Header() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <header className="t-primary  sticky top-0 z-10 bg-white px-4 focus-within:shadow dark:bg-dblue">
+    <header className="t-primary  sticky top-0 z-10 bg-white px-4 focus-within:shadow py-2 dark:bg-dblue">
       <nav className="justify-between mx-auto flex max-w-6xl items-center py-1">
         {/* Left */}
         <div className="flex max-w-xs items-center  text-xl font-semibold">
@@ -45,25 +45,26 @@ export default function Header() {
         </div>
 
         {/* Right */}
-        <div className="flex items-center gap-2 space-x-6 py-1">
-          <HeaderLink Icon={TbBrandGoogleHome} feed active link="/feed">
+        <div className="flex items-center gap- space-x-4  pb-2 rounded-xl px-1 bg-[#22292e] py-1">
+          <HeaderLink feed active link="/feed">
             Home
           </HeaderLink>
-          <HeaderLink Icon={SlPeople} feed link="/mynetwork">
+          <HeaderLink  feed link="/mynetwork">
             My Network
           </HeaderLink>
-          <HeaderLink Icon={MdBusinessCenter} feed hidden link="/network">
+          <HeaderLink  feed hidden link="/network">
             Opportunities
           </HeaderLink>
-          <HeaderLink Icon={MdNotifications} feed link="/notification">
-            Notifications
-          </HeaderLink>
+          </div>
+          <div className="flex  gap-2 items-center">
+          <div><HeaderLink  Icon={MdNotifications} feed link="/notification">
+          </HeaderLink></div><div>
           <HeaderLink feed avatar hidden link={`/profile/id`}>
-            Me
-          </HeaderLink>
+            
+          </HeaderLink></div></div>
 
           {/* Dark mode toggle */}
-          {mounted && (
+          {/* {mounted && (
             <button
               onClick={() =>
                 setTheme(resolvedTheme === "dark" ? "light" : "dark")
@@ -81,8 +82,8 @@ export default function Header() {
               />
               <span className="absolute right-1">🌞</span>
             </button>
-          )}
-        </div>
+          )} */}
+        
       </nav>
     </header>
   );

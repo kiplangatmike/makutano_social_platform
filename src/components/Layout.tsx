@@ -17,10 +17,10 @@ export default function Layout({ children }: { children: ReactNode }) {
       <Header />
       {/* <Navbar /> */}
       <div className="px-5">
-        <div className="my-6">
+        <div className="my-5">
           <Sidebar />
-          <div className="ml-[27vw]  min-w-[400px] max-w-[42vw]">{children}</div>
-          <aside className="fixed right-4 top-20 mt-0 block h-[80vh] w-[325px] overflow-y-auto md:hidden lg:block">
+          <div className="ml-[337px]  min-w-[400px] max-w-[42vw]">{children}</div>
+          <aside className="fixed right-4 top-24 mt-0 block h-[80vh] w-[325px] overflow-y-auto md:hidden lg:block">
             <Widgets />
           </aside>
         </div>

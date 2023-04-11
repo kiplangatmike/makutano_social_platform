@@ -13,13 +13,31 @@ export default function Education() {
       </button>
       <ProfileMod isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <form>
-          <h1>Add Education</h1>
+          <h1 className="text-2xl">Add Education</h1>
 
-          <div className="flex flex-col">
+          <div className="mt-5">
+            <div className="flex flex-col">
             <label className="">Level</label>
-            <input placeholder="Input" />
+            <input
+              placeholder="Input"
+              className="mt-1 rounded-xl py-2 border-none pl-3 text-black"
+              type="text"
+            /></div>
+            <div className="mt-2 flex flex-col">
             <label>School</label>
-            <input placeholder="Input" />
+            <input
+              placeholder="Input"
+              className="mt-1 rounded-xl border-none py-2 pl-3 text-black"
+              type="text"
+            /></div>
+            <div className="text-center mt-4">
+              <button
+                className="rounded-xl bg-amber-800 px-4 py-1 "
+                type="submit"
+              >
+                Update
+              </button>
+            </div>
           </div>
         </form>
       </ProfileMod>

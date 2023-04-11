@@ -63,9 +63,9 @@ export default function Profile() {
                 </div>
               </div>
             </div>
-            <div className="my-3 mr-5 flex justify-around">
+            <div className="my-3 mr-5 flex-1 flex flex-wrap flex-grow gap-3 justify-around">
               <div
-                className={`rounded-xl px-4 py-1 ${
+                className={`transition ease-in-out delay-180 hover:-translate-y-1 hover:scale-105 duration-150 flex-1 text-center rounded-xl min-w-[100px] hover:bg-red-800 py-1 ${
                   activeComponent === "component1"
                     ? "bg-red-800 text-white"
                     : "bg-gray-200/20 text-white"
@@ -75,7 +75,7 @@ export default function Profile() {
                 <button>Posts</button>
               </div>
               <div
-                className={`rounded-xl px-4 py-1 ${
+                className={`transition ease-in-out delay-180 hover:-translate-y-1 hover:scale-105 duration-150 flex-1 text-center rounded-xl min-w-[100px] hover:bg-red-800 py-1 ${
                   activeComponent === "component2"
                     ? "bg-red-800 text-white"
                     : "bg-gray-200/20 text-white"
@@ -85,7 +85,7 @@ export default function Profile() {
                 <button>Education</button>
               </div>
               <div
-                className={`rounded-xl px-4 py-1 ${
+                className={`transition ease-in-out delay-180 hover:-translate-y-1 hover:scale-105 duration-150 flex-1 text-center rounded-xl min-w-[100px] hover:bg-red-800 py-1 ${
                   activeComponent === "component3"
                     ? "bg-red-800 text-white"
                     : "bg-gray-200/20 text-white"
@@ -95,7 +95,7 @@ export default function Profile() {
                 <button>Experience</button>
               </div>
               <div
-                className={`rounded-xl px-4 py-1 ${
+                className={`transition ease-in-out delay-180 hover:-translate-y-1 hover:scale-105 duration-150 rounded-xl flex-1 text-center min-w-[100px] hover:bg-red-800 py-1 ${
                   activeComponent === "component4"
                     ? "bg-red-800 text-white"
                     : "bg-gray-200/20 text-white"
