@@ -5,7 +5,7 @@ const isProd = process.env.NODE_ENV === 'production'
 export const prisma =
   global.prisma ||
   new PrismaClient({
-    ...(!isProd && { log: ['warn', 'error'] }),
+    ...(!isProd && { log: ['error'] }),
   })
 
 if (!isProd) global.prisma = prisma
