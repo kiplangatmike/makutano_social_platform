@@ -1,0 +1,5 @@
+{
+  "appService.zipIgnorePattern": ["node_modules{,/**}", ".vscode{,/**}"],
+  "appService.defaultWebAppToDeploy": "/subscriptions/2ab9ccf2-8dfd-4580-9e1c-335a239c8d88/resourceGroups/makutano_group/providers/Microsoft.Web/sites/makutano",
+  "appService.deploySubpath": "."
+}

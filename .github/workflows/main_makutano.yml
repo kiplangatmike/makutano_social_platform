@@ -57,6 +57,10 @@ jobs:
         run: |
           rm node-app.tar.gz
 
+      - name: Check if package.json exists
+        run: |
+          if [ -f package.json ]; then echo "package.json exists."; else echo "package.json does not exist."; exit 1; fi
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
