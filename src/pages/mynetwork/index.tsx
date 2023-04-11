@@ -11,7 +11,7 @@ const Network = () => {
           <input
             type="text"
             placeholder="Search for users"
-            className="mb-4 w-full rounded-xl border border-gray-400 p-2"
+            className="mb-4 w-full rounded-xl border-none p-2"
           />
           <div className="flex flex-col space-y-4">
             <div className="flex items-center space-x-4">
@@ -20,7 +20,7 @@ const Network = () => {
                 <h2 className="font-semibold">Liplan</h2>
                 <p className="text-gray-500">@Liplan</p>
               </div>
-              <button className="rounded-2xl bg-blue-600 px-4 py-2 font-bold text-white hover:bg-blue-700">
+              <button className="rounded-2xl bg-red-900 px-4 py-2 font-bold text-white hover:bg-red-800">
                 Unfollow
               </button>
             </div>
@@ -30,7 +30,7 @@ const Network = () => {
                 <h2 className="font-semibold">Mercy</h2>
                 <p className="text-gray-500">@Mercy</p>
               </div>
-              <button className="rounded-2xl bg-blue-600 px-4 py-2 font-bold text-white hover:bg-blue-700">
+              <button className="rounded-2xl bg-red-900 px-4 py-2 font-bold text-white hover:bg-red-800">
                 Unfollow
               </button>
             </div>

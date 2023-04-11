@@ -27,7 +27,7 @@ export default function Sidebar() {
   }, [setModalOpen, setModalType]);
 
   return (
-    <div className="fixed left-4 top-20 w-[320px] space-y-2">
+    <div className="fixed left-4 top-24 w-[320px] space-y-2">
       {/* First card */}
       <section className="feed-card rounded-3xl text-center">
         <div className="relative mx-auto flex">
@@ -97,7 +97,7 @@ export default function Sidebar() {
             onClick={openModal}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
-            className="t-secondary rounded-3xl bg-amber-800 px-8 py-2 text-lg font-semibold"
+            className="t-secondary rounded-xl bg-amber-800 px-8 py-2 text-lg font-semibold"
           >
             Create Post
           </motion.button>

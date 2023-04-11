@@ -4,12 +4,13 @@ import Image from "next/image";
 import clsx from "clsx";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
-import { MdBusinessCenter, MdNotifications } from "react-icons/md";
+import { MdOutlineWorkOutline, MdNotifications } from "react-icons/md";
 import { TbBrandGoogleHome } from "react-icons/tb";
 import { SlPeople } from "react-icons/sl";
 import HeaderLink from "$components/HeaderLink";
 import icon from "$public/icon.png";
 import icon_white from "$public/icon_white.png";
+import Avatar from "./Avatar";
 
 export default function Header() {
   const [mounted, setMounted] = useState(false);
@@ -18,8 +19,8 @@ export default function Header() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <header className="t-primary sticky top-0 z-10 bg-white px-4 focus-within:shadow dark:bg-dblue">
-      <nav className="justify- mx-auto flex max-w-6xl items-center py-1">
+    <header className="t-primary  sticky top-0 z-10 bg-white px-4 py-2 focus-within:shadow dark:bg-dblue">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between py-1">
         {/* Left */}
         <div className="flex max-w-xs items-center  text-xl font-semibold">
           <Link href="/feed" className="flex">
@@ -45,25 +46,46 @@ export default function Header() {
         </div>
 
         {/* Right */}
-        <div className="flex items-center gap-2 space-x-6 py-1">
-          <HeaderLink Icon={TbBrandGoogleHome} feed active link="/feed">
-            Home
-          </HeaderLink>
-          <HeaderLink Icon={SlPeople} feed link="/chapters">
-            Chapters
-          </HeaderLink>
-          <HeaderLink Icon={MdBusinessCenter} feed hidden link="/network">
-            Opportunities
-          </HeaderLink>
-          <HeaderLink Icon={MdNotifications} feed link="/notification">
-            Notifications
-          </HeaderLink>
-          <HeaderLink feed avatar hidden link="/profile">
-            Me
-          </HeaderLink>
+        <div className="gap- flex items-center space-x-4  rounded-xl bg-[#22292e] px-1 py-1 pb-2">
+          <div className="flex">
+            <HeaderLink Icon={TbBrandGoogleHome} feed active link="/feed">
+              Home
+            </HeaderLink>
+          </div>
+          <div>
+            <HeaderLink Icon={SlPeople} feed link="/mynetwork">
+              My Network
+            </HeaderLink>
+          </div>
+          <div>
+            <HeaderLink Icon={SlPeople} feed link="/chapters">
+              Chapters
+            </HeaderLink>
+          </div>
+          <div>
+            <HeaderLink Icon={MdOutlineWorkOutline} feed hidden link="/network">
+              Opportunities
+            </HeaderLink>
+          </div>
+        </div>
+        <div className="flex  items-center gap-2">
+          <div>
+            <HeaderLink
+              Icon={MdNotifications}
+              feed
+              link="/notification"
+            >Notifications</HeaderLink>
+          </div>
+          <Link
+            href={`/profile/12`}
+            className=" cursor-pointer"
+          >
+            <Avatar size={40} />
+          </Link>
+        </div>
 
-          {/* Dark mode toggle */}
-          {mounted && (
+        {/* Dark mode toggle */}
+        {/* {mounted && (
             <button
               onClick={() =>
                 setTheme(resolvedTheme === "dark" ? "light" : "dark")
@@ -81,8 +103,7 @@ export default function Header() {
               />
               <span className="absolute right-1">🌞</span>
             </button>
-          )}
-        </div>
+          )} */}
       </nav>
     </header>
   );
