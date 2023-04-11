@@ -13,3 +13,5 @@ Makutano app connects the ELP community through the power of social media powere
     Start the production server: npm run start
     Open your browser and go to http://localhost:3000/ to view the app.
     
+VIDEO LINK
+https://drive.google.com/drive/folders/1Yoe-c2TBPnfvchUeUBk15sUPCpXkHBAw?usp=share_link
