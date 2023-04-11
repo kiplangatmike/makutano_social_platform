@@ -9,6 +9,7 @@ const nextConfig = {
       "unsplash.com",
       "res.cloudinary.com",
       "via.placeholder.com",
+      "www.google.com",
     ],
   },
 };

@@ -10,7 +10,7 @@ export default function Notification() {
   ];
   return (
     <Layout>
-      <div className="feed-card flex flex-col  rounded-3xl">
+      <div className="feed-card dark:bg-gray-900 flex flex-col  rounded-3xl">
         <div className="my-2 text-center text-2xl font-bold">Notifications</div>
         <Link href="/profile" className="m-2 ">
           {notifications?.map((index, noti) => (

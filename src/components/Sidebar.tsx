@@ -31,20 +31,20 @@ export default function Sidebar() {
   const { data: allChapters, isFetching } = useGetAllChaptersQuery(undefined);
 
   return (
-    <div className="fixed left-4 top-24 w-[320px] space-y-2">
+    <div className="md:fixed left-4 top-24 md:w-[300px] space-y-2">
       {/* First card */}
-      <section className="feed-card rounded-3xl text-center">
+      <section className="dark:bg-gray-900 rounded-3xl text-center drop-shadow-lg">
         <div className="relative mx-auto flex">
           <Link
             href={`/profile/${session?.user?.uid}`}
-            className="ml-8 mt-4 h-[40px] min-w-[40px] cursor-pointer"
+            className="ml-8 mt-4 h-[40px] min-w-[40px] cursor-pointer capitalize"
           >
             <Avatar size={40} />
           </Link>
 
           <div className="px-6 py-4 text-left">
             <Link href={`/profile/${session?.user?.uid}`} className="block">
-              <h3 className="cursor-pointer divide-amber-800/80 font-semibold underline-offset-1 hover:underline">
+              <h3 className="cursor-pointer divide-amber-800/80 font-semibold underline-offset-1 hover:underline capitalize">
                 {session?.user?.name}
               </h3>
             </Link>
@@ -87,7 +87,7 @@ export default function Sidebar() {
           className="sidebar-section sidebar-btn card-btn mt-2 flex w-full items-center gap-3 p-3 px-8"
         >
           <BiLogOut className="mui-icon t-secondary h-4 w-4" />
-          <h4 className="text-x font-semibold">Logout</h4>
+          <h4 className="font-semibold">Logout</h4>
         </button>
 
         <div className="sidebar-section sidebar-btn card-btn w-full p-3 px-8">

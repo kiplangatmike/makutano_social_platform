@@ -46,7 +46,7 @@ export default function Profile({
           <ProfileModal onClose={() => setOpenModal(false)} />
         </ProfileMod>
       )}
-      <div className="feed-card rounded-3xl">
+      <div className="dark:bg-gray-900 feed-card rounded-3xl">
         <div className="relative h-[80px] bg-gray-900">
           <div className="h-full overflow-hidden">
             <Image
@@ -115,7 +115,7 @@ export default function Profile({
             <p className="mb-4 mr-5 rounded-lg py-2 italic">
               {data?.ComprehensiveProfile[0]?.bio}
             </p>
-            <div className="bottom-20 left-0 flex w-full pb-4 font-bold text-white">
+            <div className="bottom-20 left-0  flex w-full p-5 pb-4 font-bold text-white">
               <div className="mr-3 flex w-max">
                 <span className="mr-1">{data?.posts?.length}</span>
                 <p>Posts</p>
@@ -130,13 +130,13 @@ export default function Profile({
               </div>
             </div>
           </div>
-          <div className="my-3 mr-5  flex flex-1 flex-grow flex-wrap justify-around rounded-xl border-[1px] border-blue-400/30">
+          <div className=" my-3 mr-5  flex flex-1 flex-grow flex-wrap justify-around rounded-xl border-[1px] border-blue-400/30">
             <motion.button
               onClick={() => handleButtonClick("component1")}
               whileTap={{ scale: 0.99 }}
               className={`t-secondary  min-w-[100px]  flex-1 rounded-l-xl bg-amber-800 py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
                 activeComponent === "component1"
-                  ? "bg-blue-400/30 text-white"
+                  ? "bg-blue-500/30 text-white"
                   : "bg-transparent text-white"
               }`}
             >
@@ -147,7 +147,7 @@ export default function Profile({
               whileTap={{ scale: 0.99 }}
               className={`t-secondary  min-w-[100px]   flex-1 bg-amber-800 py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
                 activeComponent === "component2"
-                  ? "bg-blue-400/30 text-white"
+                  ? "bg-blue-500/30 text-white"
                   : "bg-transparent text-white"
               }`}
             >
@@ -158,7 +158,7 @@ export default function Profile({
               whileTap={{ scale: 0.99 }}
               className={`t-secondary  min-w-[100px]  flex-1 bg-amber-800 py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
                 activeComponent === "component3"
-                  ? "bg-blue-400/30 text-white"
+                  ? "bg-blue-500/30 text-white"
                   : "bg-transparent text-white"
               }`}
             >
@@ -392,6 +392,7 @@ export const getStaticProps = async ({
       },
     };
   } catch (error) {
+    console.log(error?.response)
     // not found
     return {
       notFound: true,

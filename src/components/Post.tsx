@@ -145,14 +145,14 @@ export default function OnePost({ post, modalPost = false }: Props) {
   return (
     <div
       className={clsx(
-        !modalPost && "feed-card  rounded-3xl",
+        !modalPost && "dark:bg-gray-900  rounded-3xl shadow-md",
         modalPost && "rounded-r-lg"
       )}
     >
       <header className="mb-2 flex flex-nowrap items-center justify-between px-4 pt-3">
         <Link
           href={`/profile/${localPostContent?.authorId}`}
-          className="flex items-center"
+          className="flex items-center capitalize"
         >
           <span className="flex cursor-pointer">
             <Avatar src={localPostContent?.author?.image as string} size={40} />
@@ -255,7 +255,7 @@ export default function OnePost({ post, modalPost = false }: Props) {
 
         <button
           onClick={() => setModalOpen2(false)}
-          className="card-btn rounded-xl text-white"
+          className="card-btn rounded-xl text-white "
         >
           <BiComment className="mui-icon w-[23px] -scale-x-100" />
           <span className="ml-1 text-white">{commentIds?.length ?? 0}</span>
@@ -272,7 +272,7 @@ export default function OnePost({ post, modalPost = false }: Props) {
         <div>
           <Avatar size={30} />
         </div>
-        <div className="relative mr-4 grow rounded-3xl">
+        <div className="relative mr-4 grow rounded-3xl pb-3">
           <form className="mr-0">
             <textarea
               className="block h-12 w-full resize-none overflow-hidden rounded-3xl border border-white/30 bg-transparent px-4 outline-none transition-all duration-300 ease-in focus:h-16 focus:border-none focus:border-white focus:outline-none"

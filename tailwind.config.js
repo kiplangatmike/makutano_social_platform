@@ -16,6 +16,10 @@ module.exports = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
+      screens: {
+        b600: "1210px",
+        b400: "950px",
+      },
     },
   },
   plugins: [require("@tailwindcss/forms")],

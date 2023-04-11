@@ -8,7 +8,7 @@ export default function ProfilePost({ posts }: { posts: Post[] }) {
 
   return (
     <div ref={parent} className="w-full flex flex-col gap-8">
-      {posts?.length === 0 && <p>No posts found</p>}
+      {posts?.length === 0 && <p className="feed-card rounded-3xl p-4 font-semibold">No posts found</p>}
       {posts?.map((p: Post) => (
         <OnePost key={p.id} post={p} />
       ))}
