@@ -53,6 +53,10 @@ jobs:
         run: |
           tar -xvf node-app.tar.gz
 
+      - name: Remove tar file
+        run: |
+          rm node-app.tar.gz
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
