@@ -282,18 +282,25 @@ export default function OnePost({ data }: { data: Post }) {
 }
 
 export const getStaticPaths = async () => {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_V1}posts`
-  );
-  const paths = res.data.map((post: Post) => ({
-    params: {
-      postId: post.id.toString(),
-    },
-  }));
-  return {
-    paths,
-    fallback: "blocking",
-  };
+  try {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL_V1}posts`
+    );
+    const paths = res.data.map((post: Post) => ({
+      params: {
+        postId: post.id.toString(),
+      },
+    }));
+    return {
+      paths,
+      fallback: "blocking",
+    };
+  } catch (error) {
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
 };
 
 // get post by id - `/posts/:post` for getStaticProps
@@ -304,13 +311,19 @@ export const getStaticProps = async ({
     postId: string;
   };
 }) => {
-  console.log(params);
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_V1}posts/${params.postId}`
-  );
-  return {
-    props: {
-      data: res.data,
-    },
-  };
+  try {
+    console.log(params);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL_V1}posts/${params.postId}`
+    );
+    return {
+      props: {
+        data: res.data,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
 };

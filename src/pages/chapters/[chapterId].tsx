@@ -18,18 +18,25 @@ export default function OneChapter({
 }
 
 export const getStaticPaths = async () => {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_V1}chapters`
-  );
-  const paths = res.data.map((chapter: Chapters) => ({
-    params: {
-      chapterId: chapter.id.toString(),
-    },
-  }));
-  return {
-    paths,
-    fallback: "blocking",
-  };
+  try {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL_V1}chapters`
+    );
+    const paths = res.data.map((chapter: Chapters) => ({
+      params: {
+        chapterId: chapter.id.toString(),
+      },
+    }));
+    return {
+      paths,
+      fallback: "blocking",
+    };
+  } catch (error) {
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
 };
 
 export const getStaticProps = async ({
@@ -39,13 +46,19 @@ export const getStaticProps = async ({
     chapterId: string;
   };
 }) => {
-  console.log(params);
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_V1}chapters/${params.chapterId}`
-  );
-  return {
-    props: {
-      data: res.data,
-    },
-  };
+  try {
+    console.log(params);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL_V1}chapters/${params.chapterId}`
+    );
+    return {
+      props: {
+        data: res.data,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
 };
