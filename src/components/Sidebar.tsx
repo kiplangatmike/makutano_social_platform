@@ -36,14 +36,14 @@ export default function Sidebar() {
       <section className="feed-card rounded-3xl text-center">
         <div className="relative mx-auto flex">
           <Link
-            href={`/profile/12`}
+            href={`/profile/${session?.user?.uid}`}
             className="ml-8 mt-4 h-[40px] min-w-[40px] cursor-pointer"
           >
             <Avatar size={40} />
           </Link>
 
           <div className="px-6 py-4 text-left">
-            <Link href={`/profile/12`} className="block">
+            <Link href={`/profile/${session?.user?.uid}`} className="block">
               <h3 className="cursor-pointer divide-amber-800/80 font-semibold underline-offset-1 hover:underline">
                 {session?.user?.name}
               </h3>

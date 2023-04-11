@@ -15,7 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             ComprehensiveProfile: true,
           }
         })
-        if (user) {
+        if (user && user?.ComprehensiveProfile?.length > 0) {
           // get education and experience with profileId (user.ComprehensiveProfile.id)
           const education = await prisma.education.findMany({
             where: {

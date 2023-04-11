@@ -32,6 +32,8 @@ export default function Profile({
 }) {
   const [openModal, setOpenModal] = useState(false);
 
+  const { data: session } = useSession();
+
   const [activeComponent, setActiveComponent] = useState("component1");
 
   const handleButtonClick = (componentName: string) => {
@@ -55,55 +57,61 @@ export default function Profile({
             ></Image>
           </div>
           <div className="absolute bottom-0 -mb-10 ml-5">
-            <Avatar size={80} />
+            <Avatar src={data?.image as string} size={80} />
           </div>
-          <div className="absolute bottom-0 right-0 -mb-10 mr-5 rounded-[8px] bg-gray-200/20 px-4 py-1">
-            <button onClick={() => setOpenModal(true)}>Update profile</button>
-          </div>
+          {session?.user?.uid === data?.id && (
+            <div className="absolute bottom-0 right-0 -mb-10 mr-5 rounded-[8px] bg-gray-200/20 px-4 py-1">
+              <button onClick={() => setOpenModal(true)}>Update profile</button>
+            </div>
+          )}
         </div>
         <div className=" ml-5 mt-12 h-2/3">
           <div className="relative">
             <p className="mb-1 text-2xl font-bold">{data?.name}</p>
 
-            <p className="mb-1 mt-6 flex gap-1 font-semibold">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="h-6 w-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
-                />
-              </svg>
-              {data?.ComprehensiveProfile[0]?.location}
-            </p>
-            <p className="mb-7 flex gap-1 font-semibold">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="h-6 w-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"
-                />
-              </svg>
-              {data?.education[0]?.school ?? ""}
-            </p>
+            {data?.ComprehensiveProfile[0]?.location && (
+              <p className="mb-1 mt-6 flex gap-1 font-semibold">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="h-6 w-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                  />
+                </svg>
+                {data?.ComprehensiveProfile[0]?.location ?? ""}
+              </p>
+            )}
+            {data?.education?.length > 0 && (
+              <p className="mb-7 flex gap-1 font-semibold">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="h-6 w-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"
+                  />
+                </svg>
+                {data?.education?.length > 0 ? data?.education[0]?.school : ""}
+              </p>
+            )}
             <p className="mb-4 mr-5 rounded-lg py-2 italic">
               {data?.ComprehensiveProfile[0]?.bio}
             </p>
@@ -346,18 +354,26 @@ function ProfileModal({ onClose }: { onClose: () => void }) {
 }
 
 export const getStaticPaths = async () => {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_V1}users`
-  );
-  const paths = res.data.map((user: User) => ({
-    params: {
-      userId: user.id.toString(),
-    },
-  }));
-  return {
-    paths,
-    fallback: "blocking",
-  };
+  try {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL_V1}users`
+    );
+    const paths = res.data.map((user: User) => ({
+      params: {
+        userId: user.id.toString(),
+      },
+    }));
+    return {
+      paths,
+      fallback: "blocking",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
 };
 
 export const getStaticProps = async ({
@@ -367,13 +383,20 @@ export const getStaticProps = async ({
     userId: string;
   };
 }) => {
-  console.log(params);
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_V1}users/${params.userId}`
-  );
-  return {
-    props: {
-      data: res.data,
-    },
-  };
+  try {
+    console.log(params);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL_V1}users/${params.userId}`
+    );
+    return {
+      props: {
+        data: res.data,
+      },
+    };
+  } catch (error) {
+    // not found
+    return {
+      notFound: true,
+    };
+  }
 };
