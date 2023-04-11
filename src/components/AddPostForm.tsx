@@ -259,9 +259,9 @@ export default function AddPostForm() {
   }, [allChapters]);
 
   return (
-    <div className="overflow-auto">
+    <div className="overflow-auto dark:bg-gray-900">
       <form
-        className="t-primary flex h-full flex-col justify-between"
+        className="t-primary dark:bg-gray-900 flex h-full flex-col justify-between"
         onSubmit={handleSubmit(post ? onEditPost : onCreatePost)}
       >
         <div className="flex-grow overflow-y-auto">
@@ -280,11 +280,11 @@ export default function AddPostForm() {
                       setSelectedChapter("");
                     }}
                     className={`card-btn t-secondary flex items-center justify-center rounded-full px-3 py-1 ${
-                      selectedChapter.length > 0 ? "" : "bg-amber-700"
+                      selectedChapter.length > 0 ? "" : "bg-blue-400/25"
                     }`}
                   >
                     <MdPublic size={16} />
-                    <span className="px-2 font-semibold">Anyone</span>
+                    <span className="px-2 font-semibold ">Anyone</span>
                     {selectedChapter.length === 0 && <MdCheck />}
                   </button>
                   <div

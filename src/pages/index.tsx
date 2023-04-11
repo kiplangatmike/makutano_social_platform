@@ -19,7 +19,6 @@ export default function Home() {
             href="/"
             className="items-center h-[21px] w-[84px] lg:h-[34px] lg:w-[135px] flex"
           >
-            <Image src={logoo} alt="makutano logo" className="h-9 w-10"/>
             <Image src={social_logo} alt="makutano logo" />
           </Link>
 
