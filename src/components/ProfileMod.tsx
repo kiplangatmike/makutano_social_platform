@@ -7,14 +7,14 @@ export default function ProfileMod({
 }: {
   isOpen: boolean;
   onClose: () => void;
-  children: any
+  children: any;
 }) {
   const modalStyles: React.CSSProperties = {
     position: "fixed",
     inset: 0,
     zIndex: 50,
     overflow: "auto",
-    backgroundColor: "rgba(0,0,0,0.8)",
+    backgroundColor: "rgba(0,0,0,0.5)",
     display: isOpen ? "block" : "none",
   };
 
@@ -22,12 +22,12 @@ export default function ProfileMod({
     position: "absolute",
     top: "55%",
     left: "50%",
-    width: "700px",
+    width: "950px",
     minWidth: "300px",
     transform: "translate(-50%, -50%)",
-    backgroundColor: "#000000",
+    backgroundColor: "#1d2226",
     borderRadius: "20px",
-    boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+    boxShadow: "#fff",
     padding: "1rem",
   };
 

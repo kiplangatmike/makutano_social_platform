@@ -111,6 +111,13 @@ export const baseApiSlice = createApi({
         method: "GET",
       }),
     }),
+    updateUserProfile: builder.mutation({
+      query: (body) => ({
+        url: `/users/${body.id}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
     joinOrLeaveChapter: builder.mutation({
       query: (body) => ({
         url: `/chapters/${body.id}`,
@@ -146,4 +153,5 @@ export const {
   useGetUserByIdQuery,
   useJoinOrLeaveChapterMutation,
   useGetChapterByIdQuery,
+  useUpdateUserProfileMutation,
 } = baseApiSlice;
