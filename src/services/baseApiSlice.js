@@ -78,6 +78,52 @@ export const baseApiSlice = createApi({
         method: "GET",
       }),
     }),
+    createChapter: builder.mutation({
+      query: (body) => ({
+        url: "/chapters",
+        method: "POST",
+        body,
+      }),
+    }),
+    editChapter: builder.mutation({
+      query: (body) => ({
+        url: `/chapters`,
+        method: "PATCH",
+        body,
+      }),
+    }),
+    deleteChapter: builder.mutation({
+      query: (id) => ({
+        url: `/chapters`,
+        method: "DELETE",
+        body: { id },
+      }),
+    }),
+    getAllChapters: builder.query({
+      query: () => ({
+        url: "/chapters",
+        method: "GET",
+      }),
+    }),
+    getUserById: builder.query({
+      query: (id) => ({
+        url: `/users/${id}`,
+        method: "GET",
+      }),
+    }),
+    joinOrLeaveChapter: builder.mutation({
+      query: (body) => ({
+        url: `/chapters/${body.id}`,
+        method: "POST",
+        body,
+      }),
+    }),
+    getChapterById: builder.query({
+      query: (chapterId) => ({
+        url: `/chapters/${chapterId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -93,4 +139,11 @@ export const {
   useCommentPostMutation,
   useGetCommentsCountQuery,
   useGetCommentsQuery,
+  useCreateChapterMutation,
+  useEditChapterMutation,
+  useDeleteChapterMutation,
+  useGetAllChaptersQuery,
+  useGetUserByIdQuery,
+  useJoinOrLeaveChapterMutation,
+  useGetChapterByIdQuery,
 } = baseApiSlice;

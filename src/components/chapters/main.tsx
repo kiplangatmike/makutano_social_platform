@@ -1,7 +1,15 @@
 import Layout from "$components/Layout";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
+
+import { useCallback } from "react";
+import { useSetAtom } from "jotai";
+
+import { modalStateAddChapters, modalTypeState } from "$lib/atoms";
+import { useGetAllChaptersQuery } from "$services/baseApiSlice";
+import { Chapters as PrismaChapters } from "@prisma/client";
+import { useRouter } from "next/router";
 
 const chapters = [
   {
@@ -39,20 +47,62 @@ const chapters = [
 ];
 
 export default function Chapters() {
+  const setModalOpen = useSetAtom(modalStateAddChapters);
+  const setModalType = useSetAtom(modalTypeState);
+
+  const openModal = useCallback(() => {
+    setModalOpen(true);
+    setModalType("dropIn");
+  }, [setModalOpen, setModalType]);
+
+  const router = useRouter();
+
+  const { refetchChapters } = router.query;
+
+  const { data, isFetching, refetch } = useGetAllChaptersQuery(undefined);
+
+  useEffect(() => {
+    if (refetchChapters) {
+      refetch();
+      router.replace("/chapters", undefined, { shallow: true });
+    }
+  }, [refetchChapters]);
+
   return (
     <Layout>
       <div className="relative mx-auto mt-0 w-full pb-6 xl:w-[40vw] 2xl:w-[50vw]">
-        <div className="mt-6 flex flex-wrap gap-6">
-          {chapters &&
-            chapters?.length > 0 &&
-            chapters.map((chapter) => (
+        <button
+          onClick={openModal}
+          className="absolute right-0 flex items-center justify-center gap-2 rounded-md bg-white px-8 py-2 text-base font-semibold text-black"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="h-6 w-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z"
+            />
+          </svg>
+          Create Chapter
+        </button>
+        {isFetching && <div>Loading...</div>}
+        <div className="mt-6 flex flex-wrap gap-6 pt-16">
+          {data &&
+            data?.length > 0 &&
+            data.map((chapter: PrismaChapters) => (
               <OneChapterCard
                 key={chapter.name}
                 image={chapter.image}
                 name={chapter.name}
-                link={chapter.link}
-                members={chapter.members}
-                postsCount={chapter.postsCount}
+                link={`/chapters/${chapter.id}`}
+                members={chapter?.userIds?.length || 0}
+                postsCount={chapter?.postIds?.length || 0}
               />
             ))}
         </div>
@@ -77,7 +127,7 @@ function OneChapterCard({
   return (
     <Link
       href={link}
-      title={`View ${name}`}
+      title={`View Chapter: ${name}`}
       className="chapterBlur group relative h-[150px] w-[250px] overflow-hidden rounded-lg"
     >
       <Image
@@ -91,7 +141,7 @@ function OneChapterCard({
         <h2 className="w-max text-center text-lg font-bold">{name}</h2>
       </div>
       <div className="absolute inset-x-0 bottom-2 z-30 flex w-full justify-between gap-3 px-4 text-xs text-white">
-        <p className="flex w-max items-center">
+        <p className="flex w-max items-center gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -108,7 +158,7 @@ function OneChapterCard({
           </svg>
           {members} members
         </p>
-        <p className="flex w-max items-center">
+        <p className="flex w-max items-center gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

@@ -123,3 +123,30 @@
 .chapterBlur {
   box-shadow: rgba(255, 255, 255, 0.5) 0px 2px 8px;
 }
+
+input, textarea {
+  outline: none;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+input {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+textarea {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border: none;
+}
+
+input:focus {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+textarea:focus {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}

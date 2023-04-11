@@ -22,17 +22,9 @@ export default function Widgets() {
       </div>
 
       <ul className="pb-8">
-        {articles.slice(0, 2).map((a) => (
-          <>
-            <Item key={a.url} article={a} />
-          </>
+        {articles.map((a, index) => (
+          <Item key={index} article={a} />
         ))}
-        {showMore &&
-          articles.slice(5, 10).map((a) => (
-            <>
-              <Item key={a.url} article={a} />
-            </>
-          ))}
       </ul>
     </div>
   );

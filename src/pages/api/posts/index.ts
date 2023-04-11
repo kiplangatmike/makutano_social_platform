@@ -47,10 +47,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Create a new post
   if (req.method === 'POST') {
     try {
-      const { input, media } = z
+      const { input, media, chapterId } = z
         .object({
           input: z.string().min(1).trim(),
           media: z.array(z.string().url()).optional(),
+          chapterId: z.string().min(1).trim().optional(),
         })
         .parse(req.body)
 
@@ -62,6 +63,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             media,
             keywords,
             authorId: session?.user?.uid ?? '',
+            chapterid: chapterId ?? "",
           },
           include: {
             author: {
