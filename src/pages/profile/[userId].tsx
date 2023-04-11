@@ -95,7 +95,7 @@ export default function Profile({
               </svg>
               African Leadership University
             </p>
-            <div className="bottom-20 left-0 flex w-full pb-4 font-bold text-white">
+            <div className="bottom-20 left-0  flex w-full p-5 pb-4 font-bold text-white">
               <div className="mr-3 flex w-max">
                 <span className="mr-1">{data?.posts?.length}</span>
                 <p>Posts</p>
@@ -110,7 +110,7 @@ export default function Profile({
               </div>
             </div>
           </div>
-          <div className="my-3 mr-5  flex flex-1 flex-grow flex-wrap justify-around rounded-xl border-[1px] border-blue-400/30">
+          <div className=" my-3 mr-5  flex flex-1 flex-grow flex-wrap justify-around rounded-xl border-[1px] border-blue-400/30">
             <motion.button
               onClick={() => handleButtonClick("component1")}
               whileTap={{ scale: 0.99 }}

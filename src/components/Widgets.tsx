@@ -7,6 +7,7 @@ import { formatDistanceToNow, parseISO } from "date-fns";
 import { BsInfoSquareFill } from "react-icons/bs";
 import { MdCircle } from "react-icons/md";
 import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi";
+import james from "../../assests/equity.jpg"
 
 import { articlesState } from "$lib/atoms";
 
@@ -51,7 +52,7 @@ const Item = ({ article: a }: { article: Article }) => (
       </span>
       <div className="my-2 ml-3 overflow-hidden rounded-xl">
         <Image
-          src="https://images.unsplash.com/photo-1507537509458-b8312d35a233?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+          src={james}
           width={280}
           height={280}
           alt=""

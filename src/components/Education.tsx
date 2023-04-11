@@ -4,9 +4,9 @@ import ProfileMod from "./ProfileMod";
 export default function Education() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <div className="relative">
+    <div className="relative feed-card p-4 rounded-3xl">
       <button
-        className="absolute right-0 top-0"
+        className="absolute right-5 top-4"
         onClick={() => setIsModalOpen(true)}
       >
         Edit

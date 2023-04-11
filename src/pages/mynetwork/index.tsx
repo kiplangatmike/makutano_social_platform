@@ -20,7 +20,7 @@ const Network = () => {
                 <h2 className="font-semibold">Liplan</h2>
                 <p className="text-gray-500">@Liplan</p>
               </div>
-              <button className="rounded-2xl bg-red-900 px-4 py-2 font-bold text-white hover:bg-red-800">
+              <button className="rounded-xl bg-blue-400/30 px-4 py-2 font-bold text-white hover:bg-blue-500/30">
                 Unfollow
               </button>
             </div>
@@ -30,8 +30,8 @@ const Network = () => {
                 <h2 className="font-semibold">Mercy</h2>
                 <p className="text-gray-500">@Mercy</p>
               </div>
-              <button className="rounded-2xl bg-red-900 px-4 py-2 font-bold text-white hover:bg-red-800">
-                Unfollow
+              <button className="rounded-xl bg-blue-400/30 px-4 py-2 font-bold text-white hover:bg-blue-500/30">
+                follow
               </button>
             </div>
           </div>

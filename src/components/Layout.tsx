@@ -19,8 +19,8 @@ export default function Layout({ children }: { children: ReactNode }) {
       <div className="px-5">
         <div className="my-5">
           <Sidebar />
-          <div className="ml-[337px]  min-w-[400px] max-w-[42vw]">{children}</div>
-          <aside className="fixed right-4 top-24 mt-0 block h-[80vh] w-[325px] overflow-y-auto md:hidden lg:block">
+          <div className="md:ml-[337px] mt-[20px] md:mt-[0px] min-w-[400px] md:max-w-[520px] ">{children}</div>
+          <aside className="fixed lg:right-4 md:top-24 mt-0 block h-[80vh] w-[325px] overflow-y-auto md:hidden  lg:block">
             <Widgets />
           </aside>
         </div>

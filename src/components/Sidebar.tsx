@@ -31,7 +31,7 @@ export default function Sidebar() {
   const { data: allChapters, isFetching } = useGetAllChaptersQuery(undefined);
 
   return (
-    <div className="fixed left-4 top-24 w-[320px] space-y-2">
+    <div className="md:fixed left-4 top-24 md:w-[320px] space-y-2">
       {/* First card */}
       <section className="feed-card rounded-3xl text-center">
         <div className="relative mx-auto flex">
@@ -87,7 +87,7 @@ export default function Sidebar() {
           className="sidebar-section sidebar-btn card-btn mt-2 flex w-full items-center gap-3 p-3 px-8"
         >
           <BiLogOut className="mui-icon t-secondary h-4 w-4" />
-          <h4 className="text-x font-semibold">Logout</h4>
+          <h4 className="font-semibold">Logout</h4>
         </button>
 
         <div className="sidebar-section sidebar-btn card-btn w-full p-3 px-8">
