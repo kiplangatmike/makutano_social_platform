@@ -9,6 +9,7 @@ import Experience from "$components/Experience";
 import ProfilePost from "$components/ProfilePost";
 import ProfileMod from "$components/ProfileMod";
 import About from "$components/About";
+import { motion } from "framer-motion";
 
 export default function Profile() {
   const [openModal, setOpenModal] = useState(false);
@@ -21,7 +22,11 @@ export default function Profile() {
   return (
     <div>
       <Layout>
-        {openModal && <ProfileMod isOpen={openModal} onClose={() => setOpenModal(false)} ><ProfileModal/></ProfileMod>}
+        {openModal && (
+          <ProfileMod isOpen={openModal} onClose={() => setOpenModal(false)}>
+            <ProfileModal />
+          </ProfileMod>
+        )}
         <div className="feed-card rounded-3xl">
           <div className="relative h-[80px] bg-gray-900">
             <div className="h-full overflow-hidden">
@@ -63,51 +68,59 @@ export default function Profile() {
                 </div>
               </div>
             </div>
-            <div className="my-3 mr-5 flex-1 flex flex-wrap flex-grow gap-3 justify-around">
-              <div
-                className={`transition ease-in-out delay-180 hover:-translate-y-1 hover:scale-105 duration-150 flex-1 text-center rounded-xl min-w-[100px] hover:bg-red-800 py-1 ${
-                  activeComponent === "component1"
-                    ? "bg-red-800 text-white"
-                    : "bg-gray-200/20 text-white"
-                }`}
+            <div className="my-3 mr-5 flex flex-1 flex-grow flex-wrap justify-around gap-3">
+              <motion.button
                 onClick={() => handleButtonClick("component1")}
-              >
-                <button>Posts</button>
-              </div>
-              <div
-                className={`transition ease-in-out delay-180 hover:-translate-y-1 hover:scale-105 duration-150 flex-1 text-center rounded-xl min-w-[100px] hover:bg-red-800 py-1 ${
-                  activeComponent === "component2"
-                    ? "bg-red-800 text-white"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                className={`t-secondary  min-w-[100px]  flex-1 rounded-xl bg-amber-800 py-1 text-center text-lg font-semibold hover:bg-amber-800 ${
+                  activeComponent === "component1"
+                    ? "bg-amber-800 text-white"
                     : "bg-gray-200/20 text-white"
                 }`}
+              >
+                Post
+              </motion.button>
+              <motion.button
                 onClick={() => handleButtonClick("component2")}
-              >
-                <button>Education</button>
-              </div>
-              <div
-                className={`transition ease-in-out delay-180 hover:-translate-y-1 hover:scale-105 duration-150 flex-1 text-center rounded-xl min-w-[100px] hover:bg-red-800 py-1 ${
-                  activeComponent === "component3"
-                    ? "bg-red-800 text-white"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                className={`t-secondary  min-w-[100px]   flex-1 rounded-xl bg-amber-800 py-1 text-center text-lg font-semibold hover:bg-amber-800 ${
+                  activeComponent === "component2"
+                    ? "bg-amber-800 text-white"
                     : "bg-gray-200/20 text-white"
                 }`}
+              >
+                Education
+              </motion.button>
+              <motion.button
                 onClick={() => handleButtonClick("component3")}
-              >
-                <button>Experience</button>
-              </div>
-              <div
-                className={`transition ease-in-out delay-180 hover:-translate-y-1 hover:scale-105 duration-150 rounded-xl flex-1 text-center min-w-[100px] hover:bg-red-800 py-1 ${
-                  activeComponent === "component4"
-                    ? "bg-red-800 text-white"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                className={`t-secondary  min-w-[100px]  flex-1 rounded-xl bg-amber-800 py-1 text-center text-lg font-semibold hover:bg-amber-800 ${
+                  activeComponent === "component3"
+                    ? "bg-amber-800 text-white"
                     : "bg-gray-200/20 text-white"
                 }`}
-                onClick={() => handleButtonClick("component4")}
               >
-                <button>About</button>
-              </div>
+                Experience
+              </motion.button>
+              <motion.button
+                onClick={() => handleButtonClick("component4")}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                className={`t-secondary  text- min-w-[100px] flex-1 rounded-xl bg-amber-800 py-1 text-center font-semibold hover:bg-amber-800 ${
+                  activeComponent === "component4"
+                    ? "bg-amber-800 text-white"
+                    : "bg-gray-200/20 text-white"
+                }`}
+              >
+                About
+              </motion.button>
             </div>
           </div>
         </div>
-       
+
         <div className="feed-card mt-4 rounded-3xl p-4 ">
           {activeComponent === "component1" ? <ProfilePost /> : null}
           {activeComponent === "component2" ? <Education /> : null}

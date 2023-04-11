@@ -21,7 +21,7 @@ export default function About() {
           </div>
         </form>
       </ProfileMod>
-      <div className="feed-card mt-3 rounded-3xl p-4  ">
+      <div className="feed-card mt-3 rounded-3xl p-  ">
         <div className="mb-2 text-[20px] font-semibold">About</div>
         <div>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue eu

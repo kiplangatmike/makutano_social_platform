@@ -107,7 +107,7 @@ export default function Sidebar() {
             onClick={openModal}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
-            className="t-secondary rounded-3xl bg-amber-800 px-8 py-2 text-lg font-semibold"
+            className="t-secondary rounded-xl bg-amber-800 px-8 py-2 text-lg font-semibold"
           >
             Create Post
           </motion.button>
