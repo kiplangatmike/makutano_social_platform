@@ -49,8 +49,8 @@ export default function Header() {
           <HeaderLink Icon={TbBrandGoogleHome} feed active link="/feed">
             Home
           </HeaderLink>
-          <HeaderLink Icon={SlPeople} feed link="/mynetwork">
-            My Network
+          <HeaderLink Icon={SlPeople} feed link="/chapters">
+            Chapters
           </HeaderLink>
           <HeaderLink Icon={MdBusinessCenter} feed hidden link="/network">
             Opportunities

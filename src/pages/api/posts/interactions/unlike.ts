@@ -23,6 +23,22 @@ export default withAuthApi(async ({ method, query }, res) => {
                     }
                 }
             })
+
+            // update user likedPosts to remove postId
+            await prisma.user.update({
+                where: {
+                    id: userId
+                },
+                data: {
+                    likedPosts: {
+                        set: (await prisma.user.findUnique({ where: { id: userId } }))?.likedPosts.filter(
+                            (post) => post !== postId
+                        )
+                    }
+                }
+            })
+
+
             return res.status(200).json(updatedPost)
         } catch (error) {
             console.error(error)

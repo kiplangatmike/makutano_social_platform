@@ -10,12 +10,7 @@ import { AiTwotoneHeart, AiOutlineHeart } from "react-icons/ai";
 import { BiComment } from "react-icons/bi";
 import { HiOutlineReply } from "react-icons/hi";
 
-import {
-  modalPostState,
-  modalState,
-  modalState2,
-  modalTypeState,
-} from "$lib/atoms";
+import { modalState, modalState2 } from "$lib/atoms";
 
 import clsx from "clsx";
 

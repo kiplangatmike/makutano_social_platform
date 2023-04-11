@@ -21,6 +21,20 @@ export default withAuthApi(async ({ method, query }, res) => {
                     }
                 }
             })
+
+            // update user likedPosts to add postId
+            await prisma.user.update({
+                where: {
+                    id: userId
+                },
+                data: {
+                    likedPosts: {
+                        push: postId
+                    }
+                }
+            })
+
+
             return res.status(200).json(updatedPost)
         } catch (error) {
             console.error(error)

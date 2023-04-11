@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { AnimatePresence, motion } from "framer-motion";
 import { Dialog } from "@headlessui/react";
 import { MdClose } from "react-icons/md";
 
 import AddPostForm from "$components/AddPostForm";
-import Post from "$components/Post";
-import { modalPostState, modalState, modalTypeState } from "$lib/atoms";
+import {
+  modalPostState,
+  modalState,
+  modalTypeState,
+  modalStateAddChapters,
+  postForChapters,
+} from "$lib/atoms";
+import AddChapter from "./AddChapter";
 
 export default function Modal() {
   const [isClient, setIsClient] = useState(false);
   const [isOpen, setIsOpen] = useAtom(modalState);
+  const [isOpenChapters, setIsOpenChapters] = useAtom(modalStateAddChapters);
   const modalType = useAtomValue(modalTypeState);
-  const post = useAtomValue(modalPostState);
+
+  const setIsForChapters = useSetAtom(postForChapters);
 
   useEffect(() => setIsClient(true), []);
 
@@ -21,16 +28,19 @@ export default function Modal() {
 
   return (
     <AnimatePresence mode="wait">
-      {isOpen && (
+      {(isOpen || isOpenChapters) && (
         <Dialog
           static
-          open={isOpen}
-          onClose={() => setIsOpen(false)}
-          className="fixed inset-0 z-20 overflow-y-auto p-4 pt-[10vh]"
+          open={isOpen || isOpenChapters}
+          onClose={() => {
+            setIsOpen(false);
+            setIsOpenChapters(false);
+            setIsForChapters("");
+          }}
+          className="fixed inset-0 z-50 overflow-y-auto p-4 pt-[10vh]"
         >
           <Dialog.Overlay
             as={motion.div}
-            // onClick={() => setIsOpen(false)}
             className="fixed inset-0 bg-black/70"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -44,17 +54,17 @@ export default function Modal() {
               variants={dropIn}
               initial="hidden"
               animate="visible"
+              viewport={{ once: false }}
               exit="exit"
             >
               <header className="flex items-center justify-between border-b border-black/10 py-4 pl-6 pr-4 dark:border-gray-500">
-                <Dialog.Title className="text-xl">Create a post</Dialog.Title>
-                <Dialog.Description className="sr-only">
-                  Make a post
-                </Dialog.Description>
+                <Dialog.Title className="text-xl">
+                  {isOpenChapters ? "Create a chapter" : "Create a post"}
+                </Dialog.Title>
                 <CloseButton />
               </header>
 
-              <AddPostForm />
+              {isOpenChapters ? <AddChapter /> : <AddPostForm />}
             </motion.div>
           )}
         </Dialog>
@@ -65,13 +75,20 @@ export default function Modal() {
 
 const CloseButton = () => {
   const setIsOpen = useSetAtom(modalState);
+  const setIsOpenChapters = useSetAtom(modalStateAddChapters);
   const setPost = useSetAtom(modalPostState);
+  const setModalType = useSetAtom(modalTypeState);
+
+  const setIsForChapters = useSetAtom(postForChapters);
 
   return (
     <button
       onClick={() => {
         setPost(undefined);
         setIsOpen(false);
+        setIsOpenChapters(false);
+        setModalType("");
+        setIsForChapters("");
       }}
       className="card-btn rounded-full p-2"
     >
@@ -98,28 +115,5 @@ const dropIn = {
   exit: {
     y: "100vh",
     opacity: 0,
-  },
-};
-
-const gifYouUp = {
-  hidden: {
-    opacity: 0,
-    scale: 0,
-  },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.2,
-      ease: "easeIn",
-    },
-  },
-  exit: {
-    opacity: 0,
-    scale: 0,
-    transition: {
-      duration: 0.15,
-      ease: "easeOut",
-    },
   },
 };

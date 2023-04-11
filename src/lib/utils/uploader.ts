@@ -21,12 +21,6 @@ export const uploadOne = async (file: File) => {
         return res.data.secure_url as string;
     } catch (error) {
         console.log(error);
-        return {
-            success: 0,
-            file: {
-                url: "Something went wrong",
-                public_id: "Something went wrong",
-            },
-        };
+        return ""
     }
 };
