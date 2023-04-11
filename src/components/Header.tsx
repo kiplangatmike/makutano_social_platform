@@ -58,6 +58,11 @@ export default function Header() {
             </HeaderLink>
           </div>
           <div>
+            <HeaderLink Icon={SlPeople} feed link="/chapters">
+              Chapters
+            </HeaderLink>
+          </div>
+          <div>
             <HeaderLink Icon={MdOutlineWorkOutline} feed hidden link="/network">
               Opportunities
             </HeaderLink>
