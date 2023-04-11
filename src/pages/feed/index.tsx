@@ -17,8 +17,16 @@ export default function FeedPage({ articles }: Props) {
   const setArticles = useSetAtom(articlesState);
 
   useEffect(() => {
-    setArticles(articles);
-  }, [articles, setArticles]);
+    setArticles([
+      {
+        title: "Time management and being productive",
+        description: `Join us for a discussion on time management and being productive.`,
+        postedBy: "John Doe",
+        postedAt: "2021-08-01T00:00:00.000Z",
+      },
+    ]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Layout>
