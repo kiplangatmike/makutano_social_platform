@@ -14,7 +14,7 @@ export default function Widgets() {
   const articles = useAtomValue(articlesState);
 
   return (
-    <div className="feed-card  rounded-3xl py-3">
+    <div className="dark:bg-gray-900  rounded-3xl py-3">
       <div className="flex items-center px-3">
         <h4 className="flex-grow text-center font-semibold">Program Updates</h4>
         <BsInfoSquareFill className="mui-icon h-6 w-4" />
@@ -31,7 +31,7 @@ export default function Widgets() {
 
 const Item = ({ article: a }: { article: Article }) => (
   <li>
-    <div className="card-btn m-2 block rounded-3xl bg-black py-3 pl-1 pr-4">
+    <div className="card-btn m-2 block rounded-3xl  py-3 pl-1 pr-4">
       <div className="flex flex-col items-center">
         <div className="flex items-center">
           <MdCircle className="mui-icon t-secondary mx-3 mr-1 h-2 w-2 rounded-full" />

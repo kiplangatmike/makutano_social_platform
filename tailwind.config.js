@@ -17,7 +17,8 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
       screens: {
-        b600: "1100px",
+        b600: "1210px",
+        b400: "950px",
       },
     },
   },

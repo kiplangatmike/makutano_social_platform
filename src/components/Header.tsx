@@ -25,8 +25,8 @@ export default function Header() {
   const { data: session } = useSession();
 
   return (
-    <header className="t-primary  sticky top-0 z-10 bg-white px-4 py-2 focus-within:shadow dark:bg-dblue">
-      <nav className="mx-auto flex max-w-8xl items-center justify-between py-1">
+    <header className="t-primary  sticky top-0 z-10 bg-white px-4 py-2 focus-within:shadow dark:bg-gray-900">
+      <nav className="max-w-8xl mx-auto flex items-center justify-between py-1">
         {/* Left */}
         <div className="flex max-w-xs items-center  text-xl font-semibold">
           <Link href="/feed" className="flex">
@@ -39,7 +39,7 @@ export default function Header() {
         </div>
 
         {/* Right */}
-        <div className="gap- flex items-center space-x-4  rounded-xl bg-[#22292e] px-1 py-1 pb-2">
+        <div className=" flex items-center space-x-4  rounded-xl  px-2 py-1 py-2">
           <div className="flex">
             <HeaderLink
               Icon={TbBrandGoogleHome}
@@ -82,9 +82,14 @@ export default function Header() {
             </HeaderLink>
           </div>
         </div>
-        <div className="flex  items-center gap-2">
+        <div className="  flex  items-center  gap-2 rounded-xl  px-2 py-2">
           <div>
-            <HeaderLink Icon={MdNotifications} feed link="/notification">
+            <HeaderLink
+              Icon={MdNotifications}
+              feed
+              active={router.pathname.includes("/notification")}
+              link="/notification"
+            >
               Notifications
             </HeaderLink>
           </div>

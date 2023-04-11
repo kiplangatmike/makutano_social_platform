@@ -146,7 +146,7 @@ export default function OnePost({ data }: { data: Post }) {
       <Head>
         <title>Post by {data?.author?.name}</title>
       </Head>
-      <div className="feed-card relative mx-auto mt-0 flex w-full flex-col gap-3 rounded-3xl px-3 py-3 pb-6 xl:w-[40vw] 2xl:w-[50vw]">
+      <div className=" dark:bg-gray-900 relative mx-auto mt-0 flex w-full flex-col gap-3 rounded-3xl bg-gray-900 px-3 py-3 pb-6 xl:w-[40vw] 2xl:w-[50vw]">
         <Link href={`/profile/${data?.authorId}`} className="flex">
           <span className=" cursor-pointer">
             <Avatar src={data?.author?.image as string} size={40} />

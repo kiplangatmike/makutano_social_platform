@@ -3,7 +3,7 @@ import Layout from "$components/Layout";
 export default function Opportunity() {
   return (
     <Layout>
-      <div className="feed-card rounded-3xl p-4">
+      <div className="feed-card dark:bg-gray-900 rounded-3xl p-4">
         <div className="text-center text-2xl font-bold">Opportunities</div>
         <div className="mb-2 flex justify-between">
           <div>

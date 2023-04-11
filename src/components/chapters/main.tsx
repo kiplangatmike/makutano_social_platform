@@ -128,7 +128,7 @@ function OneChapterCard({
     <Link
       href={link}
       title={`View Chapter: ${name}`}
-      className="feed-card group relative min-h-[260px] max-h-[350px] min-w-[230px]  rounded-3xl flex-1"
+      className="dark:bg-gray-900 group relative min-h-[260px] max-h-[350px] min-w-[230px]  rounded-3xl flex-1"
     >
       <div className="p-3 ">
         <h2 className="w-max ml-3 text-center text-lg font-bold">{name}</h2>

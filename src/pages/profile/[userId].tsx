@@ -46,7 +46,7 @@ export default function Profile({
           <ProfileModal onClose={() => setOpenModal(false)} />
         </ProfileMod>
       )}
-      <div className="feed-card rounded-3xl">
+      <div className="dark:bg-gray-900 feed-card rounded-3xl">
         <div className="relative h-[80px] bg-gray-900">
           <div className="h-full overflow-hidden">
             <Image
@@ -136,7 +136,7 @@ export default function Profile({
               whileTap={{ scale: 0.99 }}
               className={`t-secondary  min-w-[100px]  flex-1 rounded-l-xl bg-amber-800 py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
                 activeComponent === "component1"
-                  ? "bg-blue-400/30 text-white"
+                  ? "bg-blue-500/30 text-white"
                   : "bg-transparent text-white"
               }`}
             >
@@ -147,7 +147,7 @@ export default function Profile({
               whileTap={{ scale: 0.99 }}
               className={`t-secondary  min-w-[100px]   flex-1 bg-amber-800 py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
                 activeComponent === "component2"
-                  ? "bg-blue-400/30 text-white"
+                  ? "bg-blue-500/30 text-white"
                   : "bg-transparent text-white"
               }`}
             >
@@ -158,7 +158,7 @@ export default function Profile({
               whileTap={{ scale: 0.99 }}
               className={`t-secondary  min-w-[100px]  flex-1 bg-amber-800 py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
                 activeComponent === "component3"
-                  ? "bg-blue-400/30 text-white"
+                  ? "bg-blue-500/30 text-white"
                   : "bg-transparent text-white"
               }`}
             >
@@ -394,7 +394,7 @@ export const getStaticProps = async ({
       },
     };
   } catch (error) {
-    console.log(error)
+    console.log(error?.response)
     // not found
     return {
       notFound: true,
