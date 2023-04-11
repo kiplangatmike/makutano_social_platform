@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Makutano: Log In or Sign Up | Next</title>
+        <title>Makutano: Welcome to the ELP community</title>
       </Head>
 
       <header>
@@ -37,14 +37,15 @@ export default function Home() {
       <main className="flex flex-col items-center overflow-hidden">
         <section className="mx-auto flex min-h-[560px] max-w-6xl flex-col items-center px-4 pt-10 md:flex-row">
           <div className="w-full flex-shrink-0 space-y-6 pr-0 md:w-[55%] md:pr-12 lg:space-y-10">
-            <h1 className="max-w-xl text-3xl font-extralight !leading-snug text-amber-800/80 md:text-5xl">
+            <h1 className="max-w-xl text-3xl font-extralight text-amber-800/80 md:text-5xl">
               Welcome to the ELP community
             </h1>
+            <p className="text-amber-800/80">Feel at home!</p>
             <button
               onClick={() => signIn("google", { callbackUrl: "/feed" })}
               className="rounded-[10px] border border-amber-800/80 px-8 py-2 font-semibold text-amber-800/80 transition-all hover:border-amber-800/50"
             >
-              Get started
+              Join the community
             </button>
           </div>
 

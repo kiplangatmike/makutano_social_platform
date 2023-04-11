@@ -14,6 +14,8 @@ import { motion } from "framer-motion";
 
 import { modalState, modalTypeState } from "$lib/atoms";
 import { BiLogOut } from "react-icons/bi";
+import { useGetAllChaptersQuery } from "$services/baseApiSlice";
+import { Chapters } from "@prisma/client";
 
 export default function Sidebar() {
   const { data: session } = useSession();
@@ -25,6 +27,8 @@ export default function Sidebar() {
     setModalOpen(true);
     setModalType("dropIn");
   }, [setModalOpen, setModalType]);
+
+  const { data: allChapters, isFetching } = useGetAllChaptersQuery(undefined);
 
   return (
     <div className="fixed left-4 top-24 w-[320px] space-y-2">
@@ -66,22 +70,16 @@ export default function Sidebar() {
             <h4 className="text-x font-semibold">Chapters</h4>
           </Link>
           <div className="flex flex-col gap-2 pl-8">
-            <Link href="/chapters/alu" className="flex gap-2">
-              <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
-              <h4 className="text-x font-semibold">ALU</h4>
-            </Link>
-            <Link href="/chapters/alu" className="flex gap-2">
-              <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
-              <h4 className="text-x font-semibold">ALU</h4>
-            </Link>
-            <Link href="/chapters/alu" className="flex gap-2">
-              <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
-              <h4 className="text-x font-semibold">ALU</h4>
-            </Link>
-            <Link href="/chapters/alu" className="flex gap-2">
-              <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
-              <h4 className="text-x font-semibold">ALU</h4>
-            </Link>
+            {allChapters?.slice(0, 5).map((chapter: Chapters) => (
+              <Link
+                href={`/chapters/${chapter?.id}`}
+                key={chapter?.id}
+                className="flex gap-2"
+              >
+                <TbBrandWechat className="mui-icon t-secondary h-4 w-4" />
+                <h4 className="text-x font-semibold">{chapter?.name}</h4>
+              </Link>
+            ))}
           </div>
         </div>
         <button
@@ -95,9 +93,7 @@ export default function Sidebar() {
         <div className="sidebar-section sidebar-btn card-btn w-full p-3 px-8">
           <motion.button
             onClick={openModal}
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.99 }}
-            className="t-secondary rounded-xl bg-amber-800 px-8 py-2 text-lg font-semibold"
+            className="rounded-xl bg-white px-8 py-2 text-lg font-semibold text-slate-600 transition-all duration-300 ease-in hover:bg-blue-400/25 hover:text-white"
           >
             Create Post
           </motion.button>

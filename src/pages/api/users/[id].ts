@@ -10,11 +10,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       try {
         const user = await prisma.user.findUnique({
           where: { id: id },
-          select: {
-            email: true,
-            id: true,
-            image: true,
-            name: true,
+          include: {
+            posts: true,
           }
         })
         return res.status(200).json(user)
