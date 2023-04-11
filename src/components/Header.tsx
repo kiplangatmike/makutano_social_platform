@@ -12,12 +12,15 @@ import icon from "$public/icon.png";
 import icon_white from "$public/icon_white.png";
 import Avatar from "./Avatar";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function Header() {
   const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
 
   useEffect(() => setMounted(true), []);
+
+  const router = useRouter();
 
   const { data: session } = useSession();
 
@@ -38,22 +41,43 @@ export default function Header() {
         {/* Right */}
         <div className="gap- flex items-center space-x-4  rounded-xl bg-[#22292e] px-1 py-1 pb-2">
           <div className="flex">
-            <HeaderLink Icon={TbBrandGoogleHome} feed active link="/feed">
+            <HeaderLink
+              Icon={TbBrandGoogleHome}
+              feed
+              active={router.pathname === "/feed"}
+              link="/feed"
+            >
               Home
             </HeaderLink>
           </div>
-          <div>
-            <HeaderLink Icon={SlPeople} feed link="/mynetwork">
+          <div className="hidden">
+            <HeaderLink
+              Icon={SlPeople}
+              feed
+              active={router.pathname === "/mynetwork"}
+              link="/mynetwork"
+            >
               My Network
             </HeaderLink>
           </div>
           <div>
-            <HeaderLink Icon={TbBuildingBank} feed link="/chapters">
+            <HeaderLink
+              active={router.pathname.includes("/chapters")}
+              Icon={TbBuildingBank}
+              feed
+              link="/chapters"
+            >
               Chapters
             </HeaderLink>
           </div>
           <div>
-            <HeaderLink Icon={MdOutlineWorkOutline} feed hidden link="/opportunity">
+            <HeaderLink
+              Icon={MdOutlineWorkOutline}
+              active={router.pathname.includes("/opportunity")}
+              feed
+              hidden
+              link="/opportunity"
+            >
               Opportunities
             </HeaderLink>
           </div>
