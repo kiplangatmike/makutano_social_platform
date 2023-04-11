@@ -4,20 +4,12 @@ import Image from "next/image";
 import clsx from "clsx";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
-import {
-  MdApps,
-  MdBusinessCenter,
-  MdChat,
-  MdGroup,
-  MdHome,
-  MdNotifications,
-  MdSearch,
-} from "react-icons/md";
+import { MdBusinessCenter, MdNotifications } from "react-icons/md";
 import { TbBrandGoogleHome } from "react-icons/tb";
 import { SlPeople } from "react-icons/sl";
 import HeaderLink from "$components/HeaderLink";
-import linkedin_icon from "$public/linkedin_icon.png";
-import linkedin_icon_white from "$public/linkedin_icon_white.png";
+import icon from "$public/icon.png";
+import icon_white from "$public/icon_white.png";
 
 export default function Header() {
   const [mounted, setMounted] = useState(false);
@@ -27,28 +19,18 @@ export default function Header() {
 
   return (
     <header className="t-primary sticky top-0 z-10 bg-white px-4 focus-within:shadow dark:bg-dblue">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between py-1">
+      <nav className="justify- mx-auto flex max-w-6xl items-center py-1">
         {/* Left */}
-        <div className="flex w-full max-w-xs items-center space-x-2">
+        <div className="flex max-w-xs items-center  text-xl font-semibold">
           <Link href="/feed" className="flex">
             {resolvedTheme === "dark" ? (
-              <Image
-                src={linkedin_icon_white}
-                alt="LinkedIn logo"
-                width={34}
-                height={34}
-              />
+              <div>MAKUTANO</div>
             ) : (
-              <Image
-                src={linkedin_icon}
-                alt="LinkedIn logo"
-                width={34}
-                height={34}
-              />
+              <Image src={icon} alt="" width={34} height={34} />
             )}
           </Link>
 
-          <div className="relative rounded md:w-full">
+          {/* <div className="relative rounded md:w-full">
             <div className="grid place-items-center pl-3 md:absolute md:inset-y-0">
               <MdSearch className="mui-icon t-secondary hover:t-black dark:hover:t-white cursor-pointer md:pointer-events-none md:h-5 md:w-5" />
             </div>
@@ -59,7 +41,7 @@ export default function Header() {
               placeholder="Search"
               className="hidden h-8 w-full rounded border-none bg-slate-100 pl-10 text-sm dark:bg-gray-700 md:inline-block"
             />
-          </div>
+          </div> */}
         </div>
 
         {/* Right */}
@@ -76,7 +58,7 @@ export default function Header() {
           <HeaderLink Icon={MdNotifications} feed link="/notification">
             Notifications
           </HeaderLink>
-          <HeaderLink feed avatar hidden link="/profile/12">
+          <HeaderLink feed avatar hidden link="/profile">
             Me
           </HeaderLink>
 

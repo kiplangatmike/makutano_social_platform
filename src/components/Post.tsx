@@ -145,7 +145,7 @@ export default function OnePost({ post, modalPost = false }: Props) {
   return (
     <div
       className={clsx(
-        !modalPost && "feed-card rounded-3xl",
+        !modalPost && "feed-card mx-[350px] rounded-3xl",
         modalPost && "rounded-r-lg"
       )}
     >
