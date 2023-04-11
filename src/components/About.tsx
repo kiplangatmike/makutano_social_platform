@@ -13,7 +13,7 @@ export default function About() {
       </button>
       <ProfileMod isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <form>
-          <h1>About</h1>
+          <h1 className="text-2xl font-semibold mb-2">About</h1>
 
           <div className="flex flex-col">
             <label className="">Update</label>
