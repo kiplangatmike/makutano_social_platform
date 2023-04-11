@@ -1,18 +1,15 @@
 import type { Article } from "$lib/types";
 import { useState } from "react";
 import Image from "next/image";
-import clsx from "clsx";
 import { useAtomValue } from "jotai";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { BsInfoSquareFill } from "react-icons/bs";
 import { MdCircle } from "react-icons/md";
-import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi";
 
 import { articlesState } from "$lib/atoms";
 
 export default function Widgets() {
   const articles = useAtomValue(articlesState);
-  const [showMore, setShowMore] = useState(true);
 
   return (
     <div className="feed-card  rounded-3xl py-3">
@@ -22,7 +19,7 @@ export default function Widgets() {
       </div>
 
       <ul className="pb-8">
-        {articles.map((a, index) => (
+        {articles?.map((a, index) => (
           <Item key={index} article={a} />
         ))}
       </ul>
@@ -32,31 +29,24 @@ export default function Widgets() {
 
 const Item = ({ article: a }: { article: Article }) => (
   <li>
-    <a
-      href={a.url}
-      className="card-btn m-2 block rounded-3xl bg-black py-3 pl-1 pr-4"
-      rel="noreferrer noopener"
-      target="_blank"
-    >
-      <div className="flex items-center">
-        <MdCircle className="mui-icon t-secondary mx-3 h-2 w-2 rounded-full" />
-        <p className="block max-w-[480px] truncate text-sm font-semibold lg:max-w-[260px]">
-          {a.title}
+    <div className="card-btn m-2 block rounded-3xl bg-black py-3 pl-1 pr-4">
+      <div className="flex flex-col items-center">
+        <div className="flex items-center">
+          <MdCircle className="mui-icon t-secondary mx-3 mr-1 h-2 w-2 rounded-full" />
+          <p className="block max-w-[480px] truncate text-sm font-semibold lg:max-w-[260px]">
+            {a.title}
+          </p>
+        </div>
+
+        <p className="block h-max max-w-[480px] py-1 text-xs lg:max-w-[260px]">
+          {a.description}
         </p>
       </div>
-      <span className="t-secondary block w-full truncate pl-8 text-xs">
-        {formatDistanceToNow(parseISO(a.publishedAt), {
+      <span className="block w-full truncate pl-4 text-xs font-bold text-white">
+        {formatDistanceToNow(parseISO(a.postedAt), {
           addSuffix: true,
         })}
       </span>
-      <div className="my-2 ml-3 overflow-hidden rounded-xl">
-        <Image
-          src="https://images.unsplash.com/photo-1507537509458-b8312d35a233?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-          width={280}
-          height={280}
-          alt=""
-        ></Image>
-      </div>
-    </a>
+    </div>
   </li>
 );
