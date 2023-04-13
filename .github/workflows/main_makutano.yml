@@ -36,9 +36,7 @@ jobs:
           npm run test --if-present
 
       - name: Create artifact archive
-        run: |
-          zip -r node-app.zip .
-          ls -al node-app.zip
+        run: zip next.zip ./* .next -qr
 
       - name: Upload artifact for deployment job
 
@@ -47,7 +45,7 @@ jobs:
         with:
           name: node-app
 
-          path: node-app.zip
+          path: next.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -67,11 +65,6 @@ jobs:
         with:
           name: node-app
 
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: "Deploy to Azure Web App"
 
         id: deploy-to-webapp
@@ -85,4 +78,8 @@ jobs:
 
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_21758064c5374917a4e4216ca9d26e57 }}
 
-          package: ${{ github.workspace }}/node-app.zip
+          package: next.zip
+
+      - name: Delete artifact
+
+        run: rm next.zip
