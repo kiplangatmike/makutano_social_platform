@@ -76,7 +76,7 @@ jobs:
 
           slot-name: "production"
 
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_21758064c5374917a4e4216ca9d26e57 }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
 
           package: next.zip
 
