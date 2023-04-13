@@ -26,16 +26,21 @@ jobs:
           npm install
           npm run build --if-present
 
-      - name: Compress files
-        run: |
-          tar -czvf node-app.tar.gz *
-
-      - name: Upload artifact for deployment job
+      - name: Upload build artifact
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: node-app.tar.gz
-
+          path: |
+            ./*
+            !.gitignore
+            !.github
+            !.github/**
+            !.vscode
+            !.vscode/**
+            !.git
+            !.git/**
+            !.github
+            !.github/**
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -44,18 +49,10 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download artifact from build job
+      - name: Download build artifact
         uses: actions/download-artifact@v2
         with:
           name: node-app
-
-      - name: Extract files
-        run: |
-          tar -xvf node-app.tar.gz
-
-      - name: Remove tar file
-        run: |
-          rm node-app.tar.gz
 
       - name: Check if package.json exists
         run: |
@@ -68,4 +65,4 @@ jobs:
           app-name: 'makutano'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8BA42BD6146343A58E5AEAA607E7857C }}
-          package: .
+          package: '.'
