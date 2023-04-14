@@ -12,7 +12,7 @@ import { useSession } from "next-auth/react";
 export default function Layout({ children }: { children: ReactNode }) {
   const { data: session } = useSession();
   return (
-    <div className="dark:to-[#19 h-screen overflow-y-scroll bg-lstone transition-all dark:bg-gradient-radial dark:from-[#15202b] dark:from-100% dark:to-50%">
+    <div className="h-screen overflow-y-scroll bg-lstone transition-all dark:bg-gradient-radial dark:from-[#15202b] dark:from-100% dark:to-50%">
       <Header />
       {/* <div className="relativ mx-auto max-w-[1240px]"> */}
       <div className="px-5">
@@ -22,7 +22,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               <Sidebar />
             </div>
           )}
-          <div className="mt-[20px]  md:ml-[312px] md:mt-[0px] b400:min-w-[450px] b400:max-w-[840px] lg:w-[] b600:max-w-[540px]">
+          <div className="mx-auto mt-[20px] w-[60vw] max-w-[600px] md:mt-[0px]">
             {children}
           </div>
           {session && (
