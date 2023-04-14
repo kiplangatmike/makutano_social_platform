@@ -29,10 +29,10 @@ export default function Header() {
 
   return (
     <header className="t-primary  sticky top-0 z-10 bg-white px-4 py-2 focus-within:shadow dark:bg-gray-900">
-      <nav className="max-w-[1200px] mx-auto flex items-center justify-between py-1">
+      <nav className="mx-auto flex max-w-[1200px] items-center justify-between py-1">
         {/* Left */}
         <div className="flex max-w-xs items-center  text-xl font-semibold">
-          <Link href="/feed" className="flex">
+          <Link href={session ? "/feed" : "/"} className="flex">
             {resolvedTheme === "dark" ? (
               <div>MAKUTANO</div>
             ) : (
