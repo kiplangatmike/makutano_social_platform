@@ -170,12 +170,12 @@ export default function ChapterView({
       />
       <Layout>
         <div className="relative mx-auto mt-0 w-full bg-black/10 pb-8 xl:w-[40vw] 2xl:w-[50vw]">
-          <div className="relative h-[400px] w-full rounded-bl-lg rounded-tr-lg">
+          <div className="relative h-[400px] w-full rounded-bl-3xl rounded-tr-x3l">
             <Image
               src={data.image}
               alt={data.name}
               fill
-              className="rounded-bl-lg rounded-tr-lg object-cover object-center"
+              className="rounded-bl-3xl rounded-tr-3xl object-cover object-center"
             />
           </div>
           <div className="relative mt-4 flex flex-col gap-2 px-4">
