@@ -9,7 +9,7 @@ export default function ProfilePost({ posts }: { posts: Post[] }) {
   return (
     <div ref={parent} className="flex w-full flex-col gap-8">
       {posts?.length === 0 && (
-        <p className="feed-card rounded-3xl p-4 font-semibold">
+        <p className="dark:bg-gray-900 rounded-3xl p-4 font-semibold">
           No posts found
         </p>
       )}
