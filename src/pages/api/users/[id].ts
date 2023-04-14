@@ -11,7 +11,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const user = await prisma.user.findUnique({
           where: { id: id },
           include: {
-            posts: true,
+            posts: {
+              include: {
+                author: {
+                  select: {
+                    id: true,
+                    image: true,
+                    name: true,
+                  },
+                },
+              },
+            },
             ComprehensiveProfile: true,
           }
         })

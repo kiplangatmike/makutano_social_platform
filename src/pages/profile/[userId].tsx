@@ -403,6 +403,7 @@ export const getStaticProps = async ({
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_API_BASE_URL_V1}users/${params.userId}`
     );
+    console.log(res.data);
     return {
       props: {
         data: res.data,

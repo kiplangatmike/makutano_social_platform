@@ -5,12 +5,10 @@ import { useSession } from "next-auth/react";
 export default function Avatar({ size, src }: Props) {
   const { data: session } = useSession();
 
-  if (!session?.user?.image) return <AvatarBlank size={size} />;
-
   return (
     <Image
-      src={src ?? session.user.image}
-      alt={session.user.name ?? "Profile picture"}
+      src={src ?? (session?.user?.image as string)}
+      alt={session?.user?.name ?? "Profile picture"}
       width={size}
       height={size}
       className={`rounded-full `}

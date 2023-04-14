@@ -1,13 +1,10 @@
 import { prisma } from '$lib/config/prisma'
-import { withAuthApi } from '$lib/utils/api'
 import { z } from 'zod'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-
-export default withAuthApi(async ({ method, query }, res) => {
-
-    // get comments for a post - only for feed
-    if (method === 'GET') {
-        const id = z.string().parse(query.id)
+const handler = async (req: NextApiRequest, res: NextApiResponse) => { // get comments for a post - only for feed
+    if (req.method === 'GET') {
+        const id = z.string().parse(req.query.id)
         try {
             const comments = await prisma.comment.findMany({
                 where: {
@@ -32,4 +29,7 @@ export default withAuthApi(async ({ method, query }, res) => {
             return res.status(500).json(error)
         }
     }
-})
+}
+
+
+export default handler;

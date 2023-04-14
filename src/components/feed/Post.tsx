@@ -155,6 +155,8 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
     }
   };
 
+  console.log(post);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -172,7 +174,7 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
             <Avatar src={post?.author?.image as string} size={40} />
           </span>
           <div className="ml-2 flex-grow leading-5">
-            <p className="t-link dark:t-white capitalize hover:t-blue dark:hover:t-blue-light font-semibold text-black/90">
+            <p className="t-link dark:t-white hover:t-blue dark:hover:t-blue-light font-semibold capitalize text-black/90">
               {post?.author?.name}
             </p>
             {post?.createdAt && (
@@ -248,7 +250,7 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
             "card-btn rounded-xl text-white ",
             liked && "text-blue-500"
           )}
-          disabled={liking || unliking}
+          disabled={liking || unliking || !session}
           onClick={() => {
             liked ? unlikePost() : likePost();
           }}
@@ -281,40 +283,42 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
           <HiOutlineReply className="mui-icon w-[23px] -scale-x-100" />
         </button>
       </div>
-      <div className="ml-3 flex items-center gap-3">
-        <div className="mb-2">
-          <Avatar size={30} />
-        </div>
-        <div className="relative mr-4 grow rounded-3xl mb-3 items-center">
-          <form className="mr-0">
-            <textarea
-              className="block h-8 pb-7 w-full resize-none overflow-hidden rounded-3xl border border-white/30 bg-transparent px-4 outline-none transition-all duration-300 ease-in focus:h-16 focus:border-none focus:border-white focus:outline-none"
-              placeholder="Leave a comment"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-          </form>
-          <button
-            onClick={(e) => commentHandler(e)}
-            className="absolute right-2 top-5 -translate-y-1/2 text-gray-400"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="h-6 w-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+      {session && (
+        <div className="ml-3 flex items-center gap-3">
+          <div className="mb-2">
+            <Avatar size={30} />
+          </div>
+          <div className="relative mb-3 mr-4 grow items-center rounded-3xl">
+            <form className="mr-0">
+              <textarea
+                className="block h-8 w-full resize-none overflow-hidden rounded-3xl border border-white/30 bg-transparent px-4 pb-7 outline-none transition-all duration-300 ease-in focus:h-16 focus:border-none focus:border-white focus:outline-none"
+                placeholder="Leave a comment"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
               />
-            </svg>
-          </button>
+            </form>
+            <button
+              onClick={(e) => commentHandler(e)}
+              className="absolute right-2 top-5 -translate-y-1/2 text-gray-400"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="h-6 w-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </motion.div>
   );
 }

@@ -17,15 +17,19 @@ export default function Layout({ children }: { children: ReactNode }) {
       {/* <div className="relativ mx-auto max-w-[1240px]"> */}
       <div className="px-5">
         <div className="my-5">
-          <div className="left-4 space-y-2 md:absolute md:w-[300px]">
-            <Sidebar />
-          </div>
+          {session && (
+            <div className="left-4 space-y-2 md:absolute md:w-[300px]">
+              <Sidebar />
+            </div>
+          )}
           <div className="mt-[20px]  md:ml-[312px] md:mt-[0px] b400:min-w-[450px] b400:max-w-[840px] lg:w-[] b600:max-w-[540px]">
             {children}
           </div>
-          <aside className="mt-0 hidden h-[80vh] w-[325px] overflow-y-auto md:absolute md:top-24 md:hidden lg:right-4 b600:block">
-            <Widgets />
-          </aside>
+          {session && (
+            <aside className="mt-0 hidden h-[80vh] w-[325px] overflow-y-auto md:absolute md:top-24 md:hidden lg:right-4 b600:block">
+              <Widgets />
+            </aside>
+          )}
         </div>
       </div>
       <Modal />

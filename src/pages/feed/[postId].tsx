@@ -70,8 +70,8 @@ export default function OnePost({ data }: { data: Post }) {
       });
   };
 
-  const [likeAction] = useLikePostMutation();
-  const [unlikeAction] = useUnlikePostMutation();
+  const [likeAction, { isLoading: liking }] = useLikePostMutation();
+  const [unlikeAction, { isLoading: unliking }] = useUnlikePostMutation();
 
   const [localPostContent, setLocalPostContent] = useState(data);
 
@@ -79,19 +79,29 @@ export default function OnePost({ data }: { data: Post }) {
 
   useEffect(() => {
     setLocalPostContent(data);
-  }, [data]);
+    if (data && session?.user) {
+      if (data?.likes?.length === 0) {
+        setLiked(false);
+        return;
+      }
+      setLiked(
+        data?.likes?.filter((id) => id === session?.user?.uid).length > 0
+      );
+    }
+  }, [data, session]);
 
   const likePost = async () => {
     if (localPostContent?.likes?.includes(session?.user?.uid as string)) return;
+    setLiked(true);
     const userId = session?.user?.uid;
     const postId = localPostContent?.id;
     await likeAction({ userId, postId })
       .unwrap()
       .then((payload) => {
-        setLiked(true);
         setLocalPostContent(payload as Post);
       })
       .catch((error) => {
+        setLiked(false);
         toaster({
           status: "error",
           message: error?.message ?? "Error while liking. Try again later",
@@ -102,15 +112,16 @@ export default function OnePost({ data }: { data: Post }) {
   const unlikePost = async () => {
     if (!localPostContent?.likes?.includes(session?.user?.uid as string))
       return;
+    setLiked(false);
     const userId = session?.user?.uid;
     const postId = localPostContent?.id;
     await unlikeAction({ userId, postId })
       .unwrap()
       .then((payload) => {
-        setLiked(false);
         setLocalPostContent(payload as Post);
       })
       .catch((error) => {
+        setLiked(true);
         toaster({
           status: "error",
           message: error?.message ?? "Error while unliking. Try again later",
@@ -180,15 +191,12 @@ export default function OnePost({ data }: { data: Post }) {
                 "card-btn rounded-xl text-white ",
                 liked && "text-blue-500"
               )}
+              disabled={!session || liking || unliking}
               onClick={() => {
-                localPostContent?.likes?.includes(session?.user?.uid as string)
-                  ? unlikePost()
-                  : likePost();
+                liked ? unlikePost() : likePost();
               }}
             >
-              {!localPostContent?.likes?.includes(
-                session?.user?.uid as string
-              ) ? (
+              {!liked ? (
                 <AiOutlineHeart className="mui-icon -scale-x-100 first-line:w-[25px] " />
               ) : (
                 <AiTwotoneHeart
@@ -217,40 +225,42 @@ export default function OnePost({ data }: { data: Post }) {
             </button>
           </div>
           <div className="flex w-full flex-col rounded-md bg-black/50">
-            <div className="my-3 ml-3 flex items-center gap-3">
-              <div>
-                <Avatar size={30} />
-              </div>
-              <div className="relative mr-4 grow rounded-3xl">
-                <form className="mr-0">
-                  <textarea
-                    className="block h-12 w-full resize-none overflow-hidden rounded-3xl border border-white/30 bg-transparent px-4 outline-none transition-all duration-300 ease-in focus:h-16 focus:border-none focus:border-white focus:outline-none"
-                    placeholder="Leave a comment"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                </form>
-                <button
-                  onClick={(e) => commentHandler(e)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="h-8 w-8"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+            {session && (
+              <div className="my-3 ml-3 flex items-center gap-3">
+                <div>
+                  <Avatar size={30} />
+                </div>
+                <div className="relative mr-4 grow rounded-3xl">
+                  <form className="mr-0">
+                    <textarea
+                      className="block h-12 w-full resize-none overflow-hidden rounded-3xl border border-white/30 bg-transparent px-4 outline-none transition-all duration-300 ease-in focus:h-16 focus:border-none focus:border-white focus:outline-none"
+                      placeholder="Leave a comment"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
                     />
-                  </svg>
-                </button>
+                  </form>
+                  <button
+                    onClick={(e) => commentHandler(e)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="h-8 w-8"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
             <div className="my-2 mt-1 flex flex-col items-start gap-3 rounded-xl p-2">
               {comments?.length === 0 && (
                 <p className="t-secondary w-full text-center text-xs">

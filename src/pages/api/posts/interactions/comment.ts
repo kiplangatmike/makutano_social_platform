@@ -1,14 +1,19 @@
 import { prisma } from '$lib/config/prisma'
-import { withAuthApi } from '$lib/utils/api'
 import { z } from 'zod'
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { getServerSession } from 'next-auth';
+import { authOptions } from '$pages/api/auth/[...nextauth]';
 
-
-export default withAuthApi(async ({ method, body, query }, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // comment on a post
-    if (method === 'POST') {
-        const id = z.string().parse(body.id)
-        const userId = z.string().parse(body.userId)
-        const comment = z.string().parse(body.comment)
+    if (req.method === 'POST') {
+        const session = await getServerSession(req, res, authOptions);
+
+        if (!session) return res.status(401).json({ message: 'Unauthorized' })
+
+        const id = z.string().parse(req.body.id)
+        const userId = z.string().parse(req.body.userId)
+        const comment = z.string().parse(req.body.comment)
         try {
 
             const createdComment = await prisma.comment.create({
@@ -28,8 +33,8 @@ export default withAuthApi(async ({ method, body, query }, res) => {
     }
 
     // get comments for a post - only for feed
-    if (method === 'GET') {
-        const id = z.string().parse(query.id)
+    if (req.method === 'GET') {
+        const id = z.string().parse(req.query.id)
         try {
             const comments = await prisma.comment.findMany({
                 where: {
@@ -45,4 +50,9 @@ export default withAuthApi(async ({ method, body, query }, res) => {
             return res.status(500).json(error)
         }
     }
-})
+
+}
+
+
+
+export default handler;
