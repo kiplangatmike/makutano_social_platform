@@ -1,12 +1,12 @@
-import Avatar from "$components/Avatar";
-import Layout from "$components/Layout";
+import Avatar from "$components/common/Avatar";
+import Layout from "$components/common/Layout";
 import Image from "next/image";
 import React, { useState } from "react";
-import Education from "$components/Education";
-import Experience from "$components/Experience";
-import ProfilePost from "$components/ProfilePost";
-import ProfileMod from "$components/ProfileMod";
-import About from "$components/About";
+import Education from "$components/profile/Education";
+import Experience from "$components/profile/Experience";
+import ProfilePost from "$components/profile/userPosts";
+import ProfileMod from "$components/profile/updateProfileModal";
+import About from "$components/profile/About";
 import { motion } from "framer-motion";
 import axios from "axios";
 import {
@@ -19,7 +19,7 @@ import { Post } from "$lib/types";
 import { useSession } from "next-auth/react";
 import { useUpdateUserProfileMutation } from "$services/baseApiSlice";
 import toaster from "$lib/utils/toaster";
-import HeaderSeo from "$components/head";
+import HeaderSeo from "$components/common/head";
 
 export default function Profile({
   data,

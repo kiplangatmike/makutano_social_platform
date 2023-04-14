@@ -1,5 +1,5 @@
-import Avatar from "$components/Avatar";
-import Layout from "$components/Layout";
+import Avatar from "$components/common/Avatar";
+import Layout from "$components/common/Layout";
 import { Comment, Post } from "$lib/types";
 import axios from "axios";
 import Head from "next/head";
@@ -26,7 +26,7 @@ import {
   useUnlikePostMutation,
 } from "$services/baseApiSlice";
 import { useSession } from "next-auth/react";
-import HeaderSeo from "$components/head";
+import HeaderSeo from "$components/common/head";
 
 export default function OnePost({ data }: { data: Post }) {
   const [comment, setComment] = useState("");
@@ -88,12 +88,10 @@ export default function OnePost({ data }: { data: Post }) {
     await likeAction({ userId, postId })
       .unwrap()
       .then((payload) => {
-        console.log("liked");
         setLiked(true);
         setLocalPostContent(payload as Post);
       })
       .catch((error) => {
-        console.log(error);
         toaster({
           status: "error",
           message: error?.message ?? "Error while liking. Try again later",
@@ -109,12 +107,10 @@ export default function OnePost({ data }: { data: Post }) {
     await unlikeAction({ userId, postId })
       .unwrap()
       .then((payload) => {
-        console.log("unliked");
         setLiked(false);
         setLocalPostContent(payload as Post);
       })
       .catch((error) => {
-        console.log(error);
         toaster({
           status: "error",
           message: error?.message ?? "Error while unliking. Try again later",
@@ -171,7 +167,13 @@ export default function OnePost({ data }: { data: Post }) {
               )}
             </div>
           </Link>
-          <article className="mb-2 pl-4">{data?.input}</article>
+          <article className="mb-2 pl-4">
+            {data?.input?.split("\n")?.map((txt, i) => (
+              <p key={i} className="t-body text-black/90 dark:text-white">
+                {txt}
+              </p>
+            ))}
+          </article>
           <div className="my-1 flex w-full justify-between gap-3 border-t border-black/10 px-4	py-3 text-black/60 dark:border-gray-500">
             <button
               className={clsx(
@@ -268,7 +270,7 @@ export default function OnePost({ data }: { data: Post }) {
                       />
                     </span>
                     <div className="ml-2 flex-grow leading-5">
-                      <p className="t-link dark:t-white hover:t-blue dark:hover:t-blue-light text-sm font-semibold text-black/90">
+                      <p className="t-link hover:t-blue dark:hover:t-blue-light text-sm font-semibold text-black/90 dark:text-white">
                         {comment?.author?.name}
                       </p>
                       {comment?.createdAt && (
@@ -281,7 +283,7 @@ export default function OnePost({ data }: { data: Post }) {
                     </div>
                   </Link>
 
-                  <p className="t-secondary text-md">{comment.input}</p>
+                  <p className="text-md text-sm text-white">{comment.input}</p>
                 </div>
               ))}
             </div>

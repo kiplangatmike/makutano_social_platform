@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 import social_logo from "$public/makutano.svg";
 import logoo from "$public/logoo.jpg";
 import hero_svg from "$public/hero.svg";
-import HeaderSeo from "$components/head";
+import HeaderSeo from "$components/common/head";
 
 export default function Home() {
   return (

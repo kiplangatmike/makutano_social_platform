@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import ProfileMod from "./ProfileMod";
 import { Experience as IExperience } from "@prisma/client";
 
 export default function Experience({ data }: { data: IExperience[] }) {

@@ -9,10 +9,10 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 
 import { prisma } from "$lib/config/prisma";
-import Feed from "$components/Feed";
+import Feed from "$components/feed/Feed";
 import { articlesState } from "$lib/atoms";
-import Layout from "$components/Layout";
-import HeaderSeo from "$components/head";
+import Layout from "$components/common/Layout";
+import HeaderSeo from "$components/common/head";
 
 export default function FeedPage({ articles }: Props) {
   const setArticles = useSetAtom(articlesState);

@@ -7,12 +7,13 @@ import { motion } from "framer-motion";
 import { MdOutlineWorkOutline, MdNotifications } from "react-icons/md";
 import { TbBrandGoogleHome, TbBuildingBank } from "react-icons/tb";
 import { SlPeople } from "react-icons/sl";
-import HeaderLink from "$components/HeaderLink";
 import icon from "$public/icon.png";
 import icon_white from "$public/icon_white.png";
 import Avatar from "./Avatar";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+
+import HeaderLink from "./HeaderLink";
 
 export default function Header() {
   const [mounted, setMounted] = useState(false);
@@ -39,7 +40,7 @@ export default function Header() {
         </div>
 
         {/* Right */}
-        <div className=" flex items-center space-x-4  rounded-xl  px-2 py-1 py-2">
+        <div className=" flex items-center space-x-4  rounded-xl  px-2 py-2">
           <div className="flex">
             <HeaderLink
               Icon={TbBrandGoogleHome}

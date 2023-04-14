@@ -5,7 +5,7 @@ import Modal from "./Modal";
 
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
-import Widgets from "./Widgets";
+import Widgets from "./updates";
 import { ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {
