@@ -1,5 +1,5 @@
-import Avatar from "$components/Avatar";
-import Layout from "$components/Layout";
+import Avatar from "$components/common/Avatar";
+import Layout from "$components/common/Layout";
 import { Comment, Post } from "$lib/types";
 import axios from "axios";
 import Head from "next/head";
@@ -26,7 +26,7 @@ import {
   useUnlikePostMutation,
 } from "$services/baseApiSlice";
 import { useSession } from "next-auth/react";
-import HeaderSeo from "$components/head";
+import HeaderSeo from "$components/common/head";
 
 export default function OnePost({ data }: { data: Post }) {
   const [comment, setComment] = useState("");

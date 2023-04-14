@@ -21,7 +21,7 @@ import {
   modalState2,
   modalTypeState,
 } from "$lib/atoms";
-import Avatar from "$components/Avatar";
+import Avatar from "$components/common/Avatar";
 import { IconType } from "react-icons";
 import {
   useCommentPostMutation,
@@ -145,7 +145,7 @@ export default function OnePost({ post, modalPost = false }: Props) {
   return (
     <div
       className={clsx(
-        !modalPost && "dark:bg-gray-900  rounded-3xl shadow-md",
+        !modalPost && "rounded-3xl  shadow-md dark:bg-gray-900",
         modalPost && "rounded-r-lg"
       )}
     >
@@ -311,11 +311,7 @@ type Props = {
   modalPost?: boolean;
 };
 
-const PostMenu = ({
-  post,
-}: {
-  post: Props["post"];
-}) => {
+const PostMenu = ({ post }: { post: Props["post"] }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const setModalOpen = useSetAtom(modalState);

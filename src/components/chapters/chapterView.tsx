@@ -1,5 +1,5 @@
 import Layout from "$components/Layout";
-import OnePost from "$components/Post";
+import OnePost from "$components/feed/Post";
 import { Post } from "$lib/types";
 import {
   useGetChapterByIdQuery,

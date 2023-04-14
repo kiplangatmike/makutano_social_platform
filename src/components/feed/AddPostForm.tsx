@@ -23,7 +23,7 @@ import {
   MdCheck,
 } from "react-icons/md";
 import { TiStarburst } from "react-icons/ti";
-import Avatar from "$components/Avatar";
+import Avatar from "$components/common/Avatar";
 import { modalState } from "$lib/atoms";
 
 import {

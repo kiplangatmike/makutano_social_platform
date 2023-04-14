@@ -1,5 +1,4 @@
 import { useState } from "react";
-import ProfileMod from "./ProfileMod";
 import { Education as IEducation } from "@prisma/client";
 
 export default function Education({ data }: { data: IEducation[] }) {

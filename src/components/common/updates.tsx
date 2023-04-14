@@ -5,8 +5,7 @@ import { useAtomValue } from "jotai";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { BsInfoSquareFill } from "react-icons/bs";
 import { MdCircle } from "react-icons/md";
-import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi";
-import james from "../../assests/equity.jpg"
+import james from "../../assests/equity.jpg";
 
 import { articlesState } from "$lib/atoms";
 
@@ -14,7 +13,7 @@ export default function Widgets() {
   const articles = useAtomValue(articlesState);
 
   return (
-    <div className="dark:bg-gray-900  rounded-3xl py-3">
+    <div className="rounded-3xl  py-3 dark:bg-gray-900">
       <div className="flex items-center px-3">
         <h4 className="flex-grow text-center font-semibold">Program Updates</h4>
         <BsInfoSquareFill className="mui-icon h-6 w-4" />
@@ -50,12 +49,7 @@ const Item = ({ article: a }: { article: Article }) => (
         })}
       </span>
       <div className="my-2 ml-3 overflow-hidden rounded-xl">
-        <Image
-          src={james}
-          width={280}
-          height={280}
-          alt=""
-        ></Image>
+        <Image src={james} width={280} height={280} alt=""></Image>
       </div>
     </div>
   </li>

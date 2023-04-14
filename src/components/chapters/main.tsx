@@ -1,4 +1,4 @@
-import Layout from "$components/Layout";
+import Layout from "$components/common/Layout";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect } from "react";
@@ -10,7 +10,7 @@ import { modalStateAddChapters, modalTypeState } from "$lib/atoms";
 import { useGetAllChaptersQuery } from "$services/baseApiSlice";
 import { Chapters as PrismaChapters } from "@prisma/client";
 import { useRouter } from "next/router";
-import HeaderSeo from "$components/head";
+import HeaderSeo from "$components/common/head";
 
 export default function Chapters() {
   const setModalOpen = useSetAtom(modalStateAddChapters);

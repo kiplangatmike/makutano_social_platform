@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { MdArrowDropDown } from "react-icons/md";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { fetchPosts } from "$lib/utils";
-import OnePost from "$components/Post";
+import OnePost from "./Post";
 import { Post } from "$lib/types";
 
 export default function Feed() {
