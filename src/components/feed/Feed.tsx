@@ -34,8 +34,8 @@ export default function Feed() {
         {isLoading && <p>loading...</p>}
         {isError && error instanceof Error && <p>Error: {error?.message}</p>}
         {posts?.length === 0 && <p>No posts found</p>}
-        {posts?.map((p: Post) => (
-          <OnePost key={p.id} post={p} />
+        {posts?.map((p: Post, index: number) => (
+          <OnePost key={p.id} post={p} index={index} />
         ))}
       </div>
     </div>

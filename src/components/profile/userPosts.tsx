@@ -13,8 +13,8 @@ export default function ProfilePost({ posts }: { posts: Post[] }) {
           No posts found
         </p>
       )}
-      {posts?.map((p: Post) => (
-        <OnePost key={p.id} post={p} />
+      {posts?.map((p: Post, index: number) => (
+        <OnePost key={p.id} post={p} index={index} />
       ))}
     </div>
   );

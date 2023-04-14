@@ -15,6 +15,8 @@ import { HiOutlineReply } from "react-icons/hi";
 import { IoIosMore } from "react-icons/io";
 import { useQueryClient } from "@tanstack/react-query";
 
+import { motion } from "framer-motion";
+
 import {
   modalPostState,
   modalState,
@@ -33,7 +35,7 @@ import {
 import { Post } from "$lib/types";
 import toaster from "$lib/utils/toaster";
 
-export default function OnePost({ post, modalPost = false }: Props) {
+export default function OnePost({ post, index, modalPost = false }: Props) {
   const [liked, setLiked] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const setModalOpen = useSetAtom(modalState);
@@ -143,7 +145,11 @@ export default function OnePost({ post, modalPost = false }: Props) {
   };
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.1, ease: "easeIn" }}
+      viewport={{ once: true }}
       className={clsx(
         !modalPost && "rounded-3xl  shadow-md dark:bg-gray-900",
         modalPost && "rounded-r-lg"
@@ -280,7 +286,7 @@ export default function OnePost({ post, modalPost = false }: Props) {
         <div className="relative mr-4 grow rounded-3xl pb-3">
           <form className="mr-0">
             <textarea
-              className="block h-12 w-full resize-none overflow-hidden rounded-3xl border border-white/30 bg-transparent px-4 outline-none transition-all duration-300 ease-in focus:h-16 focus:border-none focus:border-white focus:outline-none"
+              className="block h-12 w-full resize-none overflow-hidden rounded-xl border border-white/30 bg-transparent px-4 outline-none transition-all duration-300 ease-in focus:h-16 focus:border-none focus:border-white focus:outline-none"
               placeholder="Leave a comment"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
@@ -288,7 +294,7 @@ export default function OnePost({ post, modalPost = false }: Props) {
           </form>
           <button
             onClick={(e) => commentHandler(e)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+            className="absolute right-4 top-[40%] -translate-y-1/2 text-gray-400"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -307,13 +313,14 @@ export default function OnePost({ post, modalPost = false }: Props) {
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 type Props = {
   post: Post;
   modalPost?: boolean;
+  index: number;
 };
 
 const PostMenu = ({ post }: { post: Props["post"] }) => {

@@ -1,4 +1,4 @@
-import Layout from "$components/Layout";
+import Layout from "$components/common/Layout";
 import OnePost from "$components/feed/Post";
 import { Post } from "$lib/types";
 import {
@@ -17,7 +17,7 @@ import { postForChapters, modalState, modalTypeState } from "$lib/atoms";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import toaster from "$lib/utils/toaster";
 import { useRouter } from "next/router";
-import HeaderSeo from "$components/head";
+import HeaderSeo from "$components/common/head";
 
 export default function ChapterView({
   data,
@@ -235,8 +235,8 @@ export default function ChapterView({
                 <JoinORLeaveButton fromMessage />
               </div>
             )}
-            {chapterPosts?.map((p: Post) => (
-              <OnePost key={p.id} post={p} />
+            {chapterPosts?.map((p: Post, index: number) => (
+              <OnePost key={p.id} post={p} index={index} />
             ))}
           </div>
         </div>
