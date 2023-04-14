@@ -200,18 +200,23 @@ export default function OnePost({ post, modalPost = false }: Props) {
             )}
           >
             <article className="mb-4">
-              {localPostContent?.input?.length > 220
-                ? `${localPostContent?.input?.slice(0, 220)}...`
-                : `${localPostContent?.input}`}
+              {localPostContent?.input
+                ?.slice(0, 220)
+                .split("\n")
+                ?.map((txt, i) => (
+                  <p key={i} className="t-body text-black/90 dark:text-white">
+                    {txt}
+                  </p>
+                ))}
               {!modalPost &&
                 !showAll &&
                 localPostContent?.input?.length > 220 && (
-                  <button
+                  <span
                     onClick={() => setShowAll(true)}
-                    className="t-secondary inline-block bg-white pl-2 hover:underline dark:bg-dblue dark:text-amber-400"
+                    className="t-secondary bg-white pl-2 hover:underline dark:bg-dblue dark:text-amber-400"
                   >
                     ...see more
-                  </button>
+                  </span>
                 )}
             </article>
             {localPostContent?.media?.length > 0 && (
