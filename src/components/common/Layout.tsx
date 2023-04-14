@@ -22,7 +22,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               <Sidebar />
             </div>
           )}
-          <div className="ml-auto w-[80%] sm:w-[50vw] md:mt-[0px] b1200:w-[70vw] xl:mx-auto xl:w-[40vw] xl:max-w-[700px]">
+          <div className="ml-auto w-[80%] sm:w-[50vw] md:mt-[0px] b1200:w-[70vw] xl:mx-auto xl:w-[45vw]">
             {children}
           </div>
           {session && (

@@ -44,7 +44,7 @@ export default function Chapters() {
         description="Discover and engage with ELP Chapters, exclusive groups for universities, continents, and disciplines. Expand your network and stay connected with like-minded professionals in your field. "
       />
       <Layout>
-        <div className="relative mx-auto mt-0 w-full rounded-md bg-[#111827] px-4 pb-6 pr-4 xl:w-[40vw] 2xl:w-[50vw]">
+        <div className="relative mx-auto mt-0 w-full rounded-md bg-[#111827] px-4 pb-6 pr-4">
           <button
             onClick={openModal}
             className="absolute right-4 top-2 flex items-center justify-center gap-2 rounded-md bg-white px-8 py-2 text-base font-semibold text-black hover:bg-blue-400/25 hover:text-white"

@@ -13,7 +13,7 @@ export default function Widgets() {
   const articles = useAtomValue(articlesState);
 
   return (
-    <div className="rounded-3xl  py-3 dark:bg-gray-900">
+    <div className="rounded-3xl py-3 dark:bg-gray-900">
       <div className="flex items-center px-3">
         <h4 className="flex-grow text-center text-[22px] font-semibold">
           Program Updates

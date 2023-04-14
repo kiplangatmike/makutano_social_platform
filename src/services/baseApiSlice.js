@@ -1,7 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://makutano.azurewebsites.net/api",
+  baseUrl:
+    process.env.NODE_ENV === "development"
+      ? process.env.NEXT_PUBLIC_API_BASE_URL_V1
+      : "https://makutano.azurewebsites.net/api",
   credentials: "include",
 });
 
