@@ -4,7 +4,7 @@ import { MdAdd, MdBookmark, MdHome } from "react-icons/md";
 import { TbBuildingBank } from "react-icons/tb";
 import { SiArtifacthub } from "react-icons/si";
 import { TbBrandWechat } from "react-icons/tb";
-import Avatar from "$components/Avatar";
+import Avatar from "$components/common/Avatar";
 import premium_icon from "$public/premium.svg";
 import Link from "next/link";
 
@@ -31,20 +31,20 @@ export default function Sidebar() {
   const { data: allChapters, isFetching } = useGetAllChaptersQuery(undefined);
 
   return (
-    <div className="">
+    <div className="left-4 top-24 space-y-4 md:fixed md:w-[300px]">
       {/* First card */}
-      <section className="dark:bg-gray-900 rounded-3xl text-center drop-shadow-lg">
-        <div className="relative mx-auto flex">
+      <section className="rounded-3xl px-4 text-center drop-shadow-lg dark:bg-gray-900">
+        <div className="relative mb-1 flex">
           <Link
             href={`/profile/${session?.user?.uid}`}
-            className="ml-8 mt-4 h-[40px] min-w-[40px] cursor-pointer capitalize"
+            className="ml-2 mt-4 h-[40px] min-w-[40px] cursor-pointer capitalize"
           >
             <Avatar size={40} />
           </Link>
 
           <div className="px-6 py-4 text-left">
             <Link href={`/profile/${session?.user?.uid}`} className="block">
-              <h3 className="cursor-pointer divide-amber-800/80 font-semibold underline-offset-1 hover:underline capitalize">
+              <h3 className="cursor-pointer divide-amber-800/80 font-semibold capitalize underline-offset-1 hover:underline">
                 {session?.user?.name}
               </h3>
             </Link>
@@ -52,7 +52,7 @@ export default function Sidebar() {
           </div>
         </div>
 
-        <div className="hidden px-6 text-left text-sm md:block">
+        <div className="mb-1 hidden text-left text-sm md:block">
           <Link
             href="/feed"
             className="sidebar-section card-btn flex items-center space-x-1.5 p-3"
@@ -61,7 +61,7 @@ export default function Sidebar() {
             <h4 className="text-x font-semibold">Feed</h4>
           </Link>
         </div>
-        <div className="hidden px-6 pb-2 text-left text-sm md:block">
+        <div className="mb-1 hidden pb-2 text-left text-sm md:block">
           <Link
             href="/chapters"
             className="sidebar-section card-btn flex items-center space-x-1.5 p-3"
@@ -90,7 +90,7 @@ export default function Sidebar() {
           <h4 className="font-semibold">Logout</h4>
         </button>
 
-        <div className="sidebar-section sidebar-btn card-btn w-full p-3 px-8">
+        <div className="sidebar-section sidebar-btn card-btn w-full p-3 px-8 pt-8">
           <motion.button
             onClick={openModal}
             className="rounded-xl bg-white px-8 py-2 text-lg font-semibold text-slate-600 transition-all duration-300 ease-in hover:bg-blue-400/25 hover:text-white"

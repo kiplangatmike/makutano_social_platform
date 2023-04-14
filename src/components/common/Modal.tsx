@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Dialog } from "@headlessui/react";
 import { MdClose } from "react-icons/md";
 
-import AddPostForm from "$components/AddPostForm";
+import AddPostForm from "$components/feed/AddPostForm";
 import {
   modalPostState,
   modalState,
@@ -12,7 +12,7 @@ import {
   modalStateAddChapters,
   postForChapters,
 } from "$lib/atoms";
-import AddChapter from "./AddChapter";
+import AddChapter from "$components/chapters/AddChapter";
 
 export default function Modal() {
   const [isClient, setIsClient] = useState(false);

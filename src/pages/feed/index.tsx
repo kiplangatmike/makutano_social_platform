@@ -9,9 +9,10 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 
 import { prisma } from "$lib/config/prisma";
-import Feed from "$components/Feed";
+import Feed from "$components/feed/Feed";
 import { articlesState } from "$lib/atoms";
-import Layout from "$components/Layout";
+import Layout from "$components/common/Layout";
+import HeaderSeo from "$components/common/head";
 
 export default function FeedPage({ articles }: Props) {
   const setArticles = useSetAtom(articlesState);
@@ -31,13 +32,16 @@ export default function FeedPage({ articles }: Props) {
         postedAt: "2023-04-01T00:00:00.000Z",
       },
     ]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Layout>
-      <Feed />
-    </Layout>
+    <>
+      <HeaderSeo title={`Feed - Makutano`} />
+      <Layout>
+        <Feed />
+      </Layout>
+    </>
   );
 }
 

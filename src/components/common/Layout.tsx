@@ -5,15 +5,12 @@ import Modal from "./Modal";
 
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
-import Widgets from "./Widgets";
+import Widgets from "./updates";
 import { ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="dark:to-[#19 h-screen overflow-y-scroll bg-lstone transition-all dark:bg-gradient-radial dark:from-[#15202b] dark:from-100% dark:to-50%">
-      <Head>
-        <title>Feed | Makutano</title>
-      </Head>
+    <div className="h-screen overflow-y-scroll bg-lstone transition-all dark:bg-gradient-radial dark:from-[#15202b] dark:from-100% dark:to-[#19 dark:to-50%">
       <Header />
       {/* <div className="relativ mx-auto max-w-[1240px]"> */}
       <div className="px-5">

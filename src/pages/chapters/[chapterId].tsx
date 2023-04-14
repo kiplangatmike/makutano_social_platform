@@ -1,4 +1,3 @@
-import Layout from "$components/Layout";
 import ChapterView from "$components/chapters/chapterView";
 import { Chapters } from "@prisma/client";
 import axios from "axios";

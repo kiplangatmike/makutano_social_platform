@@ -1,5 +1,5 @@
-import Avatar from "$components/Avatar";
-import Layout from "$components/Layout";
+import Avatar from "$components/common/Avatar";
+import Layout from "$components/common/Layout";
 import Link from "next/link";
 
 export default function Notification() {

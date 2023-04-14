@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { MdArrowDropDown } from "react-icons/md";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { fetchPosts } from "$lib/utils";
-import OnePost from "$components/Post";
+import OnePost from "./Post";
 import { Post } from "$lib/types";
 
 export default function Feed() {
@@ -34,8 +34,8 @@ export default function Feed() {
         {isLoading && <p>loading...</p>}
         {isError && error instanceof Error && <p>Error: {error?.message}</p>}
         {posts?.length === 0 && <p>No posts found</p>}
-        {posts?.map((p: Post) => (
-          <OnePost key={p.id} post={p} />
+        {posts?.map((p: Post, index: number) => (
+          <OnePost key={p.id} post={p} index={index} />
         ))}
       </div>
     </div>

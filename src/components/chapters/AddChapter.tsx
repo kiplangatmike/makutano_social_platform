@@ -19,7 +19,6 @@ import {
 } from "$lib/atoms";
 import { MdClose, MdOutlinePhotoSizeSelectActual } from "react-icons/md";
 import { TiStarburst } from "react-icons/ti";
-import Avatar from "$components/Avatar";
 import { modalState } from "$lib/atoms";
 
 import {

@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useSetAtom } from "jotai";
 import { motion } from "framer-motion";
 
-import Avatar from "$components/Avatar";
+import Avatar from "$components/common/Avatar";
 import { modalState, modalTypeState } from "$lib/atoms";
 
 export default function AddPost() {

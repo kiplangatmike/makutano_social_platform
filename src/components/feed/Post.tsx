@@ -15,13 +15,15 @@ import { HiOutlineReply } from "react-icons/hi";
 import { IoIosMore } from "react-icons/io";
 import { useQueryClient } from "@tanstack/react-query";
 
+import { motion } from "framer-motion";
+
 import {
   modalPostState,
   modalState,
   modalState2,
   modalTypeState,
 } from "$lib/atoms";
-import Avatar from "$components/Avatar";
+import Avatar from "$components/common/Avatar";
 import { IconType } from "react-icons";
 import {
   useCommentPostMutation,
@@ -33,7 +35,7 @@ import {
 import { Post } from "$lib/types";
 import toaster from "$lib/utils/toaster";
 
-export default function OnePost({ post, modalPost = false }: Props) {
+export default function OnePost({ post, index, modalPost = false }: Props) {
   const [liked, setLiked] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const setModalOpen = useSetAtom(modalState);
@@ -41,26 +43,36 @@ export default function OnePost({ post, modalPost = false }: Props) {
 
   const { data: session } = useSession();
 
-  const [likeAction] = useLikePostMutation();
-  const [unlikeAction] = useUnlikePostMutation();
+  const [likeAction, { isLoading: liking }] = useLikePostMutation();
+  const [unlikeAction, { isLoading: unliking }] = useUnlikePostMutation();
 
   const [localPostContent, setLocalPostContent] = useState(post);
 
   useEffect(() => {
     setLocalPostContent(post);
-  }, [post]);
+    if (post && session?.user) {
+      if (post?.likes?.length === 0) {
+        setLiked(false);
+        return;
+      }
+      setLiked(
+        post?.likes?.filter((id) => id === session?.user?.uid).length > 0
+      );
+    }
+  }, [post, session]);
 
   const likePost = async () => {
     if (localPostContent?.likes?.includes(session?.user?.uid as string)) return;
+    setLiked(true);
     const userId = session?.user?.uid;
     const postId = localPostContent?.id;
     await likeAction({ userId, postId })
       .unwrap()
       .then((payload) => {
-        setLiked(true);
         setLocalPostContent(payload as Post);
       })
       .catch((error) => {
+        setLiked(false);
         toaster({
           status: "error",
           message: error?.message ?? "Error while liking. Try again later",
@@ -71,15 +83,16 @@ export default function OnePost({ post, modalPost = false }: Props) {
   const unlikePost = async () => {
     if (!localPostContent?.likes?.includes(session?.user?.uid as string))
       return;
+    setLiked(false);
     const userId = session?.user?.uid;
     const postId = localPostContent?.id;
     await unlikeAction({ userId, postId })
       .unwrap()
       .then((payload) => {
-        setLiked(false);
         setLocalPostContent(payload as Post);
       })
       .catch((error) => {
+        setLiked(true);
         toaster({
           status: "error",
           message: error?.message ?? "Error while unliking. Try again later",
@@ -143,32 +156,30 @@ export default function OnePost({ post, modalPost = false }: Props) {
   };
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.1, ease: "easeIn" }}
+      viewport={{ once: true }}
       className={clsx(
-        !modalPost && "dark:bg-gray-900  rounded-3xl shadow-md",
+        !modalPost && "rounded-3xl  shadow-md dark:bg-gray-900",
         modalPost && "rounded-r-lg"
       )}
     >
       <header className="mb-2 flex flex-nowrap items-center justify-between px-4 pt-3">
-        <Link
-          href={`/profile/${localPostContent?.authorId}`}
-          className="flex items-center capitalize"
-        >
+        <Link href={`/profile/${post?.authorId}`} className="flex items-center">
           <span className="flex cursor-pointer">
-            <Avatar src={localPostContent?.author?.image as string} size={40} />
+            <Avatar src={post?.author?.image as string} size={40} />
           </span>
           <div className="ml-2 flex-grow leading-5">
-            <p className="t-link dark:t-white hover:t-blue dark:hover:t-blue-light font-semibold text-black/90">
-              {localPostContent?.author?.name}
+            <p className="t-link dark:t-white capitalize hover:t-blue dark:hover:t-blue-light font-semibold text-black/90">
+              {post?.author?.name}
             </p>
-            {localPostContent?.createdAt && (
+            {post?.createdAt && (
               <p className="t-secondary text-xs">
-                {formatDistanceToNow(
-                  parseISO(localPostContent?.createdAt as string),
-                  {
-                    addSuffix: true,
-                  }
-                )}{" "}
+                {formatDistanceToNow(parseISO(post?.createdAt as string), {
+                  addSuffix: true,
+                })}{" "}
               </p>
             )}
           </div>
@@ -177,7 +188,7 @@ export default function OnePost({ post, modalPost = false }: Props) {
         {modalPost ? (
           <button
             onClick={() => {
-              if (localPostContent.authorId === session?.user?.uid) {
+              if (post.authorId === session?.user?.uid) {
                 setModalOpen(false);
               }
             }}
@@ -185,13 +196,13 @@ export default function OnePost({ post, modalPost = false }: Props) {
           >
             <MdClose className="mui-icon" />
           </button>
-        ) : session?.user?.uid === localPostContent?.authorId ? (
-          <PostMenu post={localPostContent} />
+        ) : session?.user?.uid === post?.authorId ? (
+          <PostMenu post={post} />
         ) : null}
       </header>
 
-      <Link href={`/feed/${localPostContent?.id}`}>
-        {localPostContent?.input && (
+      <Link href={`/feed/${post?.id}`}>
+        {post?.input && (
           <article
             className={clsx(
               "relative mx-4 mb-2 overflow-hidden break-words text-sm leading-5",
@@ -200,26 +211,29 @@ export default function OnePost({ post, modalPost = false }: Props) {
             )}
           >
             <article className="mb-4">
-              {localPostContent?.input?.length > 220
-                ? `${localPostContent?.input?.slice(0, 220)}...`
-                : `${localPostContent?.input}`}
-              {!modalPost &&
-                !showAll &&
-                localPostContent?.input?.length > 220 && (
-                  <button
-                    onClick={() => setShowAll(true)}
-                    className="t-secondary inline-block bg-white pl-2 hover:underline dark:bg-dblue dark:text-amber-400"
-                  >
-                    ...see more
-                  </button>
-                )}
+              {post?.input
+                ?.slice(0, 220)
+                .split("\n")
+                ?.map((txt, i) => (
+                  <p key={i} className="t-body text-black/90 dark:text-white">
+                    {txt}
+                  </p>
+                ))}
+              {!modalPost && !showAll && post?.input?.length > 220 && (
+                <span
+                  onClick={() => setShowAll(true)}
+                  className="t-secondary bg-white pl-2 hover:underline dark:bg-dblue dark:text-amber-400"
+                >
+                  ...see more
+                </span>
+              )}
             </article>
-            {localPostContent?.media?.length > 0 && (
+            {post?.media?.length > 0 && (
               <div className="relative my-1 h-[200px] w-full overflow-hidden rounded-xl">
                 <Image
-                  src={localPostContent?.media[0]}
+                  src={post?.media[0]}
                   fill
-                  alt=""
+                  alt={post?.input}
                   className="object-contain"
                 ></Image>
               </div>
@@ -234,13 +248,12 @@ export default function OnePost({ post, modalPost = false }: Props) {
             "card-btn rounded-xl text-white ",
             liked && "text-blue-500"
           )}
+          disabled={liking || unliking}
           onClick={() => {
-            localPostContent?.likes?.includes(session?.user?.uid as string)
-              ? unlikePost()
-              : likePost();
+            liked ? unlikePost() : likePost();
           }}
         >
-          {!localPostContent?.likes?.includes(session?.user?.uid as string) ? (
+          {!liked ? (
             <AiOutlineHeart className="mui-icon -scale-x-100 first-line:w-[25px] " />
           ) : (
             <AiTwotoneHeart
@@ -302,20 +315,17 @@ export default function OnePost({ post, modalPost = false }: Props) {
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 type Props = {
   post: Post;
   modalPost?: boolean;
+  index: number;
 };
 
-const PostMenu = ({
-  post,
-}: {
-  post: Props["post"];
-}) => {
+const PostMenu = ({ post }: { post: Props["post"] }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const setModalOpen = useSetAtom(modalState);

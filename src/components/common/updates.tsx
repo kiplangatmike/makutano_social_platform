@@ -5,7 +5,6 @@ import { useAtomValue } from "jotai";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { BsInfoSquareFill } from "react-icons/bs";
 import { MdCircle } from "react-icons/md";
-import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi";
 import james from "../../assests/equity.jpg";
 
 import { articlesState } from "$lib/atoms";
