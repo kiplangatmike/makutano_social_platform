@@ -5,7 +5,7 @@ import { Experience as IExperience } from "@prisma/client";
 
 export default function Experience({ data }: { data: IExperience[] }) {
   return (
-    <div className="relative">
+    <div className="relative dark:bg-gray-900 rounded-3xl p-4">
       <div className="mb-2 text-[20px] font-semibold">
         Professional Experience{" "}
       </div>

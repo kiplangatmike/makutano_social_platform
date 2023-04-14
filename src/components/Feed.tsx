@@ -17,7 +17,7 @@ export default function Feed() {
   const [parent] = useAutoAnimate<HTMLDivElement>();
 
   return (
-    <div className=" relative  w-full pb-6 xl:w-[40vw] 2xl:w-[50vw]">
+    <div className=" relative  w-full pb-6 ">
       {posts && posts?.length > 0 && (
         <div className="">
           <button className="flex w-full cursor-pointer items-center">

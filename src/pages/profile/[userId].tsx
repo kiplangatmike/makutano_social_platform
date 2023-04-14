@@ -59,10 +59,17 @@ export default function Profile({
           <div className="absolute bottom-0 -mb-10 ml-5">
             <Avatar src={data?.image as string} size={80} />
           </div>
-          {session?.user?.uid === data?.id && (
-            <div className="absolute bottom-0 right-0 -mb-10 mr-5 rounded-[8px] bg-gray-200/20 px-4 py-1">
-              <button onClick={() => setOpenModal(true)}>Update profile</button>
-            </div>
+          {session?.user?.uid === data?.id && (<motion.button
+            onClick={() => setOpenModal(true)}
+            whileTap={{ scale: 0.99 }}
+            className={`absolute bottom-0 right-0 -mb-14 mr-5 rounded-[8px] bg-gray-400/20 px-4 py-1 t-secondary  min-w-[100px] text-center text-[15px] font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
+              activeComponent === "component1"
+                ? "bg-blue-500/30 text-white"
+                : "bg-transparent text-white"
+            }`}
+          >
+            Update Profile
+          </motion.button>
           )}
         </div>
         <div className=" ml-5 mt-12 h-2/3">
@@ -112,7 +119,7 @@ export default function Profile({
                 {data?.education?.length > 0 ? data?.education[0]?.school : ""}
               </p>
             )}
-            <p className="mb-4 mr-5 rounded-lg py-2 italic">
+            <p className="mb-4 mr-5 rounded-lg py-2 italic capitalize">
               {data?.ComprehensiveProfile[0]?.bio}
             </p>
             <div className="bottom-20 left-0  flex w-full p-5 pb-4 font-bold text-white">
@@ -134,7 +141,7 @@ export default function Profile({
             <motion.button
               onClick={() => handleButtonClick("component1")}
               whileTap={{ scale: 0.99 }}
-              className={`t-secondary  min-w-[100px]  flex-1 rounded-l-xl bg-amber-800 py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
+              className={`t-secondary  min-w-[100px]  flex-1 rounded-l-xl py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
                 activeComponent === "component1"
                   ? "bg-blue-500/30 text-white"
                   : "bg-transparent text-white"
@@ -145,7 +152,7 @@ export default function Profile({
             <motion.button
               onClick={() => handleButtonClick("component2")}
               whileTap={{ scale: 0.99 }}
-              className={`t-secondary  min-w-[100px]   flex-1 bg-amber-800 py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
+              className={`t-secondary  min-w-[100px]   flex-1 py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
                 activeComponent === "component2"
                   ? "bg-blue-500/30 text-white"
                   : "bg-transparent text-white"
@@ -156,7 +163,7 @@ export default function Profile({
             <motion.button
               onClick={() => handleButtonClick("component3")}
               whileTap={{ scale: 0.99 }}
-              className={`t-secondary  min-w-[100px]  flex-1 bg-amber-800 py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
+              className={`t-secondary  min-w-[100px]  flex-1 py-1 rounded-r-xl text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
                 activeComponent === "component3"
                   ? "bg-blue-500/30 text-white"
                   : "bg-transparent text-white"

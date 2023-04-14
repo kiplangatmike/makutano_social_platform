@@ -5,7 +5,7 @@ import { Education as IEducation } from "@prisma/client";
 export default function Education({ data }: { data: IEducation[] }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <div className="relative">
+    <div className="relative dark:bg-gray-900 rounded-3xl p-4">
       <div className="mb-2 text-[20px] font-semibold">Education</div>
       {(data?.length === 0 || !data) && (
         <p className="font-medium text-xs italic">

@@ -31,7 +31,7 @@ export default function Sidebar() {
   const { data: allChapters, isFetching } = useGetAllChaptersQuery(undefined);
 
   return (
-    <div className="md:fixed left-4 top-24 md:w-[300px] space-y-2">
+    <div className="">
       {/* First card */}
       <section className="dark:bg-gray-900 rounded-3xl text-center drop-shadow-lg">
         <div className="relative mx-auto flex">
