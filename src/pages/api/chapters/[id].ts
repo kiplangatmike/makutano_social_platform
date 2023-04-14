@@ -34,6 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                                 id: true,
                                 image: true,
                                 name: true,
+                                ComprehensiveProfile: true
                             }
                         }
                     }

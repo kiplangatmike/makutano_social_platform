@@ -11,7 +11,7 @@ export default function Avatar({ size, src }: Props) {
       alt={session?.user?.name ?? "Profile picture"}
       width={size}
       height={size}
-      className={`rounded-full `}
+      className={`rounded-full min-w-[${size}px] min-h-[${size}px]`}
     />
   );
 }

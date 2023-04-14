@@ -155,8 +155,6 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
     }
   };
 
-  console.log(post);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
