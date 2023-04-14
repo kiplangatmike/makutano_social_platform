@@ -43,26 +43,36 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
 
   const { data: session } = useSession();
 
-  const [likeAction] = useLikePostMutation();
-  const [unlikeAction] = useUnlikePostMutation();
+  const [likeAction, { isLoading: liking }] = useLikePostMutation();
+  const [unlikeAction, { isLoading: unliking }] = useUnlikePostMutation();
 
   const [localPostContent, setLocalPostContent] = useState(post);
 
   useEffect(() => {
     setLocalPostContent(post);
-  }, [post]);
+    if (post && session?.user) {
+      if (post?.likes?.length === 0) {
+        setLiked(false);
+        return;
+      }
+      setLiked(
+        post?.likes?.filter((id) => id === session?.user?.uid).length > 0
+      );
+    }
+  }, [post, session]);
 
   const likePost = async () => {
     if (localPostContent?.likes?.includes(session?.user?.uid as string)) return;
+    setLiked(true);
     const userId = session?.user?.uid;
     const postId = localPostContent?.id;
     await likeAction({ userId, postId })
       .unwrap()
       .then((payload) => {
-        setLiked(true);
         setLocalPostContent(payload as Post);
       })
       .catch((error) => {
+        setLiked(false);
         toaster({
           status: "error",
           message: error?.message ?? "Error while liking. Try again later",
@@ -73,15 +83,16 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
   const unlikePost = async () => {
     if (!localPostContent?.likes?.includes(session?.user?.uid as string))
       return;
+    setLiked(false);
     const userId = session?.user?.uid;
     const postId = localPostContent?.id;
     await unlikeAction({ userId, postId })
       .unwrap()
       .then((payload) => {
-        setLiked(false);
         setLocalPostContent(payload as Post);
       })
       .catch((error) => {
+        setLiked(true);
         toaster({
           status: "error",
           message: error?.message ?? "Error while unliking. Try again later",
@@ -156,25 +167,19 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
       )}
     >
       <header className="mb-2 flex flex-nowrap items-center justify-between px-4 pt-3">
-        <Link
-          href={`/profile/${localPostContent?.authorId}`}
-          className="flex items-center capitalize"
-        >
+        <Link href={`/profile/${post?.authorId}`} className="flex items-center">
           <span className="flex cursor-pointer">
-            <Avatar src={localPostContent?.author?.image as string} size={40} />
+            <Avatar src={post?.author?.image as string} size={40} />
           </span>
           <div className="ml-2 flex-grow leading-5">
-            <p className="t-link dark:t-white hover:t-blue dark:hover:t-blue-light font-semibold text-black/90">
-              {localPostContent?.author?.name}
+            <p className="t-link dark:t-white capitalize hover:t-blue dark:hover:t-blue-light font-semibold text-black/90">
+              {post?.author?.name}
             </p>
-            {localPostContent?.createdAt && (
+            {post?.createdAt && (
               <p className="t-secondary text-xs">
-                {formatDistanceToNow(
-                  parseISO(localPostContent?.createdAt as string),
-                  {
-                    addSuffix: true,
-                  }
-                )}{" "}
+                {formatDistanceToNow(parseISO(post?.createdAt as string), {
+                  addSuffix: true,
+                })}{" "}
               </p>
             )}
           </div>
@@ -183,7 +188,7 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
         {modalPost ? (
           <button
             onClick={() => {
-              if (localPostContent.authorId === session?.user?.uid) {
+              if (post.authorId === session?.user?.uid) {
                 setModalOpen(false);
               }
             }}
@@ -191,13 +196,13 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
           >
             <MdClose className="mui-icon" />
           </button>
-        ) : session?.user?.uid === localPostContent?.authorId ? (
-          <PostMenu post={localPostContent} />
+        ) : session?.user?.uid === post?.authorId ? (
+          <PostMenu post={post} />
         ) : null}
       </header>
 
-      <Link href={`/feed/${localPostContent?.id}`}>
-        {localPostContent?.input && (
+      <Link href={`/feed/${post?.id}`}>
+        {post?.input && (
           <article
             className={clsx(
               "relative mx-4 mb-2 overflow-hidden break-words text-sm leading-5",
@@ -206,7 +211,7 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
             )}
           >
             <article className="mb-4">
-              {localPostContent?.input
+              {post?.input
                 ?.slice(0, 220)
                 .split("\n")
                 ?.map((txt, i) => (
@@ -214,23 +219,21 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
                     {txt}
                   </p>
                 ))}
-              {!modalPost &&
-                !showAll &&
-                localPostContent?.input?.length > 220 && (
-                  <span
-                    onClick={() => setShowAll(true)}
-                    className="t-secondary bg-white pl-2 hover:underline dark:bg-dblue dark:text-amber-400"
-                  >
-                    ...see more
-                  </span>
-                )}
+              {!modalPost && !showAll && post?.input?.length > 220 && (
+                <span
+                  onClick={() => setShowAll(true)}
+                  className="t-secondary bg-white pl-2 hover:underline dark:bg-dblue dark:text-amber-400"
+                >
+                  ...see more
+                </span>
+              )}
             </article>
-            {localPostContent?.media?.length > 0 && (
+            {post?.media?.length > 0 && (
               <div className="relative my-1 h-[200px] w-full overflow-hidden rounded-xl">
                 <Image
-                  src={localPostContent?.media[0]}
+                  src={post?.media[0]}
                   fill
-                  alt=""
+                  alt={post?.input}
                   className="object-contain"
                 ></Image>
               </div>
@@ -245,13 +248,12 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
             "card-btn rounded-xl text-white ",
             liked && "text-blue-500"
           )}
+          disabled={liking || unliking}
           onClick={() => {
-            localPostContent?.likes?.includes(session?.user?.uid as string)
-              ? unlikePost()
-              : likePost();
+            liked ? unlikePost() : likePost();
           }}
         >
-          {!localPostContent?.likes?.includes(session?.user?.uid as string) ? (
+          {!liked ? (
             <AiOutlineHeart className="mui-icon -scale-x-100 first-line:w-[25px] " />
           ) : (
             <AiTwotoneHeart
