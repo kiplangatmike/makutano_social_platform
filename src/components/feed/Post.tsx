@@ -364,6 +364,10 @@ const PostMenu = ({ post }: { post: Props["post"] }) => {
       });
   };
 
+  const { data: session } = useSession();
+
+  if (!session) return null;
+
   return (
     <Menu as="div" className="relative">
       <Menu.Button className="card-btn -mt-2 self-start rounded-full p-1">

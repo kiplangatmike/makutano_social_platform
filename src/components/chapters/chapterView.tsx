@@ -63,6 +63,8 @@ export default function ChapterView({
     await joinOrLeaveAction(body)
       .unwrap()
       .then(() => {
+        // refresh
+        window.location.reload();
         toaster({
           status: "success",
           message: `You have ${
@@ -114,7 +116,7 @@ export default function ChapterView({
   useEffect(() => {
     if (refetchPosts) {
       refetch();
-      router.replace("/chapters", undefined, { shallow: true });
+      router.replace(`/chapters/${chapterId}`, undefined, { shallow: true });
     }
   }, [refetchPosts]);
 
@@ -196,7 +198,7 @@ export default function ChapterView({
             <p className="tetx-base font-medium text-white">
               {data?.description}
             </p>
-            <JoinORLeaveButton />
+            {session && <JoinORLeaveButton />}
           </div>
 
           <div className=" mx-4 mt-8 flex justify-between rounded-xl bg-blue-400/30 px-6 py-4">
@@ -246,7 +248,7 @@ export default function ChapterView({
               {chapterPosts?.length === 0 && (
                 <div className="flex flex-col gap-2 px-4 text-center">
                   <p>This chapter does not have any posts</p>
-                  <JoinORLeaveButton fromMessage />
+                  {session && <JoinORLeaveButton fromMessage />}
                 </div>
               )}
               {chapterPosts?.map((p: Post, index: number) => (

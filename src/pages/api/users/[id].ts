@@ -21,6 +21,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                   },
                 },
               },
+              orderBy: {
+                createdAt: 'desc',
+              }
             },
             ComprehensiveProfile: true,
           }
