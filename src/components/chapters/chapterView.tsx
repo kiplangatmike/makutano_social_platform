@@ -17,6 +17,7 @@ import { postForChapters, modalState, modalTypeState } from "$lib/atoms";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import toaster from "$lib/utils/toaster";
 import { useRouter } from "next/router";
+import HeaderSeo from "$components/head";
 
 export default function ChapterView({
   data,
@@ -161,78 +162,85 @@ export default function ChapterView({
     );
   }
   return (
-    <Layout>
-      <div className="relative mx-auto mt-0 w-full bg-black/10 pb-8 xl:w-[40vw] 2xl:w-[50vw]">
-        <div className="relative h-[400px] w-full rounded-bl-lg rounded-tr-lg">
-          <Image
-            src={data.image}
-            alt={data.name}
-            fill
-            className="rounded-bl-lg rounded-tr-lg object-cover object-center"
-          />
-        </div>
-        <div className="relative mt-4 flex flex-col gap-2 px-4">
-          <h1 className="text-2xl font-bold text-white">{data?.name}</h1>
-          <p className="tetx-base font-medium text-white">
-            {data?.description}
-          </p>
-          <JoinORLeaveButton />
-        </div>
-
-        <div className=" mx-4 mt-8 flex justify-between rounded-xl bg-blue-400/30 px-6 py-4">
-          <p className="text-md">
-            <span className="text-lg font-bold">{data?.userIds?.length}</span>{" "}
-            Members
-          </p>
-          <p className="text-md">
-            <span className="text-lg font-bold">
-              {thisChapter?.postIds?.length ?? data?.postIds?.length}
-            </span>{" "}
-            Posts
-          </p>
-          <p className="text-md">
-            Created by{" "}
-            <span className="text-lg font-bold">
-              {creator?.name?.split(" ")[0] ?? ""}
-            </span>
-          </p>
-        </div>
-
-        <div className="mx-4 mt-6 flex rounded-lg">
-          <div
-            onClick={() => setActiveTab("posts")}
-            className={`w-1/2 cursor-pointer rounded-l-lg border-[1px] px-4 py-2 text-white transition-all duration-150 ease-in ${
-              activeTab === "posts"
-                ? "border-blue-400/30 bg-blue-400/30"
-                : "border-r-0 border-blue-400/50 bg-transparent"
-            }`}
-          >
-            <h2>Posts</h2>
+    <>
+      <HeaderSeo
+        title={`${data?.name} - Makutano`}
+        description={`Discover and engage with ${data?.name} on Makutano. Join the chapter and start sharing your thoughts and ideas.`}
+        image={data?.image}
+      />
+      <Layout>
+        <div className="relative mx-auto mt-0 w-full bg-black/10 pb-8 xl:w-[40vw] 2xl:w-[50vw]">
+          <div className="relative h-[400px] w-full rounded-bl-lg rounded-tr-lg">
+            <Image
+              src={data.image}
+              alt={data.name}
+              fill
+              className="rounded-bl-lg rounded-tr-lg object-cover object-center"
+            />
           </div>
-          <div
-            onClick={() => setActiveTab("members")}
-            className={`w-1/2 cursor-pointer rounded-r-lg border-[1px] px-4 py-2 text-white transition-all duration-150 ease-in ${
-              activeTab === "members"
-                ? "border-blue-400/30 bg-blue-400/30"
-                : "border-l-0 border-blue-400/50 bg-transparent"
-            }`}
-          >
-            <h2>Members</h2>
+          <div className="relative mt-4 flex flex-col gap-2 px-4">
+            <h1 className="text-2xl font-bold text-white">{data?.name}</h1>
+            <p className="tetx-base font-medium text-white">
+              {data?.description}
+            </p>
+            <JoinORLeaveButton />
           </div>
-        </div>
 
-        <div ref={parent} className="mt-8 space-y-4 px-4">
-          {chapterPosts?.length === 0 && (
-            <div className="flex flex-col gap-2 px-4 text-center">
-              <p>This chapter does not have any posts</p>
-              <JoinORLeaveButton fromMessage />
+          <div className=" mx-4 mt-8 flex justify-between rounded-xl bg-blue-400/30 px-6 py-4">
+            <p className="text-md">
+              <span className="text-lg font-bold">{data?.userIds?.length}</span>{" "}
+              Members
+            </p>
+            <p className="text-md">
+              <span className="text-lg font-bold">
+                {thisChapter?.postIds?.length ?? data?.postIds?.length}
+              </span>{" "}
+              Posts
+            </p>
+            <p className="text-md">
+              Created by{" "}
+              <span className="text-lg font-bold">
+                {creator?.name?.split(" ")[0] ?? ""}
+              </span>
+            </p>
+          </div>
+
+          <div className="mx-4 mt-6 flex rounded-lg">
+            <div
+              onClick={() => setActiveTab("posts")}
+              className={`w-1/2 cursor-pointer rounded-l-lg border-[1px] px-4 py-2 text-white transition-all duration-150 ease-in ${
+                activeTab === "posts"
+                  ? "border-blue-400/30 bg-blue-400/30"
+                  : "border-r-0 border-blue-400/50 bg-transparent"
+              }`}
+            >
+              <h2>Posts</h2>
             </div>
-          )}
-          {chapterPosts?.map((p: Post) => (
-            <OnePost key={p.id} post={p} />
-          ))}
+            <div
+              onClick={() => setActiveTab("members")}
+              className={`w-1/2 cursor-pointer rounded-r-lg border-[1px] px-4 py-2 text-white transition-all duration-150 ease-in ${
+                activeTab === "members"
+                  ? "border-blue-400/30 bg-blue-400/30"
+                  : "border-l-0 border-blue-400/50 bg-transparent"
+              }`}
+            >
+              <h2>Members</h2>
+            </div>
+          </div>
+
+          <div ref={parent} className="mt-8 space-y-4 px-4">
+            {chapterPosts?.length === 0 && (
+              <div className="flex flex-col gap-2 px-4 text-center">
+                <p>This chapter does not have any posts</p>
+                <JoinORLeaveButton fromMessage />
+              </div>
+            )}
+            {chapterPosts?.map((p: Post) => (
+              <OnePost key={p.id} post={p} />
+            ))}
+          </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   );
 }
