@@ -45,7 +45,7 @@
 
 @layer components {
   .mui-icon {
-    @apply inline-block h-6 w-6;
+    @apply inline-block h-6 w-6 min-w-[24px];
   }
 
   .intent {
@@ -149,4 +149,28 @@ input:focus {
 
 textarea:focus {
   border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.no-scrollbar {
+    scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+@media screen and (max-width: 640px) {
+  .sidebar-btn {
+    border: none !important;
+  }
+  .sidebar-section {
+    border: none !important;
+  }
 }

@@ -15,18 +15,18 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className="h-screen overflow-y-scroll bg-lstone transition-all dark:bg-gradient-radial dark:from-[#15202b] dark:from-100% dark:to-50%">
       <Header />
       {/* <div className="relativ mx-auto max-w-[1240px]"> */}
-      <div className="px-5">
-        <div className="my-5">
+      <div className="relative mx-auto max-w-[1350px] px-5">
+        <div className="my-5 flex">
           {session && (
-            <div className="left-4 space-y-2 md:absolute md:w-[300px]">
+            <div className="left-4 space-y-2 fixed w-max md:w-[300px]">
               <Sidebar />
             </div>
           )}
-          <div className="mx-auto mt-[20px] w-[60vw] max-w-[600px] md:mt-[0px]">
+          <div className="ml-auto w-[80%] sm:w-[50vw] md:mt-[0px] b1200:w-[70vw] xl:mx-auto xl:w-[40vw] xl:max-w-[700px]">
             {children}
           </div>
           {session && (
-            <aside className="mt-0 hidden h-[80vh] w-[325px] overflow-y-auto md:absolute md:top-24 md:hidden lg:right-4 b600:block">
+            <aside className="no-scrollbar mt-0 hidden h-[80vh] w-[325px] overflow-y-auto md:fixed md:top-24 md:hidden lg:right-8 xl:block">
               <Widgets />
             </aside>
           )}

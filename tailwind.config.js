@@ -19,6 +19,7 @@ module.exports = {
       screens: {
         b600: "1230px",
         b400: "950px",
+        b1200: "1200px",
       },
     },
   },
