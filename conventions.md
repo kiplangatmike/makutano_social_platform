@@ -1,4 +1,4 @@
-# React/JSX Style Guide for Knack
+# React/JSX Style Guide for Makutano
 
 ## Table of Contents
 
