@@ -12,6 +12,7 @@ import { prisma } from "$lib/config/prisma";
 import Feed from "$components/Feed";
 import { articlesState } from "$lib/atoms";
 import Layout from "$components/Layout";
+import HeaderSeo from "$components/head";
 
 export default function FeedPage({ articles }: Props) {
   const setArticles = useSetAtom(articlesState);
@@ -25,13 +26,16 @@ export default function FeedPage({ articles }: Props) {
         postedAt: "2021-08-01T00:00:00.000Z",
       },
     ]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Layout>
-      <Feed />
-    </Layout>
+    <>
+      <HeaderSeo title={`Feed - Makutano`} />
+      <Layout>
+        <Feed />
+      </Layout>
+    </>
   );
 }
 
