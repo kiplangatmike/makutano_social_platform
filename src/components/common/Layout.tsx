@@ -7,10 +7,12 @@ import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import Widgets from "./updates";
 import { ReactNode } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Layout({ children }: { children: ReactNode }) {
+  const { data: session } = useSession();
   return (
-    <div className="h-screen overflow-y-scroll bg-lstone transition-all dark:bg-gradient-radial dark:from-[#15202b] dark:from-100% dark:to-[#19 dark:to-50%">
+    <div className="dark:to-[#19 h-screen overflow-y-scroll bg-lstone transition-all dark:bg-gradient-radial dark:from-[#15202b] dark:from-100% dark:to-50%">
       <Header />
       {/* <div className="relativ mx-auto max-w-[1240px]"> */}
       <div className="px-5">

@@ -28,7 +28,7 @@ export default function Sidebar() {
     setModalType("dropIn");
   }, [setModalOpen, setModalType]);
 
-  const { data: allChapters, isFetching } = useGetAllChaptersQuery(undefined);
+  const { data: allChapters } = useGetAllChaptersQuery(undefined);
 
   return (
     <div className="left-4 top-24 space-y-4 md:fixed md:w-[300px]">

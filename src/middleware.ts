@@ -7,9 +7,7 @@ const secret = process.env.NEXTAUTH_SECRET
 export async function middleware(req: NextRequest) {
   const session = await getToken({ req, secret })
 
-  if (
-    (req.nextUrl.pathname.startsWith('/auth') ||
-      req.nextUrl.pathname === '/') &&
+  if (req.nextUrl.pathname === '/' &&
     session
   ) {
     return NextResponse.redirect(new URL('/feed', req.url))
@@ -22,5 +20,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/feed/:path*', '/auth/:path*', '/'],
+  matcher: ['/feed', '/auth/:path*', '/'],
 }
