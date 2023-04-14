@@ -15,6 +15,8 @@ import { useRouter } from "next/router";
 
 import HeaderLink from "./HeaderLink";
 
+import { signIn } from "next-auth/react";
+
 export default function Header() {
   const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
@@ -27,10 +29,10 @@ export default function Header() {
 
   return (
     <header className="t-primary  sticky top-0 z-10 bg-white px-4 py-2 focus-within:shadow dark:bg-gray-900">
-      <nav className="max-w-[1200px] mx-auto flex items-center justify-between py-1">
+      <nav className="mx-auto flex max-w-[1200px] items-center justify-between py-1">
         {/* Left */}
         <div className="flex max-w-xs items-center  text-xl font-semibold">
-          <Link href="/feed" className="flex">
+          <Link href={session ? "/feed" : "/"} className="flex">
             {resolvedTheme === "dark" ? (
               <div>MAKUTANO</div>
             ) : (
@@ -40,67 +42,81 @@ export default function Header() {
         </div>
 
         {/* Right */}
-        <div className=" flex items-center space-x-4  rounded-xl  px-2 py-2">
-          <div className="flex">
-            <HeaderLink
-              Icon={TbBrandGoogleHome}
-              feed
-              active={router.pathname === "/feed"}
-              link="/feed"
+        {session ? (
+          <>
+            <div className=" flex items-center space-x-4  rounded-xl  px-2 py-2">
+              <div className="flex">
+                <HeaderLink
+                  Icon={TbBrandGoogleHome}
+                  feed
+                  active={router.pathname === "/feed"}
+                  link="/feed"
+                >
+                  Home
+                </HeaderLink>
+              </div>
+              <div className="hidden">
+                <HeaderLink
+                  Icon={SlPeople}
+                  feed
+                  active={router.pathname === "/mynetwork"}
+                  link="/mynetwork"
+                >
+                  My Network
+                </HeaderLink>
+              </div>
+              <div>
+                <HeaderLink
+                  active={router.pathname.includes("/chapters")}
+                  Icon={TbBuildingBank}
+                  feed
+                  link="/chapters"
+                >
+                  Chapters
+                </HeaderLink>
+              </div>
+              <div>
+                <HeaderLink
+                  Icon={MdOutlineWorkOutline}
+                  active={router.pathname.includes("/opportunity")}
+                  feed
+                  hidden
+                  link="/opportunity"
+                >
+                  Opportunities
+                </HeaderLink>
+              </div>
+            </div>
+            <div className="  flex  items-center  gap-2 rounded-xl  px-2 py-2">
+              <div>
+                <HeaderLink
+                  Icon={MdNotifications}
+                  feed
+                  active={router.pathname.includes("/notification")}
+                  link="/notification"
+                >
+                  Notifications
+                </HeaderLink>
+              </div>
+              <Link
+                href={`/profile/${session?.user?.uid}`}
+                className=" cursor-pointer"
+              >
+                <Avatar size={40} />
+              </Link>
+            </div>
+          </>
+        ) : (
+          <div className=" flex w-full items-center justify-center space-x-4 rounded-xl  px-2  py-2 text-center">
+            <p>Login or Sign up to experience Makutano</p>
+            <button
+              onClick={() => signIn("google", { callbackUrl: "/feed" })}
+              className="rounded-[10px] border border-white px-8 py-2 font-semibold text-white transition-all"
             >
-              Home
-            </HeaderLink>
+              Continue
+            </button>
           </div>
-          <div className="hidden">
-            <HeaderLink
-              Icon={SlPeople}
-              feed
-              active={router.pathname === "/mynetwork"}
-              link="/mynetwork"
-            >
-              My Network
-            </HeaderLink>
-          </div>
-          <div>
-            <HeaderLink
-              active={router.pathname.includes("/chapters")}
-              Icon={TbBuildingBank}
-              feed
-              link="/chapters"
-            >
-              Chapters
-            </HeaderLink>
-          </div>
-          <div>
-            <HeaderLink
-              Icon={MdOutlineWorkOutline}
-              active={router.pathname.includes("/opportunity")}
-              feed
-              hidden
-              link="/opportunity"
-            >
-              Opportunities
-            </HeaderLink>
-          </div>
-        </div>
-        <div className="  flex  items-center  gap-2 rounded-xl  px-2 py-2">
-          <div>
-            <HeaderLink
-              Icon={MdNotifications}
-              feed
-              active={router.pathname.includes("/notification")}
-              link="/notification"
-            >
-              Notifications
-            </HeaderLink>
-          </div>
-          <Link
-            href={`/profile/${session?.user?.uid}`}
-            className=" cursor-pointer"
-          >
-            <Avatar size={40} />
-          </Link>
-        </div>
+        )}
       </nav>
     </header>
   );

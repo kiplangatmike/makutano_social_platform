@@ -131,7 +131,7 @@ export default function Profile({
               <p className="mb-4 mr-5 rounded-lg py-2 italic">
                 {data?.ComprehensiveProfile[0]?.bio}
               </p>
-              <div className="bottom-20 left-0  flex w-full p-5 pb-4 font-bold text-white">
+              <div className="bottom-20 left-0 flex w-full p-5 pb-4 pl-0 font-bold text-white">
                 <div className="mr-3 flex w-max">
                   <span className="mr-1">{data?.posts?.length}</span>
                   <p>Posts</p>

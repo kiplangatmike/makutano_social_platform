@@ -254,6 +254,7 @@ export default function AddChapter() {
             id="name"
             className="bg-transparent"
             value={name}
+            autoFocus
             onChange={(e) => setName(e.target.value)}
           />
         </div>

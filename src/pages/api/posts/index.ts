@@ -35,7 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const recommendedPosts = getRecommendedPosts(user?.likedPosts ?? [], posts);
 
-      console.log(`Total posts: ${posts?.length} Found ${recommendedPosts?.length} recommended posts for user ${session?.user?.uid ?? ''}`)
+      console.log(`Total posts: ${posts?.length} Found. ${recommendedPosts?.length} recommended posts for user ${session?.user?.uid ?? ''}`)
 
       res.status(200).json(recommendedPosts?.length > 0 ? recommendedPosts : posts)
     } catch (error) {
@@ -75,6 +75,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
           },
         })
+
+        // update chapter and add post id to postIds field
+        if (chapterId) {
+          console.log(`Updating chapter ${chapterId} with post ${post.id}`)
+          await prisma.chapters.update({
+            where: {
+              id: chapterId,
+            },
+            data: {
+              postIds: {
+                push: post.id,
+              },
+            },
+          })
+        }
+
         res.status(201).json(post)
       } catch (error) {
         console.error(error)

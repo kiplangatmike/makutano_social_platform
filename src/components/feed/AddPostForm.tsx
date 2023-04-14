@@ -85,6 +85,7 @@ export default function AddPostForm() {
   const setIsForChapters = useSetAtom(postForChapters);
 
   const [selectedChapter, setSelectedChapter] = useState("");
+  const [selectedChapterId, setSelectedChapterId] = useState("");
 
   const router = useRouter();
 
@@ -93,7 +94,12 @@ export default function AddPostForm() {
     try {
       const body = {
         input: data.input.trim(),
-        chapterId: isForChapter?.length > 0 ? isForChapter : undefined,
+        chapterId:
+          isForChapter?.length > 0 || selectedChapter?.length > 0
+            ? isForChapter?.length > 0
+              ? isForChapter
+              : selectedChapterId
+            : undefined,
       };
 
       await createPost(body)
@@ -121,16 +127,28 @@ export default function AddPostForm() {
 
           const isViewChapter = router.query?.chapterId;
 
+          // for when a post is created for a chapter outside of chapter feed - not from add post button on chapter feed.
           if (
-            (isForChapter?.length > 0 &&
-              router.pathname.includes("chapters")) ||
-            (selectedChapter?.length > 0 && isViewChapter)
+            selectedChapter?.length > 0 &&
+            router.pathname.includes("chapters")
           ) {
-            const url = `/chapters/${
-              isForChapter?.length > 0 ? isForChapter : isViewChapter
-            }?refetchPosts=true`;
+            if (isViewChapter) {
+              const url = `/chapters/${isViewChapter}?refetchPosts=true`;
+              router.push(url);
+            } else {
+              const url = `/chapters?refetchPosts=true`;
+              router.push(url);
+            }
+          }
+          // for clicking on add post to chapter. Only seen on empty feed on chapter feed.
+          else if (
+            isForChapter?.length > 0 &&
+            router.pathname.includes("chapters")
+          ) {
+            const url = `/chapters/${isForChapter}?refetchPosts=true`;
             router.push(url);
           }
+
           toaster({
             status: "success",
             message: "Post created successfully",
@@ -261,7 +279,7 @@ export default function AddPostForm() {
   return (
     <div className="overflow-auto dark:bg-gray-900">
       <form
-        className="t-primary dark:bg-gray-900 flex h-full flex-col justify-between"
+        className="t-primary flex h-full flex-col justify-between dark:bg-gray-900"
         onSubmit={handleSubmit(post ? onEditPost : onCreatePost)}
       >
         <div className="flex-grow overflow-y-auto">
@@ -278,6 +296,7 @@ export default function AddPostForm() {
                       e.preventDefault();
                       setShowChapters(false);
                       setSelectedChapter("");
+                      setSelectedChapterId("");
                     }}
                     className={`card-btn t-secondary flex items-center justify-center rounded-full px-3 py-1 ${
                       selectedChapter.length > 0 ? "" : "bg-blue-400/25"
@@ -328,6 +347,7 @@ export default function AddPostForm() {
                           <p
                             onClick={() => {
                               setSelectedChapter(chapter.name);
+                              setSelectedChapterId(chapter.id);
                               setShowChapters(false);
                             }}
                             key={chapter?.id}

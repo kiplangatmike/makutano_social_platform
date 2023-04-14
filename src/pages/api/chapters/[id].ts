@@ -27,6 +27,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                                     },
                                 },
                             },
+                            orderBy: {
+                                createdAt: 'desc',
+                            }
                         },
                         users: {
                             select: {
@@ -34,7 +37,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                                 id: true,
                                 image: true,
                                 name: true,
-                            }
+                                ComprehensiveProfile: true
+                            },
+                            orderBy: {
+                                createdAt: 'desc',
+                            },
+                            distinct: ['id']
                         }
                     }
                 })
