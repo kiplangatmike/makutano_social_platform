@@ -281,14 +281,14 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
           <HiOutlineReply className="mui-icon w-[23px] -scale-x-100" />
         </button>
       </div>
-      <div className=" mb-3 ml-3 flex items-center gap-3">
-        <div>
+      <div className="ml-3 flex items-center gap-3">
+        <div className="mb-2">
           <Avatar size={30} />
         </div>
-        <div className="relative mr-4 grow rounded-3xl pb-3">
+        <div className="relative mr-4 grow rounded-3xl mb-3 items-center">
           <form className="mr-0">
             <textarea
-              className="block h-12 w-full resize-none overflow-hidden rounded-xl border border-white/30 bg-transparent px-4 outline-none transition-all duration-300 ease-in focus:h-16 focus:border-none focus:border-white focus:outline-none"
+              className="block h-8 pb-7 w-full resize-none overflow-hidden rounded-3xl border border-white/30 bg-transparent px-4 outline-none transition-all duration-300 ease-in focus:h-16 focus:border-none focus:border-white focus:outline-none"
               placeholder="Leave a comment"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
@@ -296,7 +296,7 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
           </form>
           <button
             onClick={(e) => commentHandler(e)}
-            className="absolute right-4 top-[40%] -translate-y-1/2 text-gray-400"
+            className="absolute right-2 top-5 -translate-y-1/2 text-gray-400"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -304,7 +304,7 @@ export default function OnePost({ post, index, modalPost = false }: Props) {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="h-8 w-8"
+              className="h-6 w-6"
             >
               <path
                 strokeLinecap="round"

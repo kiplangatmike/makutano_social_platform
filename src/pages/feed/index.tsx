@@ -25,6 +25,12 @@ export default function FeedPage({ articles }: Props) {
         postedBy: "John Doe",
         postedAt: "2021-08-01T00:00:00.000Z",
       },
+      {
+        title: "ELPs attend Harvard Africa Business Conference 2023 held at harvard",
+        description: `On the 04th June 2023, Equity Leaders Program Global scholars and Alumni from across the world held a short meeting that was was graced by a Virtual engagement by the Equity GCEO, Dr. James Mwangi. Present in the meeting was Dr. Beth Waweru and Dr. Joanne Korir who shared nuggets with the team. This meeting was helpful in discussing the desired impact for all scholars on the program, mentorship and inspiration.`,
+        postedBy: "John Doe",
+        postedAt: "2023-04-01T00:00:00.000Z",
+      },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

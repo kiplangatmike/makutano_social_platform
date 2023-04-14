@@ -15,7 +15,9 @@ export default function Widgets() {
   return (
     <div className="rounded-3xl  py-3 dark:bg-gray-900">
       <div className="flex items-center px-3">
-        <h4 className="flex-grow text-center font-semibold">Program Updates</h4>
+        <h4 className="flex-grow text-center text-[22px] font-semibold">
+          Program Updates
+        </h4>
         <BsInfoSquareFill className="mui-icon h-6 w-4" />
       </div>
 
