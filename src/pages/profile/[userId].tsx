@@ -161,7 +161,7 @@ export default function Profile({
               <motion.button
                 onClick={() => handleButtonClick("component2")}
                 whileTap={{ scale: 0.99 }}
-                className={`t-secondary  min-w-[100px]   flex-1 bg-amber-800 py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
+                className={`t-secondary  min-w-[100px] flex-1 bg-amber-800 py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
                   activeComponent === "component2"
                     ? "bg-blue-500/30 text-white"
                     : "bg-transparent text-white"
@@ -172,7 +172,7 @@ export default function Profile({
               <motion.button
                 onClick={() => handleButtonClick("component3")}
                 whileTap={{ scale: 0.99 }}
-                className={`t-secondary  min-w-[100px]  flex-1 bg-amber-800 py-1 text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
+                className={`t-secondary  min-w-[100px]  flex-1 bg-amber-800 py-1 rounded-r-xl text-center text-lg font-semibold transition-all duration-150 ease-in hover:bg-blue-400/30 ${
                   activeComponent === "component3"
                     ? "bg-blue-500/30 text-white"
                     : "bg-transparent text-white"
