@@ -1,6 +1,6 @@
 # Makutano App 🚀
 
-Makutano app connects the ELP community through the power of social media powered the ultra modern makutano app. You can visit the app [Makutano App on Azure](https://makutano.azurewebsites.net) to explore
+Makutano app connects the ELP community through the power of social media powered the ultra modern makutano app. You can visit the app [Makutano App on Azure](https://makutano-elp.azurewebsites.net) to explore
 
 ## Prerequisites
 
